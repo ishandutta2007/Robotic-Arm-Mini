@@ -1,15 +1,15 @@
-﻿/**
+/**
   ******************************************************************************
-  * @文	件 ： SCA_Protocol.c
-  * @作	者 ： INNFOS Software Team
-  * @版	本 ： V1.5.2
-  * @日	期 ： 2019.06.24
-  * @摘	要 ： INNFOS CAN 通信协议层
+  * @File    : SCA_Protocol.c
+  * @Author  : INNFOS Software Team
+  * @Version : V1.5.2
+  * @Date    : 2019.06.24
+  * @Summary : INNFOS CAN Communication Protocol Layer
   ******************************************************************************/
 /* Update log --------------------------------------------------------------------*/
-//V1.1.0 2019.08.05 加入第五类写入命令接口,更改CAN总线的数据等待时间
-//V1.5.0 2019.08.16 加入数据接收接口，统一读命令接口。加入各类数据分析接口，加入参数缓存
-//V1.5.2 2019.11.04	修复对旧版编译器的兼容性。
+//V1.1.0 2019.08.05 Added 5th category write command interface, changed CAN bus data wait time
+//V1.5.0 2019.08.16 Added data receive interface, unified read command interface. Added various data analysis interfaces, added parameter cache
+//V1.5.2 2019.11.04 Fixed compatibility with older compilers.
 
 /* Includes ----------------------------------------------------------------------*/
 #include "sca_api.h"
@@ -26,44 +26,44 @@ void warnBitAnaly(SCA_Handler_t *pSCA);
 /* Funcation defines -------------------------------------------------------------*/
 
 /**
-  * @功	能	第1类写入命令，发送2byte，接收2byte
-  * @参	数	pSCA：要操作的执行器句柄指针或地址
-  *			cmd：操作指令
-  *			TxData：要发送的数据，可以是以下两种
-  *					1.执行器操作模式选择 2.使能（0x01）或失能（0x00）
-  * @返	回	SCA_NoError：发送成功
-  *			其他通信错误参见 SCA_Error 错误列表
+  * @Brief  1st category write command, send 2 bytes, receive 2 bytes
+  * @Param  pSCA: target actuator handle pointer or address
+  *         cmd: operation command
+  *         TxData: data to send, can be the following two
+  *                 1. Actuator operation mode selection 2. Enable (0x01) or Disable (0x00)
+  * @Return SCA_NoError: Send success
+  *         For other communication errors, see SCA_Error list
   */
 uint8_t SCA_Write_1(SCA_Handler_t *pSCA, uint8_t cmd, uint8_t TxData)
 {
     uint8_t TxBuf[2];
 
-    /* 数据打包格式：
-        TxBuf[0]-操作命令 	TxBuf[1]-数据（高位）至 TxBuf[7]-数据（低位） */
+    /* Data packet format:
+        TxBuf[0] - Operation Command   TxBuf[1] - Data (High) to TxBuf[7] - Data (Low) */
     TxBuf[0] = cmd;
     TxBuf[1] = TxData;
 
-    /* 调用底层通信函数传输数据，若出现通信错误则返回错误值 */
+    /* Call low-level communication function to transmit data, returns error code on failure */
     return canTransmit(pSCA, TxBuf, 2);
 }
 
 /**
-  * @功	能	第2类写入命令，发送3byte，接收2byte
-  * @参	数	pSCA：要操作的执行器句柄指针或地址
-  *			cmd：操作指令
-  *			TxData：要发送的数据，真实值
-  * @返	回	SCA_NoError：发送成功
-  *			其他通信错误参见 SCA_Error 错误列表
+  * @Brief  2nd category write command, send 3 bytes, receive 2 bytes
+  * @Param  pSCA: target actuator handle pointer or address
+  *         cmd: operation command
+  *         TxData: data to send, real value
+  * @Return SCA_NoError: Send success
+  *         For other communication errors, see SCA_Error list
   */
 uint8_t SCA_Write_2(SCA_Handler_t *pSCA, uint8_t cmd, float TxData)
 {
     uint8_t TxBuf[3];
     int16_t temp;
 
-    /* 第二类读写命令以IQ8格式进行传输 */
+    /* 2nd category read/write commands use IQ8 format */
     temp = TxData * IQ8;
 
-    /* 数据打包 */
+    /* Data packet */
     TxBuf[0] = cmd;
     TxBuf[1] = (uint8_t) (temp >> 8);
     TxBuf[2] = (uint8_t) (temp >> 0);
@@ -72,26 +72,26 @@ uint8_t SCA_Write_2(SCA_Handler_t *pSCA, uint8_t cmd, float TxData)
 }
 
 /**
-  * @功	能	第3类写入命令，发送5byte，接收2byte
-  * @参	数	pSCA：要操作的执行器句柄指针或地址
-  *			cmd：操作指令
-  *			TxData：发送的数据，真实值
-  * @返	回	SCA_NoError：发送成功
-  *			其他通信错误参见 SCA_Error 错误列表
+  * @Brief  3rd category write command, send 5 bytes, receive 2 bytes
+  * @Param  pSCA: target actuator handle pointer or address
+  *         cmd: operation command
+  *         TxData: data to send, real value
+  * @Return SCA_NoError: Send success
+  *         For other communication errors, see SCA_Error list
   */
 uint8_t SCA_Write_3(SCA_Handler_t *pSCA, uint8_t cmd, float TxData)
 {
     uint8_t TxBuf[5];
     int32_t temp;
 
-    /*	速度与电流在设定时，要采用标值，
-        即设定值除以该参数的最大值，再转换为IQ24格式	*/
+    /* Velocity and current must use per-unit values during setting,
+       i.e., setting value divided by maximum value, then converted to IQ24 format */
     if ((cmd == W3_Velocity) || (cmd == W3_VelocityLimit))
         temp = TxData / Velocity_Max * IQ24;
     else if ((cmd == W3_Current) || (cmd == W3_CurrentLimit))
         temp = TxData / pSCA->Current_Max * IQ24;
     else if (cmd == W3_BlockEngy)
-        temp = TxData * BlkEngy_Scal;    //堵转能量为真实值的75.225倍
+        temp = TxData * BlkEngy_Scal;    // Blocked energy is 75.225 times the real value
     else
         temp = TxData * IQ24;
 
@@ -105,11 +105,11 @@ uint8_t SCA_Write_3(SCA_Handler_t *pSCA, uint8_t cmd, float TxData)
 }
 
 /**
-  * @功	能	第4类写入命令，发送1byte，接收2byte
-  * @参	数	pSCA：要操作的执行器句柄指针或地址
-  *			cmd：操作指令
-  * @返	回	SCA_NoError：发送成功
-  *			其他通信错误参见 SCA_Error 错误列表
+  * @Brief  4th category write command, send 1 byte, receive 2 bytes
+  * @Param  pSCA: target actuator handle pointer or address
+  *         cmd: operation command
+  * @Return SCA_NoError: Send success
+  *         For other communication errors, see SCA_Error list
   */
 uint8_t SCA_Write_4(SCA_Handler_t *pSCA, uint8_t cmd)
 {
@@ -119,20 +119,20 @@ uint8_t SCA_Write_4(SCA_Handler_t *pSCA, uint8_t cmd)
 }
 
 /**
-  * @功	能	第5类写入命令，发送6byte，接收2byte
-  * @参	数	pSCA：要操作的执行器句柄指针或地址
-  *			cmd：操作指令
-  *			TxData：发送数据
-  * @返	回	SCA_NoError：发送成功
-  *			其他通信错误参见 SCA_Error 错误列表
+  * @Brief  5th category write command, send 6 bytes, receive 2 bytes
+  * @Param  pSCA: target actuator handle pointer or address
+  *         cmd: operation command
+  *         TxData: data to send
+  * @Return SCA_NoError: Send success
+  *         For other communication errors, see SCA_Error list
   */
 uint8_t SCA_Write_5(SCA_Handler_t *pSCA, uint8_t cmd, uint8_t TxData)
 {
     uint8_t TxBuf[6];
 
     /*
-        第五类写入命令数据格式：
-        1字节命令+4字节地址（SCA的序列号）+1字节参数（目标数据）
+        5th category write command data format:
+        1 byte command + 4 bytes address (SCA serial number) + 1 byte parameter (target data)
     */
     TxBuf[0] = cmd;
     TxBuf[1] = pSCA->Serial_Num[0];
@@ -145,11 +145,11 @@ uint8_t SCA_Write_5(SCA_Handler_t *pSCA, uint8_t cmd, uint8_t TxData)
 }
 
 /**
-  * @功	能	读取命令接口，发送1byte
-  * @参	数	pSCA：要操作的执行器句柄指针或地址
-  *			cmd：操作指令
-  * @返	回	SCA_NoError：操作成功
-  *			其他通信错误参见 SCA_Error 错误列表
+  * @Brief  Read command interface, send 1 byte
+  * @Param  pSCA: target actuator handle pointer or address
+  *         cmd: operation command
+  * @Return SCA_NoError: Operation success
+  *         For other communication errors, see SCA_Error list
   */
 uint8_t SCA_Read(SCA_Handler_t *pSCA, uint8_t cmd)
 {
@@ -159,37 +159,37 @@ uint8_t SCA_Read(SCA_Handler_t *pSCA, uint8_t cmd)
 }
 
 /**
-  * @功	能	CAN底层通信函数，发送数据
-  * @参	数	ID：要操作的执行器ID
-  *			TxBuf：要发送的数据地址
-  *			TxLen：要发送的数据长度
-  * @返	回	SCA_NoError：操作成功
-  *			SCA_SendError：发送失败
+  * @Brief  Low-level CAN communication function, send data
+  * @Param  ID: target actuator ID
+  *         TxBuf: address of data to send
+  *         TxLen: length of data to send
+  * @Return SCA_NoError: Operation success
+  *         SCA_SendError: Send failed
   */
 static uint8_t canTransmit(SCA_Handler_t *pSCA, uint8_t *TxBuf, uint8_t TxLen)
 {
     uint32_t waitime = 0;
 
-    /* 调用CAN1发送指定的数据，若发送失败则进行重发，最多重发Retry次 */
+    /* Call CAN1 to send specified data, if send fails, retry up to Retry times */
     while (pSCA->Can->Send(pSCA->ID, TxBuf, TxLen) && (waitime < pSCA->Can->Retry)) waitime++;
 
-    /* 发送次数超出设定值，返回发送失败 */
+    /* Send attempts exceeded limit, return send failed */
     if (waitime >= pSCA->Can->Retry)
         return SCA_SendError;
 
-    /* 数据发送成功，没有错误产生 */
+    /* Data sent successfully, no error occurred */
     return SCA_NoError;
 }
 
 /**
-  * @功	能	第1类读取命令返回数据解析，发送1byte，接收2byte
-  * @参	数	pSCA：目标执行器句柄指针或地址
-  *			RxMsg：接收到的数据包
-  * @返	回	无
+  * @Brief  1st category read command return data parsing, send 1 byte, receive 2 bytes
+  * @Param  pSCA: target actuator handle pointer or address
+  *         RxMsg: received data packet
+  * @Return None
   */
 static void R1dataProcess(SCA_Handler_t *pSCA, CanRxMsg *RxMsg)
 {
-    /* 将读取结果装载到接收地址中 */
+    /* Load read result into receive address */
     switch (RxMsg->Data[0])
     {
         case R1_Heartbeat:

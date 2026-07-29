@@ -1,10 +1,10 @@
-﻿/**
+/**
   ******************************************************************************
-  * @文	件 ： SCA_API.h
-  * @作	者 ： INNFOS Software Team
-  * @版	本 ： V1.5.3
-  * @日	期 ： 2019.09.10
-  * @摘	要 ： SCA 控制接口层
+  * @File    : SCA_API.h
+  * @Author  : INNFOS Software Team
+  * @Version : V1.5.3
+  * @Date    : 2019.09.10
+  * @Summary : SCA Control Interface Layer
   ******************************************************************************/
 
 #ifndef __SCA_API_H
@@ -21,13 +21,13 @@ extern "C" {
 #include <malloc.h>
 #include "time_utils.h"
 
-/* 参数配置 */
-#define SCA_NUM_USE        2            //当前使用SCA的数量,1-255
-#define SCA_DEBUGER        0            //使能调试接口
-#define CanOvertime        0xFFFF        //数据阻塞超时（180MHZ）
-#define CanPowertime    0xFFFFFF    //开关机阻塞超时（180MHZ）
-#define SendInterval    200            //非阻塞时的指令发送间隔
-#define SCA_Delay(x)    delayMicroseconds(x)    //延时接口，非阻塞时连续发送需延时
+/* Parameter Configuration */
+#define SCA_NUM_USE        2            // Number of SCAs currently in use, 1-255
+#define SCA_DEBUGER        0            // Enable debug interface
+#define CanOvertime        0xFFFF       // Data blocking timeout (180MHZ)
+#define CanPowertime    0xFFFFFF    // Power on/off blocking timeout (180MHZ)
+#define SendInterval    200            // Command send interval when non-blocking
+#define SCA_Delay(x)    delayMicroseconds(x)    // Delay interface, continuous sending requires delay when non-blocking
 
 
 #if SCA_DEBUGER
@@ -36,17 +36,17 @@ extern "C" {
 #define SCA_Debug(s,...)
 #endif
 
-/* ！！！以下宏定义信息参数请勿修改！！！ */
+/* !!! DO NOT MODIFY the macro definitions below !!! */
 
-//SCA状态定义
+// SCA Status Definitions
 #define Actr_Enable        0x01
 #define Actr_Disable    0x00
 
-//通信方式定义
+// Communication Mode Definitions
 #define Block            0x01
 #define Unblock            0x00
 
-//SCA操作模式定义
+// SCA Operation Mode Definitions
 #define SCA_Current_Mode            0x01
 #define SCA_Velocity_Mode            0x02
 #define SCA_Position_Mode            0x03
@@ -55,32 +55,32 @@ extern "C" {
 #define SCA_Homing_Mode                0X08
 
 /* 
-FAST类函数使用说明：
-	以ID调用API时，会先内部查找ID对应的信息句柄，操作直观但当SCA的使用
-	数量较多时，函数的执行效率低。若直接定义指针指向对应的结构体，会省
-	去查找句柄的过程，但需防止该指针在使用时对句柄内部数据的意外修改。
-	此类指针用于带有Fast型的API，当使用的SCA数量较多或高频读写时，可以
-	提高函数的执行效率。其他类型的函数若有需求，也可按照此种方式进行修改。
+FAST type function instructions:
+	When calling an API by ID, it first searches for the information handle corresponding to the ID internally. This operation is intuitive but when there are many SCAs in use,
+	the execution efficiency of the function is low. If a pointer is defined directly to the corresponding structure, it can skip
+	the process of looking up the handle, but care must be taken to prevent accidental modification of internal data of the handle by this pointer during use.
+	Such pointers are used for Fast APIs. When there are many SCAs in use or high-frequency read/write operations, this can
+	improve the execution efficiency of functions. Other types of functions can also be modified this way if needed.
 	
 	Example:
 
-		//例如执行器ID是 0x03，对该ID进行快速写位置
+		// For instance, if the actuator ID is 0x03, for fast writing of position to this ID
 		SCA_Handler_t* pSCA_ID3 = NULL;
 		pSCA_ID3 = getInstance(0x03);
-		if(pSCA_ID3 == NULL)	return;//未找到该ID的信息句柄
+		if(pSCA_ID3 == NULL)	return;// Could not find information handle for this ID
 
-		//用定义好的指针直接传入Fast型写位置函数中
+		// Use the defined pointer directly in the Fast type position write function
 		setPositionFast(pSCA_ID3,100);
 	
-函数阻塞方式使用说明：
-	带有参数isBlock的函数，可支持阻塞或非阻塞式的执行方式，可根据实际
-	使用情况进行选择。阻塞等待时间在参数配置中可根据CPU速率更改负。其中类
-	似开机等函数必须为阻塞式通信（等待执行结果返回），否责会造成数据错乱。
-	另外，非阻塞函数的连续使用容易造成总线过载，SCA会出现蓝灯现象，在非阻
-	塞执行时函数内部会有保护延时，通过参数配置更改延时时间。
+Instructions for blocking execution of functions:
+	Functions with the isBlock parameter support blocking or non-blocking execution modes, which can be selected according to actual
+	use cases. The blocking wait time can be changed in the parameter configuration based on the CPU speed. Note that functions like
+	power-on must use blocking communication (waiting for the execution result to return), otherwise it may cause data corruption.
+	In addition, continuous use of non-blocking functions can easily cause bus overload, which leads to SCA blue light phenomenon. There is a protective delay 
+	internally in the function during non-blocking execution; the delay time can be modified through parameter configuration.
 */
 
-/***************控制相关******************/
+/*************** Control Related ******************/
 void lookupActuators(CAN_Handler_t *canPort);
 void setupActuators(uint8_t id, CAN_Handler_t *can);
 void resetController(uint8_t id);
@@ -99,7 +99,7 @@ uint8_t clearError(uint8_t id, uint8_t isBlock);
 uint8_t saveAllParams(uint8_t id, uint8_t isBlock);
 SCA_Handler_t *getInstance(uint8_t id);
 
-/***************位置相关******************/
+/*************** Position Related ******************/
 uint8_t setPosition(uint8_t id, float pos);
 uint8_t setPositionFast(SCA_Handler_t *pSCA, float pos);
 uint8_t getPosition(uint8_t id, uint8_t isBlock);
@@ -133,7 +133,7 @@ uint8_t getProfilePositionDeceleration(uint8_t id, uint8_t isBlock);
 uint8_t setProfilePositionMaxVelocity(uint8_t id, float maxVelocity, uint8_t isBlock);
 uint8_t getProfilePositionMaxVelocity(uint8_t id, uint8_t isBlock);
 
-/***************速度相关******************/
+/*************** Velocity Related ******************/
 uint8_t setVelocity(uint8_t id, float vel);
 uint8_t setVelocityFast(SCA_Handler_t *pSCA, float vel);
 uint8_t getVelocity(uint8_t id, uint8_t isBlock);
@@ -160,7 +160,7 @@ uint8_t setProfileVelocityMaxVelocity(uint8_t id, float maxVelocity, uint8_t isB
 uint8_t getProfileVelocityMaxVelocity(uint8_t id, uint8_t isBlock);
 float getVelocityRange(uint8_t id);
 
-/***************电流相关******************/
+/*************** Current Related ******************/
 uint8_t setCurrent(uint8_t id, float current);
 uint8_t setCurrentFast(SCA_Handler_t *pSCA, float current);
 uint8_t getCurrent(uint8_t id, uint8_t isBlock);
@@ -175,7 +175,7 @@ uint8_t setCurrentCutoffFrequency(uint8_t id, float frequency, uint8_t isBlock);
 uint8_t setCurrentLimit(uint8_t id, float limit, uint8_t isBlock);
 uint8_t getCurrentLimit(uint8_t id, uint8_t isBlock);
 
-/***************其他参数******************/
+/*************** Other Parameters ******************/
 uint8_t getVoltage(uint8_t id, uint8_t isBlock);
 uint8_t getLockEnergy(uint8_t id, uint8_t isBlock);
 uint8_t setLockEnergy(uint8_t id, float energy, uint8_t isBlock);

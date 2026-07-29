@@ -42,36 +42,36 @@ void MX_GPIO_Init(void);
 /********** Button **********/
 /********** Button **********/
 /********** Button **********/
-void REIN_GPIO_Button_Init(void);  	 //GPIO初始�??(Button)
+void REIN_GPIO_Button_Init(void);  	 // GPIO initialization (Button)
 
 /********** HwElec **********/
 /********** HwElec **********/
 /********** HwElec **********/
-void REIN_GPIO_HwElec_Init(void);   	//GPIO初始�??(HwElec)
+void REIN_GPIO_HwElec_Init(void);   	// GPIO initialization (HwElec)
 
 /********** MT6816Base **********/
 /********** MT6816Base **********/
 /********** MT6816Base **********/
-void REIN_GPIO_MT6816_ABZ_Init(void);  //GPIO初始�??(MT6816_ABZ)
-void REIN_GPIO_MT6816_SPI_Init(void);  //GPIO初始�??(MT6916_SPI)
+void REIN_GPIO_MT6816_ABZ_Init(void);  // GPIO initialization (MT6816_ABZ)
+void REIN_GPIO_MT6816_SPI_Init(void);  // GPIO initialization (MT6916_SPI)
 
 /********** Modbus **********/
 /********** Modbus **********/
 /********** Modbus **********/
-void REIN_GPIO_Modbus_Init(void);			//GPIO初始�??(Modbus)
+void REIN_GPIO_Modbus_Init(void);			// GPIO initialization (Modbus)
 
 /********** OLED **********/
 /********** OLED **********/
 /********** OLED **********/
-void REIN_GPIO_OLED_Init(void);			 //GPIO初始�??(OLED)
+void REIN_GPIO_OLED_Init(void);			 // GPIO initialization (OLED)
 
 /********** SIGNAL **********/
 /********** SIGNAL **********/
 /********** SIGNAL **********/
-void REIN_GPIO_SIGNAL_COUNT_Init(void);		//GPIO初始�??(SIGNAL_COUNT)
-void REIN_GPIO_SIGNAL_COUNT_DeInit(void);	//GPIO清理(SIGNAL_COUNT)
-void REIN_GPIO_SIGNAL_PWM_Init(void);			//GPIO初始�??(SIGNAL_PWM)
-void REIN_GPIO_SIGNAL_PWM_DeInit(void);		//GPIO清理(SIGNAL_PWM)
+void REIN_GPIO_SIGNAL_COUNT_Init(void);		// GPIO initialization (SIGNAL_COUNT)
+void REIN_GPIO_SIGNAL_COUNT_DeInit(void);	// GPIO deinitialization (SIGNAL_COUNT)
+void REIN_GPIO_SIGNAL_PWM_Init(void);			// GPIO initialization (SIGNAL_PWM)
+void REIN_GPIO_SIGNAL_PWM_DeInit(void);		// GPIO deinitialization (SIGNAL_PWM)
 
 
 /* USER CODE END Prototypes */

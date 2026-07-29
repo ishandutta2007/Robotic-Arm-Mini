@@ -51,21 +51,21 @@ void HAL_TIM_MspPostInit(TIM_HandleTypeDef *htim);
 /********** HwElec **********/
 /********** HwElec **********/
 /********** HwElec **********/
-void REIN_TIM_HwElec_Init(void);       //TIM初始�??(HwElec)
+void REIN_TIM_HwElec_Init(void);       // TIM initialization (HwElec)
 
 /********** MT6816Base **********/
 /********** MT6816Base **********/
 /********** MT6816Base **********/
-void REIN_TIM_MT6816_ABZ_Init(void);		//TIM初始�??(MT6816_ABZ)
-void REIN_TIM_MT6816_PWM_Init(void);		//TIM初始�??(MT6816_PWM)
+void REIN_TIM_MT6816_ABZ_Init(void);		// TIM initialization (MT6816_ABZ)
+void REIN_TIM_MT6816_PWM_Init(void);		// TIM initialization (MT6816_PWM)
 
 /********** SIGNAL **********/
 /********** SIGNAL **********/
 /********** SIGNAL **********/
-void REIN_TIM_SIGNAL_COUNT_Init(void);		//TIM初始�??(SIGNAL_COUNT)
-void REIN_TIM_SIGNAL_COUNT_DeInit(void);	//TIM清理(SIGNAL_COUNT)
-void REIN_TIM_SIGNAL_PWM_Init(void);			//TIM初始�??(SIGNAL_PWM)
-void REIN_TIM_SIGNAL_PWM_DeInit(void);		//TIM清理(SIGNAL_PWM)
+void REIN_TIM_SIGNAL_COUNT_Init(void);		// TIM initialization (SIGNAL_COUNT)
+void REIN_TIM_SIGNAL_COUNT_DeInit(void);	// TIM deinitialization (SIGNAL_COUNT)
+void REIN_TIM_SIGNAL_PWM_Init(void);			// TIM initialization (SIGNAL_PWM)
+void REIN_TIM_SIGNAL_PWM_DeInit(void);		// TIM deinitialization (SIGNAL_PWM)
 
 /* USER CODE END Prototypes */
 
