@@ -1,9 +1,14 @@
-# Robotic-Arm-Mini: Super compact smart robotic-arm
-> **My super compact smart robotic arm project.**
+<p align="center">
+  <img src="docs/images/banner.svg" alt="Robotic-Arm-Mini Banner" width="100%">
+</p>
+
+# 🤖 Robotic-Arm-Mini: Super compact smart robotic-arm 🦾
+
+> **✨ My super compact smart robotic arm project.**
 >
-> Video Introduction: [[DIY] I Built an IRON MAN Robotic Arm! [Hardcore]](https://www.bilibili.com/video/BV12341117rG)
+> 📺 Video Introduction: [[DIY] I Built an IRON MAN Robotic Arm! [Hardcore]](https://www.bilibili.com/video/BV12341117rG)
 >
-> Based on this Video : [I made a DUMMY ROBOTIC ARM from scratch！ - YouTube](https://www.youtube.com/watch?v=F29vrvUwqS4)
+> 🎥 Based on this Video : [I made a DUMMY ROBOTIC ARM from scratch！ - YouTube](https://www.youtube.com/watch?v=F29vrvUwqS4)
 
 ![](docs/images/dummy1.jpg)
 
@@ -38,7 +43,7 @@
 
 
 
-## About Structural Design
+## 🏗️ About Structural Design
 
 The original design in my video uses a `Stepper Motor` + Harmonic `Harmonic Drive Module`. The latter is quite expensive (I bought a second-hand one for about 600 RMB). Therefore, to allow everyone to easily reproduce this project, I will later add a low-cost solution with a `DIY Cycloidal Pinwheel Reducer` + `3D Printing`.
 
@@ -48,7 +53,7 @@ The designed cycloidal reducer can be found in my other repository: [peng-zhihui
 
 ![](docs/images/cycliod-nano.jpg)
 
-## About Circuit Modules
+## ⚡ About Circuit Modules
 
 To achieve the main robotic arm motion control functions, the circuit actually revolves around 4 core boards:
 
@@ -93,7 +98,7 @@ By using the integrated closed-loop method, all motors can be connected in serie
 
 **As for Peak, I have already open-sourced both its hardware and software. You can check the README in the submodules folder for instructions.**
 
-## About Core Firmware
+## 💾 About Core Firmware
 
 The core of this robotic arm's firmware is the kinematics posture calculation. ~~I am still organizing this part, and it will be packaged more perfectly for open-sourcing later~~, **Now Open Sourced**. Many currently hard-coded parameters will be designed to be configurable, **making it convenient for everyone to port to their own designed robotic arms after learning from this project**; meanwhile, I ported the firmware from the LiteOS framework to the more familiar FreeRTOS to facilitate secondary development.
 
@@ -131,13 +136,13 @@ The configuration of the robotic arm needs to meet the Pieper criterion (three a
 
 Peak is based on the X-Track project. You can check the Peak repository for more details.
 
-## About Host Software
+## 🖥️ About Host Software
 
 The software simulation in the video is based on RoboDK. In the video, I developed a Driver connecting to Dummy (the official documentation introduces the driver part. The original was based on a TCP network interface, I changed it to a serial port and made it compatible with dummy's protocol). However, because this software is paid, I also developed my own host software based on Unity3D, which has been published in the repository.
 
 The host software is currently not planned for open source because there are still many functions to add. I hope to eventually make it into a general software similar to RoboDK, which everyone can use when making their own robotic arms in the future. Of course, the software will certainly be free.
 
-## About Control Algorithms
+## 🧮 About Control Algorithms
 
 First, the kinematics part has been implemented. Both forward and inverse kinematics are calculated using traditional DH parameters. Forward kinematics (finding the end effector pose from joint angles) is a unique solution and relatively easy. Inverse kinematics (finding joint angles from end effector pose) involves multiple solutions (generally 8). The algorithm I use here is **solving for the configuration among the multiple solutions that has the smallest maximum joint angle change between the previous pose and the target pose**. This ensures the robotic arm always switches postures with the minimum rotation angle.
 
@@ -147,7 +152,7 @@ Additionally, the six motors are connected using the CAN bus. Each motor receive
 
 Finally, the dynamics part is still under development and has not been fully implemented yet. **For the kinematics and dynamics algorithms mentioned above, I strongly recommend reading the book "Introduction to Robotics"**, which explains them in great detail.
 
-## Command Modes
+## ⚙️ Command Modes
 
 The Robotic-Arm-Mini firmware supports three different command modes (commands can be received via USB, Serial, CAN). The characteristics of different modes vary, see the table below:
 
