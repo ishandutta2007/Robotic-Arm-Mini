@@ -237,21 +237,21 @@ static void R1dataProcess(SCA_Handler_t *pSCA, CanRxMsg *RxMsg)
 }
 
 /**
-  * @功	能	第2类读取命令返回数据解析，发送1byte，接收3byte
-  * @参	数	pSCA：目标执行器句柄指针或地址
-  *			RxMsg：接收到的数据包
-  * @返	回	无
+  * @Brief  2nd category read command return data parsing, send 1 byte, receive 3 bytes
+  * @Param  pSCA: target actuator handle pointer or address
+  *         RxMsg: received data packet
+  * @Return None
   */
 static void R2dataProcess(SCA_Handler_t *pSCA, CanRxMsg *RxMsg)
 {
     int16_t temp;
     float RxData;
 
-    /* 第二类读写命令为IQ8格式 */
+    /* 2nd category read/write commands use IQ8 format */
     temp = ((int16_t) RxMsg->Data[1]) << 8;
     temp |= ((int16_t) RxMsg->Data[2]) << 0;
 
-    /* 在第二类读写命令中，电压数据为IQ10格式 */
+    /* In 2nd category read/write commands, voltage data uses IQ10 format */
     if (RxMsg->Data[0] == R2_Voltage)
         RxData = (float) temp / IQ10;
     else
@@ -326,23 +326,23 @@ static void R2dataProcess(SCA_Handler_t *pSCA, CanRxMsg *RxMsg)
 }
 
 /**
-  * @功	能	第3类读取命令返回数据解析，发送1byte，接收5byte
-  * @参	数	pSCA：目标执行器句柄指针或地址
-  *			RxMsg：接收到的数据包
-  * @返	回	无
+  * @Brief  3rd category read command return data parsing, send 1 byte, receive 5 bytes
+  * @Param  pSCA: target actuator handle pointer or address
+  *         RxMsg: received data packet
+  * @Return None
   */
 static void R3dataProcess(SCA_Handler_t *pSCA, CanRxMsg *RxMsg)
 {
     int32_t temp;
     float RxData;
 
-    /* 第三类读写命令以IQ24格式传输 */
+    /* 3rd category read/write commands use IQ24 format */
     temp = ((int32_t) RxMsg->Data[1]) << 24;
     temp |= ((int32_t) RxMsg->Data[2]) << 16;
     temp |= ((int32_t) RxMsg->Data[3]) << 8;
     temp |= ((int32_t) RxMsg->Data[4]) << 0;
 
-    /* 速度和电流使用标值，需要将转换值乘以该参数的最大值得到实际值 */
+    /* Velocity and current use per-unit values, need to multiply converted value by param's max value to get real value */
     if ((RxMsg->Data[0] == R3_Velocity) || (RxMsg->Data[0] == R3_VelocityLimit))
         RxData = (float) temp / IQ24 * Velocity_Max;
 
@@ -350,7 +350,7 @@ static void R3dataProcess(SCA_Handler_t *pSCA, CanRxMsg *RxMsg)
         RxData = (float) temp / IQ24 * pSCA->Current_Max;
 
     else if (RxMsg->Data[0] == R3_BlockEngy)
-        RxData = (float) temp / BlkEngy_Scal;    //堵转能量为真实的75.225倍
+        RxData = (float) temp / BlkEngy_Scal;    // Blocked energy is 75.225 times the real value
 
     else
         RxData = (float) temp / IQ24;
@@ -510,19 +510,19 @@ static void R3dataProcess(SCA_Handler_t *pSCA, CanRxMsg *RxMsg)
 }
 
 /**
-  * @功	能	第4类读取命令返回数据解析，发送1byte，接收8byte
-  * @参	数	pSCA：目标执行器句柄指针或地址
-  *			RxMsg：接收到的数据包
-  * @返	回	无
+  * @Brief  4th category read command return data parsing, send 1 byte, receive 8 bytes
+  * @Param  pSCA: target actuator handle pointer or address
+  *         RxMsg: received data packet
+  * @Return None
   */
 static void R4dataProcess(SCA_Handler_t *pSCA, CanRxMsg *RxMsg)
 {
     int32_t temp;
 
-    /*	在三环读取协议中，为了使速度、电流、位置数据在同一数据帧中表示出
-        将电流和速度值以IQ14格式传输，将位置值以IQ16格式传输。为了方便符
-        号位的计算，将位置值向左移8位对齐符号位，转而除以IQ24得到真实值；
-        同理，将电流和速度值左移16位对齐符号位，转而除以IQ30得到真实值	。	*/
+    /*	In 3-loop read protocol, to represent velocity, current, and position data in the same data frame,
+        current and velocity values are transmitted in IQ14 format, and position value is transmitted in IQ16 format.
+        To facilitate sign bit calculation, position value is left shifted by 8 bits to align sign bit, then divided by IQ24 to get real value;
+        similarly, current and velocity values are left shifted by 16 bits to align sign bit, then divided by IQ30 to get real value.	*/
 
     temp = ((int32_t) RxMsg->Data[1]) << 24;
     temp |= ((int32_t) RxMsg->Data[2]) << 16;
@@ -537,42 +537,42 @@ static void R4dataProcess(SCA_Handler_t *pSCA, CanRxMsg *RxMsg)
     temp |= ((int32_t) RxMsg->Data[7]) << 16;
     pSCA->Current_Real = (float) temp / IQ30 * pSCA->Current_Max;
 
-    /* 标记数据已收到 */
+    /* Mark data as received */
     pSCA->paraCache.R_CVP = Actr_Enable;
 }
 
 /**
-  * @功	能	第5类读取命令返回数据解析，发送1byte，接收5byte
-  *			用于查询指定执行器的序列号
-  * @参	数	pSCA：目标执行器句柄指针或地址
-  *			RxMsg：接收到的数据包
-  * @返	回	无
+  * @Brief  5th category read command return data parsing, send 1 byte, receive 5 bytes
+  *         Used to query the serial number of a specified actuator
+  * @Param  pSCA: target actuator handle pointer or address
+  *         RxMsg: received data packet
+  * @Return None
   */
 static void R5dataProcess(SCA_Handler_t *pSCA, CanRxMsg *RxMsg)
 {
-    /* 装填序列号 */
+    /* Load serial number */
     pSCA->Serial_Num[0] = RxMsg->Data[1];
     pSCA->Serial_Num[1] = RxMsg->Data[2];
     pSCA->Serial_Num[2] = RxMsg->Data[3];
     pSCA->Serial_Num[3] = RxMsg->Data[4];
 
-    /* 标记数据已收到 */
+    /* Mark data as received */
     pSCA->paraCache.R_Serial_Num = Actr_Enable;
 }
 
 /**
-  * @功	能	写入命令返回数据解析，将参数缓存中的数据写入句柄中
-  *			用于查询指定执行器的序列号
-  * @参	数	pSCA：目标执行器句柄指针或地址
-  *			RxMsg：接收到的数据包
-  * @返	回	无
+  * @Brief  Write command return data parsing, write data from parameter cache to handle
+  *         Used to query the serial number of a specified actuator
+  * @Param  pSCA: target actuator handle pointer or address
+  *         RxMsg: received data packet
+  * @Return None
   */
 static void WriteDataProcess(SCA_Handler_t *pSCA, CanRxMsg *RxMsg)
 {
-    /* 写入成功，将缓存中的参数更新到句柄中 */
+    /* Write success, update parameters from cache to handle */
     if (RxMsg->Data[1] == Actr_Enable)
     {
-        /* 有新数据写入成功，复位存储标志位 */
+        /* New data written successfully, reset storage flag */
         pSCA->Save_State = Actr_Disable;
 
         switch (RxMsg->Data[0])
@@ -776,21 +776,21 @@ static void WriteDataProcess(SCA_Handler_t *pSCA, CanRxMsg *RxMsg)
 }
 
 /**
-  * @功	能	CAN接收数据解析，
-  * @参	数	RxMessage：接收的数据包
-  * @返	回	无
+  * @Brief  CAN receive data parsing,
+  * @Param  RxMessage: received data packet
+  * @Return None
   */
 void canDispatch(CanRxMsg *RxMsg)
 {
     SCA_Handler_t *pSCA = getInstance((uint8_t) RxMsg->StdId);
 
-    /* 不存在该ID，忽略消息 */
+    /* ID doesn't exist, ignore message */
     if (pSCA == NULL) return;
 
-    /* 标记有数据更新 */
+    /* Mark that data has been updated */
     pSCA->Update_State = Actr_Enable;
 
-    /* 命令解析 */
+    /* Command parsing */
     switch (RxMsg->Data[0])
     {
         case R1_Heartbeat:
@@ -861,7 +861,7 @@ void canDispatch(CanRxMsg *RxMsg)
             R5dataProcess(pSCA, RxMsg);
             break;
 
-            /* 其余为写入指令，判断写入是否成功，更新句柄 */
+            /* Other are write commands, judge if write success, update handle */
         default:
             WriteDataProcess(pSCA, RxMsg);
             break;
@@ -869,9 +869,9 @@ void canDispatch(CanRxMsg *RxMsg)
 }
 
 /**
-  * @功	能	识别错误代码中的具体错误信息
-  * @参	数	pSCA：要操作的执行器句柄地址或指针
-  * @返	回	无
+  * @Brief  Warning information analysis
+  * @Param  pSCA: target actuator handle pointer or address
+  * @Return None
   */
 void warnBitAnaly(SCA_Handler_t *pSCA)
 {
