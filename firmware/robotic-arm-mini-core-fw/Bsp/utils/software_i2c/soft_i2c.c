@@ -86,7 +86,7 @@ void Soft_I2C_Init(void)
 }
 
 
-//产生IIC起始信号
+// Generate IIC start signal
 
 void Soft_I2C_Start(void)
 {
@@ -100,7 +100,7 @@ void Soft_I2C_Start(void)
 }
 
 
-//产生IIC停止信号
+// Generate IIC stop signal
 
 void Soft_I2C_Stop(void)
 {
@@ -130,11 +130,11 @@ uint8_t Soft_I2C_Wait_Ack(void)
             return 1;
         }
     }
-    SCL_Dout_LOW();//时钟输出0
+    SCL_Dout_LOW();// Clock output 0
     return 0;
 }
 
-//产生ACK应答
+// Generate ACK response
 
 void Soft_I2C_Ack(void)
 {
@@ -147,7 +147,7 @@ void Soft_I2C_Ack(void)
     SCL_Dout_LOW();
 }
 
-//不产生ACK应答
+// Generate NACK response
 
 void Soft_I2C_NAck(void)
 {
@@ -160,21 +160,21 @@ void Soft_I2C_NAck(void)
     SCL_Dout_LOW();
 }
 
-//IIC发送一个字节
-//返回从机有无应答
-//1，有应答
-//0，无应答
+// IIC sends a byte
+// Returns whether the slave responds
+// 1, responded
+// 0, no response
 void Soft_I2C_Send_Byte(uint8_t txd)
 {
     uint8_t t;
-    //拉低时钟开始数据传输
+    // Pull down the clock to start data transmission
     SDA_Output();
     SCL_Dout_LOW();
     for (t = 0; t < 8; t++)
     {
         SDA_Write((txd & 0x80) >> 7);
         txd <<= 1;
-        Delay_us(5);   //对TEA5767这三个延时都是必须的
+        Delay_us(5);   // For TEA5767, these three delays are necessary
         SCL_Dout_HIGH();
         Delay_us(5);
         SCL_Dout_LOW();
@@ -182,11 +182,11 @@ void Soft_I2C_Send_Byte(uint8_t txd)
     }
 }
 
-//读1个字节，ack=1时，发送ACK，ack=0，发送nACK
+// Read 1 byte, when ack=1, send ACK, when ack=0, send nACK
 uint8_t Soft_I2C_Read_Byte(uint8_t ack)
 {
     unsigned char i, receive = 0;
-    //SDA设置为输入
+    // SDA set as input
     SDA_Input();
     for (i = 0; i < 8; i++)
     {
@@ -197,8 +197,8 @@ uint8_t Soft_I2C_Read_Byte(uint8_t ack)
         if (SDA_Data_IN())receive++;
         Delay_us(5);
     }
-    if (!ack)Soft_I2C_NAck();//发送nACK
-    else Soft_I2C_Ack(); //发送ACK
+    if (!ack)Soft_I2C_NAck();// Send nACK
+    else Soft_I2C_Ack(); // Send ACK
 
     return receive;
 }

@@ -1,1 +1,1 @@
-使用STM32CubeMX重新生成工程后，需要取消`stm32f1xx_it.c`的更改。
+After regenerating the project with STM32CubeMX, you need to revert the changes to `stm32f1xx_it.c`.

@@ -1,6 +1,6 @@
 /*****
   ** @file     : stockpile_f103cb.c/h
-  ** @brief    : Flash存储库
+  ** @brief    : Flash storage library
   ** @versions : newest
   ** @time     : newest
   ** @reviser  : unli (WuHu China)
@@ -13,20 +13,20 @@
 ////LL_Driver
 //#include "stm32f0xx_ll_flash_ex.h"
 
-////LL库FLASH清除函数
+////LL library FLASH clear function
 //extern void FLASH_PageErase(uint32_t PageAddress);
 
 /*************************************************************** Flash_Start ***************************************************************/
 /*************************************************************** Flash_Start ***************************************************************/
 /*************************************************************** Flash_Start ***************************************************************/
-//Flash分区表实例
+//Flash partition table instance
 Stockpile_FLASH_Typedef	stockpile_app_firmware	= {STOCKPILE_APP_FIRMWARE_ADDR, STOCKPILE_APP_FIRMWARE_SIZE,	(STOCKPILE_APP_FIRMWARE_SIZE / Stockpile_Page_Size),	0};
 Stockpile_FLASH_Typedef	stockpile_quick_cali		= {STOCKPILE_APP_CALI_ADDR, 		STOCKPILE_APP_CALI_SIZE,			(STOCKPILE_APP_CALI_SIZE / Stockpile_Page_Size),			0};
 Stockpile_FLASH_Typedef stockpile_data					= {STOCKPILE_APP_DATA_ADDR,			STOCKPILE_APP_DATA_SIZE, 			(STOCKPILE_APP_DATA_SIZE / Stockpile_Page_Size),			0};
 
 /**
-  * @brief  Flash数据清空
-  * @param  stockpile	Flash分区表实例
+  * @brief  Flash data clear
+  * @param  stockpile	Flash partition table instance
   * @retval NULL
 **/
 void Stockpile_Flash_Data_Empty(Stockpile_FLASH_Typedef *stockpile)
@@ -37,9 +37,9 @@ void Stockpile_Flash_Data_Empty(Stockpile_FLASH_Typedef *stockpile)
 	{
 		FLASH_EraseInitTypeDef erase_config;
 		uint32_t page_error;
-		erase_config.TypeErase   = FLASH_TYPEERASE_PAGES;																	//页擦除		
-		erase_config.PageAddress = stockpile->begin_add + (count * Stockpile_Page_Size);	//页起始地址
-		erase_config.NbPages     = 1;																											//擦除页数量
+		erase_config.TypeErase   = FLASH_TYPEERASE_PAGES;																	//Page erase		
+		erase_config.PageAddress = stockpile->begin_add + (count * Stockpile_Page_Size);	//Page start address
+		erase_config.NbPages     = 1;																											//Number of pages to erase
 		HAL_FLASHEx_Erase(&erase_config, &page_error);
 		FLASH_WaitForLastOperation(HAL_MAX_DELAY);
 		CLEAR_BIT(FLASH->CR, FLASH_CR_PER);
@@ -48,8 +48,8 @@ void Stockpile_Flash_Data_Empty(Stockpile_FLASH_Typedef *stockpile)
 }
 
 /**
-  * @brief  Flash数据开始写入
-  * @param  stockpile	Flash分区表实例
+  * @brief  Flash data write begin
+  * @param  stockpile	Flash partition table instance
   * @retval NULL
 **/
 void Stockpile_Flash_Data_Begin(Stockpile_FLASH_Typedef *stockpile)
@@ -59,8 +59,8 @@ void Stockpile_Flash_Data_Begin(Stockpile_FLASH_Typedef *stockpile)
 }
 
 /**
-  * @brief  Flash数据结束写入
-  * @param  stockpile	Flash分区表实例
+  * @brief  Flash data write end
+  * @param  stockpile	Flash partition table instance
   * @retval NULL
 **/
 void Stockpile_Flash_Data_End(Stockpile_FLASH_Typedef *stockpile)
@@ -69,9 +69,9 @@ void Stockpile_Flash_Data_End(Stockpile_FLASH_Typedef *stockpile)
 }
 
 /**
-  * @brief  Flash设置写地址
-  * @param  stockpile	Flash分区表实例
-  * @param  write_add	写地址
+  * @brief  Flash set write address
+  * @param  stockpile	Flash partition table instance
+  * @param  write_add	Write address
   * @retval NULL
 **/
 void Stockpile_Flash_Data_Set_Write_Add(Stockpile_FLASH_Typedef *stockpile, uint32_t write_add)
@@ -82,10 +82,10 @@ void Stockpile_Flash_Data_Set_Write_Add(Stockpile_FLASH_Typedef *stockpile, uint
 }
 
 /**
-  * @brief  Flash_16位数据写入
-  * @param  stockpile	Flash分区表实例
-  * @param  data		半字数据缓冲区
-  * @param  num			半字数量
+  * @brief  Flash 16-bit data write
+  * @param  stockpile	Flash partition table instance
+  * @param  data		Half-word data buffer
+  * @param  num			Number of half-words
   * @retval NULL
 **/
 void Stockpile_Flash_Data_Write_Data16(Stockpile_FLASH_Typedef *stockpile, uint16_t *data, uint32_t num)
@@ -101,10 +101,10 @@ void Stockpile_Flash_Data_Write_Data16(Stockpile_FLASH_Typedef *stockpile, uint1
 }
 
 /**
-  * @brief  Flash_32位数据写入
-  * @param  stockpile	Flash分区表实例
-  * @param  data		字数据缓冲区
-  * @param  num			字数量
+  * @brief  Flash 32-bit data write
+  * @param  stockpile	Flash partition table instance
+  * @param  data		Word data buffer
+  * @param  num			Number of words
   * @retval NULL
 **/
 void Stockpile_Flash_Data_Write_Data32(Stockpile_FLASH_Typedef *stockpile, uint32_t *data, uint32_t num)
@@ -120,10 +120,10 @@ void Stockpile_Flash_Data_Write_Data32(Stockpile_FLASH_Typedef *stockpile, uint3
 }
 
 /**
-  * @brief  Flash_64位数据写入
-  * @param  stockpile	Flash分区表实例
-  * @param  data		双字数据缓冲区
-  * @param  num			双字数量
+  * @brief  Flash 64-bit data write
+  * @param  stockpile	Flash partition table instance
+  * @param  data		Double-word data buffer
+  * @param  num			Number of double-words
   * @retval NULL
 **/
 void Stockpile_Flash_Data_Write_Data64(Stockpile_FLASH_Typedef *stockpile, uint64_t *data, uint32_t num)

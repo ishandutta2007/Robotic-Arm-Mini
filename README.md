@@ -1,7 +1,7 @@
 # Robotic-Arm-Mini: Super compact smart robotic-arm
-> **我的超迷你机械臂机器人项目。**
+> **My super compact smart robotic arm project.**
 >
-> 视频介绍：[【自制】我造了一台 钢 铁 侠 的 机 械 臂 ！【硬核】](https://www.bilibili.com/video/BV12341117rG)
+> Video Introduction: [[DIY] I Built an IRON MAN Robotic Arm! [Hardcore]](https://www.bilibili.com/video/BV12341117rG)
 >
 > Video : [I made a DUMMY ROBOTIC ARM from scratch！ - YouTube](https://www.youtube.com/watch?v=F29vrvUwqS4)
 
@@ -9,161 +9,161 @@
 
 ![](docs/images/case.png)
 
-### 资料说明（更新日期22-2-9）
+### Documentation (Updated 22-2-9)
 
-* 已添加3D模型设计源文件。
-* 已添加夹爪硬件设计文件和LED灯环PCB
-* 已添加无线空间定位控制器PCB文件
-* 已添加无线示教器Peak软硬件工程（作为submodule）
-* 已添加REF的硬件设计文件
-* 已添加DummyStudio上位机
-* 已添加Dummy核心控制器的固件源代码（使用说明见后文）
-* 已添加42步进电机驱动器硬件工程
-* 已添加20步进电机驱动器硬件工程
-* 已添加42/20步进电机驱动的固件源代码
-* 已添加命令行调试工具reftool（基于odrivetool框架）
-* 已添加便携手提箱的模型文件
+* Added 3D model design source files.
+* Added gripper hardware design files and LED ring PCB.
+* Added wireless spatial positioning controller PCB files.
+* Added wireless teach pendant Peak hardware and software project (as a submodule).
+* Added REF hardware design files.
+* Added DummyStudio host software.
+* Added Dummy core controller firmware source code (see usage instructions below).
+* Added 42 stepper motor driver hardware project.
+* Added 20 stepper motor driver hardware project.
+* Added 42/20 stepper motor driver firmware source code.
+* Added command-line debugging tool reftool (based on odrivetool framework).
+* Added portable suitcase model files.
 
 
 
-> 这是视频中原版机械臂的完整设计方案，该方案成本和制作难度都比较高，因此想复现的同学建议再等等我后面会发布的**Dummy青春版**，该版本会有如下改进：
+> This is the complete design of the original robotic arm from the video. This design has high cost and manufacturing difficulty. Therefore, for those who want to reproduce it, I recommend waiting for the **Dummy Lite Version** which I will release later. This version will have the following improvements:
 >
-> 1. 整机重新设计结构，改用3D打印作为制造方案（原版为铝CNC），大幅降低制造成本
-> 2. 采用我自己设计的小型摆线针轮减速器替代原版的谐波减速器，大幅降低零件成本
-> 3. 所有软件和固件和原版通用，功能也完全一致
-> 4. 添加我自己设计的PC端上位机和手机端APP（争取把用户初始化设置引导加进去）
-> 5. 改进原版电机驱动器的走线方式，原版电源走线采用焊接的形式，不便于安装和拆卸，后面的青春版会使用4p接插件（电源+CAN总线）连接
-> 6. 整机成本争取做到2000以内
-> 7. **最重要的，会找人出一个保姆级的视频教程！**
+> 1. The whole machine structure is redesigned, using 3D printing as the manufacturing method (the original was aluminum CNC), significantly reducing manufacturing costs.
+> 2. Uses a small cycloidal pinwheel reducer I designed to replace the original harmonic reducer, significantly reducing part costs.
+> 3. All software and firmware are universal with the original, and the functions are exactly the same.
+> 4. Adds a PC host software and mobile APP designed by me (trying to add user initialization setup guide).
+> 5. Improves the original motor driver wiring method. The original power wiring was soldered, which is inconvenient for installation and removal. The upcoming Lite version will use a 4p connector (Power + CAN bus) for connection.
+> 6. Will strive to keep the total machine cost under 2000.
+> 7. **Most importantly, I will find someone to make a step-by-step video tutorial!**
 
 
 
-## 关于结构设计
+## About Structural Design
 
-我视频中原版设计使用的`步进电机`+Harmonic的`谐波减速模组`，其中后者成本较高（我买的二手大概是600元一个），因此为了能让大家尽量复现本项目，我后期会添加一个`自制摆线针轮减速器`+`3D打印`的低成本方案。
+The original design in my video uses a `Stepper Motor` + Harmonic `Harmonic Drive Module`. The latter is quite expensive (I bought a second-hand one for about 600 RMB). Therefore, to allow everyone to easily reproduce this project, I will later add a low-cost solution with a `DIY Cycloidal Pinwheel Reducer` + `3D Printing`.
 
-> 目前摆线减速器已经设计好了正在验证，预期会使用PC（或者亚克力）切割结合3D打印制作，精度有所下降但是功能都保持不变，整机硬件成本希望控制在2000元以内。
+> Currently, the cycloidal reducer has been designed and is being verified. It is expected to be made using PC (or acrylic) cutting combined with 3D printing. The precision will decrease, but all functions remain unchanged. I hope to keep the total hardware cost under 2000 RMB.
 
-设计好的摆线减速器见我的另一个仓库：[peng-zhihui/CycloidAcuratorNano ](https://github.com/peng-zhihui/CycloidAcuratorNano)
+The designed cycloidal reducer can be found in my other repository: [peng-zhihui/CycloidAcuratorNano ](https://github.com/peng-zhihui/CycloidAcuratorNano)
 
 ![](docs/images/cycliod-nano.jpg)
 
-## 关于电路模块
+## About Circuit Modules
 
-电路为了实现主要的机械臂运动控制功能其实核心就4块板子：
+To achieve the main robotic arm motion control functions, the circuit actually revolves around 4 core boards:
 
-* REF核心板
-* REF底板（也就是机械臂底座里面的控制器电路板）
-* 步进电机驱动
-* Peak示教器
+* REF Core Board
+* REF Base Board (the controller circuit board inside the robotic arm base)
+* Stepper Motor Driver
+* Peak Teach Pendant
 
-其中前两者和Peak我都开源了，步进驱动设计的时候参考了： https://github.com/unlir/XDrive 这个项目，这是我一个朋友开源的闭环驱动，基于STM32。该驱动分为开源版和闭源版，闭源版基于分立MOSFET性能极其强劲且功能很完善，开源版用的ADC+斩波驱动芯片，具备基础功能，不带CAN协议。
+Among these, I have open-sourced the first two and Peak. When designing the stepper driver, I referred to: https://github.com/unlir/XDrive. This is a closed-loop driver open-sourced by a friend of mine, based on STM32. The driver comes in open-source and closed-source versions. The closed-source version, based on discrete MOSFETs, has extremely strong performance and complete functions. The open-source version uses ADC + chopper driver chips, has basic functions, but lacks CAN protocol.
 
-我重新设计了驱动器的PCB电路（本项目分别用到20、42步进，57的文件只是供大家扩展使用），添加了CAN总线的硬件支持，也对原版核心代码进行了完全重构，**提供编译好的二进制文件可以直接烧录：**
+I redesigned the PCB circuit of the driver (this project uses 20 and 42 steppers respectively, the 57 files are just for extension), added hardware support for CAN bus, and completely refactored the original core code. **Pre-compiled binary files are provided for direct flashing:**
 
 ![](docs/images/fw2.png)
 
-**主要改进如下：**
+**Main improvements are as follows:**
 
-1. 使用C++11重构了代码，引入很多高级语言特性，同时底层部分用C混编，不影响代码性能
-2. 对硬件依赖完全解耦了，可以方便以后移植到其他平台的MCU，去除了冗余代码代码也结构化逻辑更加清晰
-3. 添加了CAN协议和UART协议的自定义模板
-4. 添加了模拟EEPROM的参数储存，可以断电保存数据
-5. 添加了任意位置设置为零点，且保证双向半圈内归零（而不是单向归零）
-6. 完全兼容STM32-HAL库，可以使用STM32CubeMX直接生成配置代码
-7. 其他改进，大家二次开发仅需关注UserApp文件夹下的文件即可
+1. Refactored the code using C++11, introducing many high-level language features, while the bottom layer uses mixed C programming, without affecting code performance.
+2. Completely decoupled hardware dependencies, making it easy to port to MCUs on other platforms in the future, removing redundant code, and making the code structured and logically clearer.
+3. Added custom templates for CAN protocol and UART protocol.
+4. Added simulated EEPROM parameter storage, which can save data after power off.
+5. Added setting any position as the zero point, and ensures zeroing within half a turn bidirectionally (rather than unidirectional zeroing).
+6. Fully compatible with STM32-HAL library, can use STM32CubeMX to directly generate configuration code.
+7. Other improvements. For secondary development, you only need to focus on the files under the `UserApp` folder.
 
-Ctrl-Step驱动的使用方式比较简单，下载好固件后，第一次上电电机会进行编码器校准，如果成功则下次上电后按下按键1会进入闭环模式，通过CAN或者串口发送指令即可控制电机，关于指令的说明见源代码`UserApp`文件夹的`interface_can.cpp`和`interface_uart.cpp`：
+The usage of the Ctrl-Step driver is quite simple. After downloading the firmware, the motor will undergo encoder calibration upon first power-up. If successful, pressing button 1 on the next power-up will enter closed-loop mode. The motor can be controlled by sending commands via CAN or serial port. For command instructions, see `interface_can.cpp` and `interface_uart.cpp` in the `UserApp` folder of the source code:
 
 ![](docs/images/fw3.png)
 
-> 其他按键的作用：
+> Functions of other buttons:
 >
-> * 同时按住两个按键上电，会自动进行编码器校准，如果首次校准失败可以通过这个方式重新校准
-> * 短按按键1在**使能闭环/失能闭环**间切换
-> * 长按按键1板子重启
-> * 短按按键2清除堵转保护
-> * 长按按键2将目标值归零（比如如果是在位置模式那位置会归零）
+> * Pressing both buttons simultaneously upon power-up will automatically perform encoder calibration. If the first calibration fails, you can recalibrate this way.
+> * Short press button 1 to switch between **Enable Closed-Loop / Disable Closed-Loop**.
+> * Long press button 1 to restart the board.
+> * Short press button 2 to clear stall protection.
+> * Long press button 2 to zero the target value (e.g., if in position mode, the position will be zeroed).
 >
-> 其他的功能要通过代码或者通信协议设置，比如设置**home零点**、**PID参数**、CAN节点ID、**各种运动参数**等等，可以自己研究代码。
+> Other functions need to be set through code or communication protocols, such as setting **home zero point**, **PID parameters**, CAN node ID, **various motion parameters**, etc. You can study the code yourself.
 
-当然另一种方式是大家也可以自行使用GRBL类的驱动器改装用来驱动本机械臂，这样方案的问题在于，grbl固件耦合性比较强（毕竟不是针对机械臂而是CNC类应用设计的）不便于扩展，另外脉冲形式的控制方式使得走线极其不优雅（每一个关节都要单独拉`step/dir`线到控制器，导致最后几个关节走线很长）。
+Of course, another way is that everyone can modify and use GRBL-type drivers to drive this robotic arm. The problem with this solution is that GRBL firmware is strongly coupled (after all, it's not designed for robotic arms but for CNC applications), making it inconvenient to expand. Additionally, the pulse-type control method makes wiring extremely inelegant (each joint requires a separate `step/dir` wire pulled to the controller, resulting in very long wiring for the last few joints).
 
-而我用一体闭环的方式则可以以串联的形式把所有电机连起来即可，走CAN总线使得整体走线只需要四根线（电源正负两根，CAN信号线两根），此外总线模型使得电机可以工作在`力矩`、`速度`、`位置`、`轨迹`模式下，而脉冲模式只能工作在位置和轨迹模式，无法进行复杂控制。
+By using the integrated closed-loop method, all motors can be connected in series. Using the CAN bus means the overall wiring requires only four wires (two for power positive/negative, two for CAN signal). In addition, the bus model allows the motor to work in `Torque`, `Velocity`, `Position`, and `Trajectory` modes, while pulse mode can only work in position and trajectory modes, making complex control impossible.
 
-**Peak的话我之前已经软硬件都开源了，可以去submodules文件夹里面看那边的README说明。**
+**As for Peak, I have already open-sourced both its hardware and software. You can check the README in the submodules folder for instructions.**
 
-## 关于核心固件
+## About Core Firmware
 
-这个机械臂的固件核心就是运动学姿态解算，~~这块我还在整理，后面会封装得更完善一些进行开源~~，**已开源**，现在写死的很多参数会设计成可配置的，**方便大家用本项目学习完后迁移到自己设计的机械臂中**；同时我把固件从LiteOS框架移植到大家更熟悉的FreeRTOS，方便做二次开发。
+The core of this robotic arm's firmware is the kinematics posture calculation. ~~I am still organizing this part, and it will be packaged more perfectly for open-sourcing later~~, **Now Open Sourced**. Many currently hard-coded parameters will be designed to be configurable, **making it convenient for everyone to port to their own designed robotic arms after learning from this project**; meanwhile, I ported the firmware from the LiteOS framework to the more familiar FreeRTOS to facilitate secondary development.
 
-**REF的固件使用说明：**
+**REF Firmware Usage Instructions:**
 
-固件主要包括几大功能模块：
+The firmware mainly includes several functional modules:
 
-* BSP驱动：板载的各种硬件驱动比如OLED、IMU、LED、蜂鸣器、非易失储存等等
-* 3rdParty库：包括U8G2的图形库和Fibre的序列化/反序列化库
-* Core：ST官方的HAL库
-* Driver：ARM的CMSIS驱动
-* Midwares：FreeRTOS支持包
-* Robot：核心机器人库，包括各种算法和驱动代码
-* UserApp：上层应用，可以基于我提供的API接口自行开发其他应用
+* BSP Driver: Various on-board hardware drivers such as OLED, IMU, LED, buzzer, non-volatile storage, etc.
+* 3rdParty Library: Includes U8G2 graphics library and Fibre serialization/deserialization library.
+* Core: ST's official HAL library.
+* Driver: ARM's CMSIS driver.
+* Midwares: FreeRTOS support package.
+* Robot: Core robotics library, including various algorithms and driver code.
+* UserApp: Upper-layer application, you can develop other applications yourself based on the API interfaces I provided.
 
-> * 其中OLED使用Arduino的U8G2库移植而来，可以方便地现实各种调试和系统信息，另外由于STM32的硬件I2C又BUG这里使用了软件I2C驱动屏幕，实测帧率比硬件I2C更高。
+> * The OLED is ported from Arduino's U8G2 library, which can conveniently display various debugging and system information. Additionally, since STM32's hardware I2C has bugs, software I2C is used to drive the screen here. In testing, the frame rate is higher than hardware I2C.
 
-`RoboticArmMini`类是Dummy的完整定义所在，初始化的时候需要设置好**步进电机驱动的信息**以及**自身的DH参数**：
+The `RoboticArmMini` class is the complete definition of Dummy. During initialization, you need to set up the **stepper motor driver information** and **its own DH parameters**:
 
 ![](docs/images/fw1.jpg)
 
-其中驱动器信息包含：CAN节点ID、**是否反向**、减速器的减速比、**运动限制范围**。
+The driver information includes: CAN node ID, **whether it is reversed**, the reduction ratio of the reducer, and **motion limit range**.
 
-而DH参数的含义如下：
+The meaning of DH parameters is as follows:
 
 ![](docs/images/fw2.jpg)
 
-机械臂的构型需要满足Pieper判据（机器人的三个相邻关节轴交于一点或三轴线平行），才能得出解析解，所以大家可以根据Dummy的结构进行修改，然后自己替换DH参数即可以移植我的代码。
+The configuration of the robotic arm needs to meet the Pieper criterion (three adjacent joint axes of the robot intersect at one point or three axes are parallel) to obtain an analytical solution. So everyone can modify it according to the structure of Dummy, and then replace the DH parameters yourself to port my code.
 
-> 关于位置的记忆，和上电零点校准：
+> About position memory and power-on zero calibration:
 >
-> **由于绝对值编码器的位置只在一圈内有效，工业机械臂经过减速后为了获取绝对位置一般是做输出端编码，但是这样精度就降低了30倍（减速比），所以更合理的是做`双编码器`或者低`功耗编码器+电池`；而我这个项目中双编码器影响结构紧凑设计，所以用了更巧妙的方式：利用电机驱动的电流环控制上电后进行低力矩的无零点定向运动，碰到机械臂限位之后确认粗零点（无限位开关归零），然后根据单圈绝对值编码器的位置精调零点。这个方式的零点是没有误差的，而且几乎不受加工精度影响，因为在12度（360/30）内都是绝对值编码器的有效精度范围。**
+> **Since the position of the absolute encoder is only valid within one turn, industrial robotic arms generally encode at the output end after deceleration to obtain the absolute position, but this reduces the precision by 30 times (reduction ratio). So it is more reasonable to use `Dual Encoders` or a low `Power Encoder + Battery`; however, in my project, dual encoders would affect the compact design, so I used a more clever way: utilizing the current loop of the motor driver to perform a low-torque directional motion without a zero point after power-up. After hitting the mechanical arm limit, it confirms a rough zero point (sensorless limit homing), and then fine-tunes the zero point based on the position of the single-turn absolute encoder. The zero point of this method has no error and is almost unaffected by machining accuracy, because within 12 degrees (360/30) is the valid accuracy range of the absolute encoder.**
 
-**Peak的固件说明：**
+**Peak Firmware Instructions:**
 
-Peak基于X-Track项目，大家可以去Peak仓库查看。
+Peak is based on the X-Track project. You can check the Peak repository for more details.
 
-## 关于上位机
+## About Host Software
 
-视频中的软件仿真基于RoboDK，我在视频中开发了连接Dummy的Driver（驱动部分官方document有介绍的，原版是基于TCP网络接口，我修改成了串口并兼容dummy的协议）。不过由于这个软件是收费的，因此我也基于Unity3D开发了自己的上位机，已经发布在仓库。
+The software simulation in the video is based on RoboDK. In the video, I developed a Driver connecting to Dummy (the official documentation introduces the driver part. The original was based on a TCP network interface, I changed it to a serial port and made it compatible with dummy's protocol). However, because this software is paid, I also developed my own host software based on Unity3D, which has been published in the repository.
 
-上位机目前暂时没有计划开源，因为还有很多功能要添加，我也是希望最后能做成一个类似RoboDK的通用软件，大家以后自己做机械臂也能用上，当然软件肯定会是免费的。
+The host software is currently not planned for open source because there are still many functions to add. I hope to eventually make it into a general software similar to RoboDK, which everyone can use when making their own robotic arms in the future. Of course, the software will certainly be free.
 
-## 关于控制算法
+## About Control Algorithms
 
-首先运动学部分是已经实现了的，正逆解都是传统DH参数计算的，正解（关节角求末端位姿）是唯一解比较好办，逆解（末端位姿求关节角）的话会涉及多解（一般是8个），我这里使用的算法是**求解上一姿态和目标姿态中6个关节变化最大角里面最小的那一组作为逆解采用的config**。这样可以保证机械臂始终以最小转角进行姿态切换。
+First, the kinematics part has been implemented. Both forward and inverse kinematics are calculated using traditional DH parameters. Forward kinematics (finding the end effector pose from joint angles) is a unique solution and relatively easy. Inverse kinematics (finding joint angles from end effector pose) involves multiple solutions (generally 8). The algorithm I use here is **solving for the configuration among the multiple solutions that has the smallest maximum joint angle change between the previous pose and the target pose**. This ensures the robotic arm always switches postures with the minimum rotation angle.
 
-然后关节角到电机驱动器输入信号的转换这一块，我使用的是梯形加减速曲线进行速度位置规划。举个例子在MoveJ指令中，当收到一个关节角运动指令，控制器会进行运动角度差分计算，得到6个运动差分角度，然后取6个差分角中最大的角θ，同时根据设置的JointSpeed参数计算运动θ角需要的时间（考虑上加减速），把这一时间作为其余5个电机的运动参数计算各自的加减速度&最高速度，然后6个电机根据计算的参数同步运动，就可以保证其同步性和流畅性了。
+Then, for the conversion from joint angles to motor driver input signals, I use a trapezoidal acceleration/deceleration curve for speed and position planning. For example, in a MoveJ command, when a joint angle motion command is received, the controller calculates the motion angle differences to get 6 differential angles, then takes the largest angle θ among the 6 differential angles, calculates the time required to move angle θ based on the set JointSpeed parameter (considering acceleration and deceleration), uses this time as the motion parameter for the other 5 motors to calculate their respective acceleration/deceleration & maximum speed, and then the 6 motors move synchronously according to the calculated parameters. This ensures synchronization and smoothness.
 
-另外六个电机使用CAN总线连接，每个电机接受两个ID号的信息（自己的ID、0号ID），0号ID作为信息广播和同步用。电机接收到运动指令后将信息储存在影子寄存器中，待收到广播的同步信号后开始运动，这样能进一步保证电机同步性。
+Additionally, the six motors are connected using the CAN bus. Each motor receives information from two IDs (its own ID and ID 0). ID 0 is used for information broadcasting and synchronization. After the motor receives a motion command, it stores the information in a shadow register and starts moving upon receiving the broadcast synchronization signal. This further ensures motor synchronization.
 
-最后，动力学部分还在开发中，这块暂时没有完全实现。上**述的运动学和动力学算法都强烈建议去看一下《机器人学导论》这本书**，里面写得非常详细。
+Finally, the dynamics part is still under development and has not been fully implemented yet. **For the kinematics and dynamics algorithms mentioned above, I strongly recommend reading the book "Introduction to Robotics"**, which explains them in great detail.
 
-## 指令模式
+## Command Modes
 
-Robotic-Arm-Mini固件支持三种不同的指令模式（指令可以由USB、串口、CAN接收），不同模式的特性有所区别，见下表：
+The Robotic-Arm-Mini firmware supports three different command modes (commands can be received via USB, Serial, CAN). The characteristics of different modes vary, see the table below:
 
-|                       | 指令发送频率      | 指令执行方式           | 可被新指令打断 | 指令间停顿 | 适合场景                                                     |
-| --------------------- | ----------------- | ---------------------- | -------------- | ---------- | ------------------------------------------------------------ |
-| SEQ（顺序指令）       | 随机，低（<5Hz）  | FIFO队列依次执行       | 否             | 有         | 一次性发送几个关键点位姿，等待依次执行，可以确保关键点到达；但是由于关键点之间存在减速到0的过程所以存在一定停顿；适合场景例如**视觉抓取、码垛等应用**。 |
-| INT（实时指令）       | 随机，频率不限    | 指令覆盖，立即执行     | 是             | 无         | 用于实时控制，新指令会覆盖正在执行的指令得到立即响应；但是如果一次性发送一系列指令的话则效果会是只执行最后一条；适合场景例如**动作同步**。 |
-| `ToDo`TRJ（轨迹跟踪） | 固定，高（200Hz） | 自动插值，固定周期执行 | 否             | 无         | 适合用于需要进行精确轨迹跟踪的应用，速度会放慢；示例场景比如**3D打印、雕刻、绘画等**。 |
+| | Command Frequency | Command Execution | Interruptible by New Commands | Pause Between Commands | Suitable Scenarios |
+| --- | --- | --- | --- | --- | --- |
+| SEQ (Sequential Commands) | Random, Low (<5Hz) | Executed sequentially in FIFO queue | No | Yes | Send several key points' poses at once, wait for them to execute sequentially, ensuring key points are reached; however, since there is a process of decelerating to 0 between key points, there is a certain pause; suitable for scenarios like **visual grasping, palletizing, etc.** |
+| INT (Interactive Commands) | Random, Unlimited | Command overwrite, immediate execution | Yes | No | Used for real-time control. New commands overwrite executing commands for an immediate response; however, if a series of commands are sent at once, the effect will be that only the last one is executed; suitable for scenarios like **action synchronization**. |
+| `ToDo` TRJ (Trajectory Tracking) | Fixed, High (200Hz) | Automatic interpolation, fixed cycle execution | No | No | Suitable for applications requiring precise trajectory tracking, speed will be reduced; example scenarios include **3D printing, engraving, painting, etc.** |
 
 ---
 
 
 
-> **感谢以下项目作者：**
+> **Thanks to the authors of the following projects:**
 >
-> * [unlir/XDrive: Stepper motor with multi-function interface and closed loop function. 具有多功能接口和闭环功能的步进电机。 (github.com)](https://github.com/unlir/XDrive)
+> * [unlir/XDrive: Stepper motor with multi-function interface and closed loop function. (github.com)](https://github.com/unlir/XDrive)
 > * [odriverobotics/ODrive: High performance motor control (github.com)](https://github.com/odriverobotics/ODrive)
 > * [olikraus/u8g2: U8glib library for monochrome displays, version 2 (github.com)](https://github.com/olikraus/u8g2)
 > * [samuelsadok/fibre: Abstraction layer for painlessly building object oriented distributed systems that just work (github.com)](https://github.com/samuelsadok/fibre)

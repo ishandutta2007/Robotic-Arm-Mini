@@ -29,7 +29,7 @@ uint16_t MT6816Base::UpdateAngle()
 
         spiRawData.rawData = ((dataRx[0] & 0x00FF) << 8) | (dataRx[1] & 0x00FF);
 
-        //奇偶校验
+        // Parity check
         hCount = 0;
         for (uint8_t j = 0; j < 16; j++)
         {

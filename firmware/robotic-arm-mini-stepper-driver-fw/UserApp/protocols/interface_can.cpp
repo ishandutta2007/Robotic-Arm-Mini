@@ -125,7 +125,7 @@ void OnCanCmd(uint8_t _cmd, uint8_t* _data, uint32_t _len)
             if (_data[4])
                 boardConfig.configStatus = CONFIG_COMMIT;
             break;
-        case 0x14:  // Set Acceleration （and Store to EEPROM）
+        case 0x14:  // Set Acceleration (and Store to EEPROM)
             tmpF = *(float*) RxData * (float) motor.MOTOR_ONE_CIRCLE_SUBDIVIDE_STEPS;
 
             motor.config.motionParams.ratedVelocityAcc = (int32_t) tmpF;
