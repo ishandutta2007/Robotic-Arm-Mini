@@ -1,23 +1,23 @@
-/**
+ï»¿/**
   ******************************************************************************
-  * @ÎÄ	¼ş £º SCA_API.c
-  * @×÷	Õß £º INNFOS Software Team
-  * @°æ	±¾ £º V1.5.3
-  * @ÈÕ	ÆÚ £º 2019.09.10
-  * @Õª	Òª £º SCA ¿ØÖÆ½Ó¿Ú²ã
+  * @æ–‡	ä»¶ ï¼š SCA_API.c
+  * @ä½œ	è€… ï¼š INNFOS Software Team
+  * @ç‰ˆ	æœ¬ ï¼š V1.5.3
+  * @æ—¥	æœŸ ï¼š 2019.09.10
+  * @æ‘˜	è¦ ï¼š SCA æ§åˆ¶æ¥å£å±‚
   ******************************************************************************/
 /* Update log --------------------------------------------------------------------*/
-//V1.1.0 2019.08.05 ËùÓĞAPIµ÷ÓÃ½Ó¿Ú¸ÄÎªID£¬ÓëPC SDK±£³ÖÒ»ÖÂ£¬Ôö¼ÓËùÓĞ²ÎÊıµÄ¶ÁĞ´API
-//V1.5.0 2019.08.16 ¸ü¸ÄÊı¾İ½ÓÊÕ·½Ê½£¨ÖĞ¶Ï½ÓÊÕ£©£¬¼ÓÈë·Ç×èÈûÍ¨ĞÅ¹¦ÄÜ£¬ÊÊÓ¦Êı¾İ·µ»ØÂıµÄ
-//					Çé¿ö¡£¼ÓÈë»ñÈ¡ÉÏ´Î¹Ø»ú×´Ì¬µÄAPI£¬ÓÅ»¯¿ª»úÁ÷³Ì¡£
-//V1.5.1 2019.09.10 Ôö¼ÓÂÖÑ¯¹¦ÄÜ
-//V1.5.3 2019.11.15 ÓÅ»¯¿ª¹Ø»úÁ÷³Ì
+//V1.1.0 2019.08.05 æ‰€æœ‰APIè°ƒç”¨æ¥å£æ”¹ä¸ºIDï¼Œä¸PC SDKä¿æŒä¸€è‡´ï¼Œå¢åŠ æ‰€æœ‰å‚æ•°çš„è¯»å†™API
+//V1.5.0 2019.08.16 æ›´æ”¹æ•°æ®æ¥æ”¶æ–¹å¼ï¼ˆä¸­æ–­æ¥æ”¶ï¼‰ï¼ŒåŠ å…¥éé˜»å¡é€šä¿¡åŠŸèƒ½ï¼Œé€‚åº”æ•°æ®è¿”å›æ…¢çš„
+//					æƒ…å†µã€‚åŠ å…¥è·å–ä¸Šæ¬¡å…³æœºçŠ¶æ€çš„APIï¼Œä¼˜åŒ–å¼€æœºæµç¨‹ã€‚
+//V1.5.1 2019.09.10 å¢åŠ è½®è¯¢åŠŸèƒ½
+//V1.5.3 2019.11.15 ä¼˜åŒ–å¼€å…³æœºæµç¨‹
 
 /* Includes ----------------------------------------------------------------------*/
 #include "sca_api.h"
 /* Variable defines --------------------------------------------------------------*/
 
-/* Ã¿¸öSCA¶¼ĞèÒªÒ»¸ö¾ä±úÀ´±£´æ¶ÔÓ¦µÄĞÅÏ¢£¬¸ù¾İÊµ¼ÊÊ¹ÓÃÊıÁ¿½øĞĞ¶¨Òå SCA_NUM_USE */
+/* æ¯ä¸ªSCAéƒ½éœ€è¦ä¸€ä¸ªå¥æŸ„æ¥ä¿å­˜å¯¹åº”çš„ä¿¡æ¯ï¼Œæ ¹æ®å®é™…ä½¿ç”¨æ•°é‡è¿›è¡Œå®šä¹‰ SCA_NUM_USE */
 SCA_Handler_t SCA_Handler_List[SCA_NUM_USE];
 
 /* Funcation declaration ---------------------------------------------------------*/
@@ -25,14 +25,14 @@ extern void warnBitAnaly(SCA_Handler_t* pSCA);
 
 /* Funcation defines -------------------------------------------------------------*/
 
-/****************************¿ØÖÆÏà¹Ø*******************************/
+/****************************æ§åˆ¶ç›¸å…³*******************************/
 
 /**
-  * @¹¦	ÄÜ	ÔÚCAN×ÜÏßÉÏ²éÕÒ´æÔÚµÄSCA£¬²¢´òÓ¡ÕÒµ½µÄID
-  * @²Î	Êı	canPort£ºĞèÒªÂÖÑ¯µÄ×ÜÏß
-  * @·µ	»Ø	ÎŞ
-  * @×¢	Òâ	Ã¿Ì¨Ö´ĞĞÆ÷¶¼ÓĞ×Ô¼ºµÄID£¬Èô³õ´ÎÊ¹ÓÃ²»ÖªµÀ
-  *			¶ÔÓ¦µÄID£¬¿ÉÓÃ´Ëº¯Êı²éÕÒ
+  * @åŠŸ	èƒ½	åœ¨CANæ€»çº¿ä¸ŠæŸ¥æ‰¾å­˜åœ¨çš„SCAï¼Œå¹¶æ‰“å°æ‰¾åˆ°çš„ID
+  * @å‚	æ•°	canPortï¼šéœ€è¦è½®è¯¢çš„æ€»çº¿
+  * @è¿”	å›	æ— 
+  * @æ³¨	æ„	æ¯å°æ‰§è¡Œå™¨éƒ½æœ‰è‡ªå·±çš„IDï¼Œè‹¥åˆæ¬¡ä½¿ç”¨ä¸çŸ¥é“
+  *			å¯¹åº”çš„IDï¼Œå¯ç”¨æ­¤å‡½æ•°æŸ¥æ‰¾
   */
 void lookupActuators(CAN_Handler_t* canPort)
 {
@@ -40,61 +40,61 @@ void lookupActuators(CAN_Handler_t* canPort)
     uint8_t Found = 0;
     SCA_Handler_t temp;
 
-    /* ±£´æÁĞ±íÏîµÄÔ­Ê¼ÄÚÈİ */
+    /* ä¿å­˜åˆ—è¡¨é¡¹çš„åŸå§‹å†…å®¹ */
     temp = SCA_Handler_List[0];
 
-    /* Ê¹ÓÃÒ»¸öÁĞ±íÏî½øĞĞ²éÑ¯ */
+    /* ä½¿ç”¨ä¸€ä¸ªåˆ—è¡¨é¡¹è¿›è¡ŒæŸ¥è¯¢ */
     SCA_Handler_List[0].Can = canPort;
 
     for(ID = 1; ID <= 0xFF; ID++)
     {
-        /* ×°ÔØĞÂµÄID */
+        /* è£…è½½æ–°çš„ID */
         SCA_Handler_List[0].ID = ID;
 
-        /* ÊÕµ½¸ÃIDµÄĞÄÌø£¬Ôò¸ÃID´æÔÚ */
+        /* æ”¶åˆ°è¯¥IDçš„å¿ƒè·³ï¼Œåˆ™è¯¥IDå­˜åœ¨ */
         if(isOnline(ID,Block) == SCA_NoError)
         {
-            /* ¼ÇÂ¼ÕÒµ½µÄ¸öÊı£¬´òÓ¡ÕÒµ½µÄID */
+            /* è®°å½•æ‰¾åˆ°çš„ä¸ªæ•°ï¼Œæ‰“å°æ‰¾åˆ°çš„ID */
             Found++;
             SCA_Debug("Found ID %d in canPort %d\r\n",ID,canPort->CanPort);
         }
     }
-    /* »Ö¸´¸ü¸ÄµÄÄÚÈİ */
+    /* æ¢å¤æ›´æ”¹çš„å†…å®¹ */
     SCA_Handler_List[0] = temp;
 
-    /* Êä³öÌáÊ¾ĞÅÏ¢ */
+    /* è¾“å‡ºæç¤ºä¿¡æ¯ */
     SCA_Debug("canPort %d polling done ! Found %d Actuators altogether!\r\n\r\n",canPort->CanPort,Found);
 }
 
 /**
-  * @¹¦	ÄÜ	³õÊ¼»¯¿ØÖÆÆ÷£¬ÓÃÓÚIDºÍCAN¶Ë¿ÚĞÅÏ¢
-  * @²Î	Êı	id£º³õÊ¼»¯Ö´ĞĞÆ÷µÄID
-  *			pCan£ºÊ¹ÓÃµÄCAN¶Ë¿ÚµØÖ·
-  * @·µ	»Ø	ÎŞ
-  * @×¢	Òâ	¶¨Òå´ÎÊı²»Òª³¬¹ıSCA_NUM_USE
+  * @åŠŸ	èƒ½	åˆå§‹åŒ–æ§åˆ¶å™¨ï¼Œç”¨äºIDå’ŒCANç«¯å£ä¿¡æ¯
+  * @å‚	æ•°	idï¼šåˆå§‹åŒ–æ‰§è¡Œå™¨çš„ID
+  *			pCanï¼šä½¿ç”¨çš„CANç«¯å£åœ°å€
+  * @è¿”	å›	æ— 
+  * @æ³¨	æ„	å®šä¹‰æ¬¡æ•°ä¸è¦è¶…è¿‡SCA_NUM_USE
   */
 void setupActuators(uint8_t id, CAN_Handler_t* pCan)
 {
     static uint32_t i = 0;
 
-    /* ¶¨ÒåÊıÁ¿³¬¹ıÊ¹ÓÃÊıÁ¿ */
+    /* å®šä¹‰æ•°é‡è¶…è¿‡ä½¿ç”¨æ•°é‡ */
     if(i >= SCA_NUM_USE)	return;
 
-    /* ¾ä±ú°ó¶¨ĞÅÏ¢ */
+    /* å¥æŸ„ç»‘å®šä¿¡æ¯ */
     SCA_Handler_List[i].ID = id;
     SCA_Handler_List[i].Can = pCan;
 
-    /* ÁĞ±íÏîÔö¼Ó */
+    /* åˆ—è¡¨é¡¹å¢åŠ  */
     i++;
 }
 
 /**
-  * @¹¦	ÄÜ	¸´Î»¿ØÖÆÆ÷£¬ÓÃÓÚSCAÒò´íÎóµ¼ÖÂµÄËÀ»úÖØÆô
-  * @²Î	Êı	id£º0±íÊ¾È«²¿¸´Î»£¬²»Îª0Ê±Ôò¸´Î»Ö¸¶¨IDµÄ¿ØÖÆÆ÷
-  * @·µ	»Ø	ÎŞ
-  * @×¢	Òâ	Èç¹û³öÏÖºìµÆ»òÀ¶µÆ×´Ì¬ËÀ»úµÄSCA£¬ÇëÏÈ½«
-  *			SCAÖØĞÂÉÏµç£¬»Ö¸´ÖÁ»ÆµÆ×´Ì¬È»ºóÖ´ĞĞ´Ëº¯
-  *			Êı,ÔÙÖ´ĞĞ¿ª»úº¯Êı¼´¿ÉÍê³ÉËÀ»úÖØÆô
+  * @åŠŸ	èƒ½	å¤ä½æ§åˆ¶å™¨ï¼Œç”¨äºSCAå› é”™è¯¯å¯¼è‡´çš„æ­»æœºé‡å¯
+  * @å‚	æ•°	idï¼š0è¡¨ç¤ºå…¨éƒ¨å¤ä½ï¼Œä¸ä¸º0æ—¶åˆ™å¤ä½æŒ‡å®šIDçš„æ§åˆ¶å™¨
+  * @è¿”	å›	æ— 
+  * @æ³¨	æ„	å¦‚æœå‡ºç°çº¢ç¯æˆ–è“ç¯çŠ¶æ€æ­»æœºçš„SCAï¼Œè¯·å…ˆå°†
+  *			SCAé‡æ–°ä¸Šç”µï¼Œæ¢å¤è‡³é»„ç¯çŠ¶æ€ç„¶åæ‰§è¡Œæ­¤å‡½
+  *			æ•°,å†æ‰§è¡Œå¼€æœºå‡½æ•°å³å¯å®Œæˆæ­»æœºé‡å¯
   */
 void resetController(uint8_t id)
 {
@@ -103,43 +103,43 @@ void resetController(uint8_t id)
 
     if(id == 0)
     {
-        /* Çå¿ÕËùÓĞĞÅÏ¢¾ä±ú */
+        /* æ¸…ç©ºæ‰€æœ‰ä¿¡æ¯å¥æŸ„ */
         for(i = 0; i < SCA_NUM_USE; i++)
         {
-            /* ±£ÁôIDÓëCAN¶Ë¿ÚµØÖ· */
+            /* ä¿ç•™IDä¸CANç«¯å£åœ°å€ */
             id_temp = SCA_Handler_List[i].ID;
             pCan_temp = SCA_Handler_List[i].Can;
 
-            /* ½á¹¹ÌåÇåÁã */
+            /* ç»“æ„ä½“æ¸…é›¶ */
             memset(&SCA_Handler_List[i], 0, sizeof(SCA_Handler_List[i]));
 
-            /* »Ö¸´IDÓëCAN¶Ë¿ÚµØÖ· */
+            /* æ¢å¤IDä¸CANç«¯å£åœ°å€ */
             SCA_Handler_List[i].ID = id_temp;
             SCA_Handler_List[i].Can = pCan_temp;
         }
     }else
     {
-        /* »ñÈ¡¸ÃIDµÄĞÅÏ¢¾ä±ú */
+        /* è·å–è¯¥IDçš„ä¿¡æ¯å¥æŸ„ */
         SCA_Handler_t* pSCA = getInstance(id);
         if(pSCA == NULL)	return;
 
-        /* ±£ÁôCAN¶Ë¿ÚµØÖ· */
+        /* ä¿ç•™CANç«¯å£åœ°å€ */
         pCan_temp = pSCA->Can;
 
-        /* ½á¹¹ÌåÇåÁã */
+        /* ç»“æ„ä½“æ¸…é›¶ */
         memset(pSCA, 0, sizeof(SCA_Handler_List[0]));
 
-        /* »Ö¸´IDÓëCAN¶Ë¿ÚµØÖ· */
+        /* æ¢å¤IDä¸CANç«¯å£åœ°å€ */
         pSCA->ID = id;
         pSCA->Can = pCan_temp;
     }
 }
 
 /**
-  * @¹¦	ÄÜ	»ñÈ¡Ö¸¶¨IDµÄSCAĞÅÏ¢¾ä±ú
-  * @²Î	Êı	id £ºÒª»ñÈ¡ĞÅÏ¢µÄÖ´ĞĞÆ÷ID
-  * @·µ	»Ø	NULL£ºÎ´²éÕÒµ½¸ÃIDµÄĞÅÏ¢¾ä±ú
-  *			ÆäËû£º²éÕÒµ½µÄĞÅÏ¢¾ä±ú
+  * @åŠŸ	èƒ½	è·å–æŒ‡å®šIDçš„SCAä¿¡æ¯å¥æŸ„
+  * @å‚	æ•°	id ï¼šè¦è·å–ä¿¡æ¯çš„æ‰§è¡Œå™¨ID
+  * @è¿”	å›	NULLï¼šæœªæŸ¥æ‰¾åˆ°è¯¥IDçš„ä¿¡æ¯å¥æŸ„
+  *			å…¶ä»–ï¼šæŸ¥æ‰¾åˆ°çš„ä¿¡æ¯å¥æŸ„
   */
 SCA_Handler_t* getInstance(uint8_t id)
 {
@@ -153,12 +153,12 @@ SCA_Handler_t* getInstance(uint8_t id)
 }
 
 /**
-  * @¹¦	ÄÜ	¼ì²éÖ´ĞĞÆ÷µÄĞÄÌø£¨ÔÚÏß£©×´Ì¬
-  * @²Î	Êı	id £ºÒª¼ì²éµÄÖ´ĞĞÆ÷id
-  *			isBlock£ºBlockÎª×èÈûÊ½£¬UnblockÎª·Ç×èÈûÊ½
-  * @·µ	»Ø	SCA_NoError£º¸ÃÖ´ĞĞÆ÷ÔÚÏß
-  *			SCA_OverTime£º¸ÃÖ´ĞĞÆ÷ÀëÏß
-  *			ÆäËûÍ¨ĞÅ´íÎó²Î¼û SCA_Error ´íÎóÁĞ±í
+  * @åŠŸ	èƒ½	æ£€æŸ¥æ‰§è¡Œå™¨çš„å¿ƒè·³ï¼ˆåœ¨çº¿ï¼‰çŠ¶æ€
+  * @å‚	æ•°	id ï¼šè¦æ£€æŸ¥çš„æ‰§è¡Œå™¨id
+  *			isBlockï¼šBlockä¸ºé˜»å¡å¼ï¼ŒUnblockä¸ºéé˜»å¡å¼
+  * @è¿”	å›	SCA_NoErrorï¼šè¯¥æ‰§è¡Œå™¨åœ¨çº¿
+  *			SCA_OverTimeï¼šè¯¥æ‰§è¡Œå™¨ç¦»çº¿
+  *			å…¶ä»–é€šä¿¡é”™è¯¯å‚è§ SCA_Error é”™è¯¯åˆ—è¡¨
   */
 uint8_t isOnline(uint8_t id, uint8_t isBlock)
 {
@@ -168,22 +168,22 @@ uint8_t isOnline(uint8_t id, uint8_t isBlock)
 
     if(pSCA == NULL)	return SCA_UnknownID;
 
-    /* ÏÈÇå¿ÕÔÚÏß×´Ì¬ */
+    /* å…ˆæ¸…ç©ºåœ¨çº¿çŠ¶æ€ */
     pSCA->Online_State = Actr_Disable;
 
-    /* µ÷ÓÃ¶ÁÈ¡ÃüÁîÓëSCAÍ¨ĞÅ£¬½á¹û·ÅÈë¶ÔÓ¦µÄSCA¾ä±úÖĞ */
+    /* è°ƒç”¨è¯»å–å‘½ä»¤ä¸SCAé€šä¿¡ï¼Œç»“æœæ”¾å…¥å¯¹åº”çš„SCAå¥æŸ„ä¸­ */
     Error = SCA_Read(pSCA, R1_Heartbeat);
     if(Error)	return Error;
 
-    /* ·Ç×èÈû */
+    /* éé˜»å¡ */
     if(isBlock == Unblock)
     {
-        /* ·Ç×èÈû·¢ËÍºóÑÓÊ±´¦Àí£¬·ÀÖ¹×ÜÏß¹ıÔØ */
+        /* éé˜»å¡å‘é€åå»¶æ—¶å¤„ç†ï¼Œé˜²æ­¢æ€»çº¿è¿‡è½½ */
         SCA_Delay(SendInterval);
         return Error;
     }
 
-    /* ×èÈûÊ½Í¨ĞÅ */
+    /* é˜»å¡å¼é€šä¿¡ */
     while((pSCA->Online_State != Actr_Enable) && (waitime++ < CanOvertime));
     if(waitime >= CanOvertime)	return SCA_OperationFailed;
 
@@ -191,11 +191,11 @@ uint8_t isOnline(uint8_t id, uint8_t isBlock)
 }
 
 /**
-  * @¹¦	ÄÜ	¼ì²éÖ´ĞĞÆ÷µÄÊ¹ÄÜ×´Ì¬
-  * @²Î	Êı	id £ºÒª¼ì²éµÄÖ´ĞĞÆ÷id
-  *			isBlock£ºBlockÎª×èÈûÊ½£¬UnblockÎª·Ç×èÈûÊ½
-  * @·µ	»Ø	Actr_Enable£º¸ÃÖ´ĞĞÆ÷ÒÑÊ¹ÄÜ
-  *			Actr_Disable£º¸ÃÖ´ĞĞÆ÷Î´Ê¹ÄÜ
+  * @åŠŸ	èƒ½	æ£€æŸ¥æ‰§è¡Œå™¨çš„ä½¿èƒ½çŠ¶æ€
+  * @å‚	æ•°	id ï¼šè¦æ£€æŸ¥çš„æ‰§è¡Œå™¨id
+  *			isBlockï¼šBlockä¸ºé˜»å¡å¼ï¼ŒUnblockä¸ºéé˜»å¡å¼
+  * @è¿”	å›	Actr_Enableï¼šè¯¥æ‰§è¡Œå™¨å·²ä½¿èƒ½
+  *			Actr_Disableï¼šè¯¥æ‰§è¡Œå™¨æœªä½¿èƒ½
   *
   */
 uint8_t isEnable(uint8_t id, uint8_t isBlock)
@@ -204,26 +204,26 @@ uint8_t isEnable(uint8_t id, uint8_t isBlock)
     uint32_t waitime = 0;
     SCA_Handler_t* pSCA = NULL;
 
-    /* »ñÈ¡¸ÃIDµÄĞÅÏ¢¾ä±ú */
+    /* è·å–è¯¥IDçš„ä¿¡æ¯å¥æŸ„ */
     pSCA = getInstance(id);
     if(pSCA == NULL)	return SCA_UnknownID;
 
-    /* ÏÈÇå¿Õ¶ÁÈ¡±êÖ¾Î» */
+    /* å…ˆæ¸…ç©ºè¯»å–æ ‡å¿—ä½ */
     pSCA->paraCache.R_Power_State = Actr_Disable;
 
-    /* µ÷ÓÃ¶ÁÈ¡ÃüÁîÓëSCAÍ¨ĞÅ£¬½á¹û·ÅÈë¶ÔÓ¦µÄSCA¾ä±úÖĞ */
+    /* è°ƒç”¨è¯»å–å‘½ä»¤ä¸SCAé€šä¿¡ï¼Œç»“æœæ”¾å…¥å¯¹åº”çš„SCAå¥æŸ„ä¸­ */
     Error = SCA_Read(pSCA, R1_PowerState);
     if(Error)	return Error;
 
-    /* ·Ç×èÈû */
+    /* éé˜»å¡ */
     if(isBlock == Unblock)
     {
-        /* ·Ç×èÈû·¢ËÍºóÑÓÊ±´¦Àí£¬·ÀÖ¹×ÜÏß¹ıÔØ */
+        /* éé˜»å¡å‘é€åå»¶æ—¶å¤„ç†ï¼Œé˜²æ­¢æ€»çº¿è¿‡è½½ */
         SCA_Delay(SendInterval);
         return Error;
     }
 
-    /* ×èÈûÊ½Í¨ĞÅ */
+    /* é˜»å¡å¼é€šä¿¡ */
     while((pSCA->paraCache.R_Power_State != Actr_Enable) && (waitime++ < CanOvertime));
     if(waitime >= CanOvertime)	return SCA_OperationFailed;
 
@@ -231,21 +231,21 @@ uint8_t isEnable(uint8_t id, uint8_t isBlock)
 }
 
 /**
-  * @¹¦	ÄÜ	¼ì²éÖ´ĞĞÆ÷µÄ²ÎÊı¸üĞÂ×´Ì¬
-  * @²Î	Êı	id £ºÒª¼ì²éµÄÖ´ĞĞÆ÷id
-  * @·µ	»Ø	Actr_Enable£ºÓĞ²ÎÊı¸üĞÂ
-  *			Actr_Disable£ºÃ»ÓĞ²ÎÊı¸üĞÂ
+  * @åŠŸ	èƒ½	æ£€æŸ¥æ‰§è¡Œå™¨çš„å‚æ•°æ›´æ–°çŠ¶æ€
+  * @å‚	æ•°	id ï¼šè¦æ£€æŸ¥çš„æ‰§è¡Œå™¨id
+  * @è¿”	å›	Actr_Enableï¼šæœ‰å‚æ•°æ›´æ–°
+  *			Actr_Disableï¼šæ²¡æœ‰å‚æ•°æ›´æ–°
   */
 uint8_t isUpdate(uint8_t id)
 {
     uint8_t State;
     SCA_Handler_t* pSCA = NULL;
 
-    /* »ñÈ¡¸ÃIDµÄĞÅÏ¢¾ä±ú */
+    /* è·å–è¯¥IDçš„ä¿¡æ¯å¥æŸ„ */
     pSCA = getInstance(id);
     if(pSCA == NULL)	return SCA_UnknownID;
 
-    /* ±£´æ¸üĞÂ×´Ì¬£¬²¢¸´Î» */
+    /* ä¿å­˜æ›´æ–°çŠ¶æ€ï¼Œå¹¶å¤ä½ */
     State = pSCA->Update_State;
     pSCA->Update_State = Actr_Disable;
 
@@ -253,9 +253,9 @@ uint8_t isUpdate(uint8_t id)
 }
 
 /**
-  * @¹¦	ÄÜ	Ê¹ÄÜËùÓĞÖ´ĞĞÆ÷£¬×èÈûÊ½
-  * @²Î	Êı	ÎŞ
-  * @·µ	»Ø	ÎŞ
+  * @åŠŸ	èƒ½	ä½¿èƒ½æ‰€æœ‰æ‰§è¡Œå™¨ï¼Œé˜»å¡å¼
+  * @å‚	æ•°	æ— 
+  * @è¿”	å›	æ— 
   */
 void enableAllActuators()
 {
@@ -266,9 +266,9 @@ void enableAllActuators()
 }
 
 /**
-  * @¹¦	ÄÜ	Ê§ÄÜËùÓĞÖ´ĞĞÆ÷£¬×èÈûÊ½
-  * @²Î	Êı	ÎŞ
-  * @·µ	»Ø	ÎŞ
+  * @åŠŸ	èƒ½	å¤±èƒ½æ‰€æœ‰æ‰§è¡Œå™¨ï¼Œé˜»å¡å¼
+  * @å‚	æ•°	æ— 
+  * @è¿”	å›	æ— 
   */
 void disableAllActuators()
 {
@@ -279,10 +279,10 @@ void disableAllActuators()
 }
 
 /**
-  * @¹¦	ÄÜ	Ö´ĞĞÆ÷Ê¹ÄÜ,×èÈûÊ½
-  * @²Î	Êı	id£ºÒªÊ¹ÄÜµÄÖ´ĞĞÆ÷ID
-  * @·µ	»Ø	SCA_NoError£º²Ù×÷³É¹¦
-  *			ÆäËûÍ¨ĞÅ´íÎó²Î¼û SCA_Error ´íÎóÁĞ±í
+  * @åŠŸ	èƒ½	æ‰§è¡Œå™¨ä½¿èƒ½,é˜»å¡å¼
+  * @å‚	æ•°	idï¼šè¦ä½¿èƒ½çš„æ‰§è¡Œå™¨ID
+  * @è¿”	å›	SCA_NoErrorï¼šæ“ä½œæˆåŠŸ
+  *			å…¶ä»–é€šä¿¡é”™è¯¯å‚è§ SCA_Error é”™è¯¯åˆ—è¡¨
   */
 uint8_t enableActuator(uint8_t id)
 {
@@ -290,58 +290,58 @@ uint8_t enableActuator(uint8_t id)
     uint32_t waitime = 0;
     SCA_Handler_t* pSCA = NULL;
 
-    /* »ñÈ¡¸ÃIDµÄĞÅÏ¢¾ä±ú */
+    /* è·å–è¯¥IDçš„ä¿¡æ¯å¥æŸ„ */
     pSCA = getInstance(id);
     if(pSCA == NULL)	return SCA_UnknownID;
 
-    /* ²éÑ¯Ò»´Îµ±Ç°µÄÊ¹ÄÜ×´Ì¬ */
+    /* æŸ¥è¯¢ä¸€æ¬¡å½“å‰çš„ä½¿èƒ½çŠ¶æ€ */
     Error = isEnable(id, Block);
     if(Error)	return Error;
 
-    /* Èôµ±Ç°ÒÑ¾­´¦ÓÚÄ¿±ê×´Ì¬£¬Ö±½Ó·µ»Ø³É¹¦ */
+    /* è‹¥å½“å‰å·²ç»å¤„äºç›®æ ‡çŠ¶æ€ï¼Œç›´æ¥è¿”å›æˆåŠŸ */
     if(pSCA->Power_State == Actr_Enable)	goto PowerOn;
 
-    /* Ä¿±ê²ÎÊıĞ´Èë»º´æ´ı¸üĞÂ */
+    /* ç›®æ ‡å‚æ•°å†™å…¥ç¼“å­˜å¾…æ›´æ–° */
     pSCA->paraCache.Power_State = Actr_Enable;
 
-    /* Ö´ĞĞ¿ª»úÃüÁî */
+    /* æ‰§è¡Œå¼€æœºå‘½ä»¤ */
     Error = SCA_Write_1(pSCA, W1_PowerState, Actr_Enable);
     if(Error)	return Error;
 
-    /* µÈ´ı¿ª»ú³É¹¦£¬¸üĞÂ¾ä±úĞÅÏ¢ */
+    /* ç­‰å¾…å¼€æœºæˆåŠŸï¼Œæ›´æ–°å¥æŸ„ä¿¡æ¯ */
     while((pSCA->Power_State != Actr_Enable) && (waitime++ < CanPowertime));
     if(waitime >= CanPowertime)	return SCA_OperationFailed;
 
     PowerOn:
-    /* ¸üĞÂÔÚÏß×´Ì¬ */
+    /* æ›´æ–°åœ¨çº¿çŠ¶æ€ */
     pSCA->Online_State = Actr_Enable;
 
-    /* ¶Á³öÉè±¸ĞòÁĞºÅ£¬¸ü¸ÄIDÓÃ */
+    /* è¯»å‡ºè®¾å¤‡åºåˆ—å·ï¼Œæ›´æ”¹IDç”¨ */
     getActuatorSerialNumber(id,Block);
 
-    /* ¶ÁÒ»´ÎÉÏ´Î¹Ø»úµÄÒì³£×´Ì¬ */
+    /* è¯»ä¸€æ¬¡ä¸Šæ¬¡å…³æœºçš„å¼‚å¸¸çŠ¶æ€ */
     getActuatorLastState(id,Block);
-    if(pSCA->Last_State == 0)		//ÌáÊ¾ÉÏ´Î¹Ø»ú×´Ì¬Òì³£
+    if(pSCA->Last_State == 0)		//æç¤ºä¸Šæ¬¡å…³æœºçŠ¶æ€å¼‚å¸¸
         SCA_Debug("ID:%d Last_State Error\r\n",pSCA->ID);
 
-    /*  ¶Á³öÖ´ĞĞÆ÷µÄÂúÁ¿³ÌµçÁ÷Öµ£¬ÔÚ¶ÁĞ´µçÁ÷»·²ÎÊıÊ±Ê¹ÓÃ£¬
-        ²»Í¬ĞÍºÅµÄSCA¸ÃÖµ²»Í¬£¬Ò²¿ÉÒÔÊÖ¶¯¸üĞÂµ½¾ä±úĞÅÏ¢ÖĞ
-        ¸Ã²ÎÊıÖµÊÇ±ØĞë»ñÈ¡µÄ¡£*/
+    /*  è¯»å‡ºæ‰§è¡Œå™¨çš„æ»¡é‡ç¨‹ç”µæµå€¼ï¼Œåœ¨è¯»å†™ç”µæµç¯å‚æ•°æ—¶ä½¿ç”¨ï¼Œ
+        ä¸åŒå‹å·çš„SCAè¯¥å€¼ä¸åŒï¼Œä¹Ÿå¯ä»¥æ‰‹åŠ¨æ›´æ–°åˆ°å¥æŸ„ä¿¡æ¯ä¸­
+        è¯¥å‚æ•°å€¼æ˜¯å¿…é¡»è·å–çš„ã€‚*/
     getCurrentRange(id,Block);
-    if(pSCA->Current_Max == 0)	//Î´»ñÈ¡µ½µçÁ÷ÂúÁ¿³ÌÖµ£¬ÎŞ·¨Ğ´ÈëµçÁ÷Öµ
+    if(pSCA->Current_Max == 0)	//æœªè·å–åˆ°ç”µæµæ»¡é‡ç¨‹å€¼ï¼Œæ— æ³•å†™å…¥ç”µæµå€¼
         SCA_Debug("ID:%d Current_Max Error\r\n",pSCA->ID);
 
-    /* ¸üĞÂÒ»´ÎËùÓĞ²ÎÊıµ½¾ä±úÖĞ£¬ÎªËõ¶Ì¿ª»úÊ±¼ä²ÉÓÃ·Ç×èÈû */
+    /* æ›´æ–°ä¸€æ¬¡æ‰€æœ‰å‚æ•°åˆ°å¥æŸ„ä¸­ï¼Œä¸ºç¼©çŸ­å¼€æœºæ—¶é—´é‡‡ç”¨éé˜»å¡ */
     regainAttrbute(id,Unblock);
 
     return Error;
 }
 
 /**
-  * @¹¦	ÄÜ	Ö´ĞĞÆ÷Ê§ÄÜ,×èÈû
-  * @²Î	Êı	id£ºÒªÊ§ÄÜµÄÖ´ĞĞÆ÷ID
-  * @·µ	»Ø	SCA_NoError£º²Ù×÷³É¹¦
-  *			ÆäËûÍ¨ĞÅ´íÎó²Î¼û SCA_Error ´íÎóÁĞ±í
+  * @åŠŸ	èƒ½	æ‰§è¡Œå™¨å¤±èƒ½,é˜»å¡
+  * @å‚	æ•°	idï¼šè¦å¤±èƒ½çš„æ‰§è¡Œå™¨ID
+  * @è¿”	å›	SCA_NoErrorï¼šæ“ä½œæˆåŠŸ
+  *			å…¶ä»–é€šä¿¡é”™è¯¯å‚è§ SCA_Error é”™è¯¯åˆ—è¡¨
   */
 uint8_t disableActuator(uint8_t id)
 {
@@ -349,25 +349,25 @@ uint8_t disableActuator(uint8_t id)
     uint32_t waitime = 0;
     SCA_Handler_t* pSCA = NULL;
 
-    /* »ñÈ¡¸ÃIDµÄĞÅÏ¢¾ä±ú */
+    /* è·å–è¯¥IDçš„ä¿¡æ¯å¥æŸ„ */
     pSCA = getInstance(id);
     if(pSCA == NULL)	return SCA_UnknownID;
 
-    /* ²éÑ¯Ò»´Îµ±Ç°µÄÊ¹ÄÜ×´Ì¬ */
+    /* æŸ¥è¯¢ä¸€æ¬¡å½“å‰çš„ä½¿èƒ½çŠ¶æ€ */
     Error = isEnable(id, Block);
     if(Error)	return Error;
 
-    /* Èôµ±Ç°ÒÑ¾­´¦ÓÚÄ¿±ê×´Ì¬£¬Ö±½Ó·µ»Ø³É¹¦ */
+    /* è‹¥å½“å‰å·²ç»å¤„äºç›®æ ‡çŠ¶æ€ï¼Œç›´æ¥è¿”å›æˆåŠŸ */
     if(pSCA->Power_State == Actr_Disable)	return SCA_NoError;
 
-    /* Ä¿±ê²ÎÊıĞ´Èë»º´æ´ı¸üĞÂ */
+    /* ç›®æ ‡å‚æ•°å†™å…¥ç¼“å­˜å¾…æ›´æ–° */
     pSCA->paraCache.Power_State = Actr_Disable;
 
-    /* Ö´ĞĞ¹Ø»úÃüÁî */
+    /* æ‰§è¡Œå…³æœºå‘½ä»¤ */
     Error = SCA_Write_1(pSCA, W1_PowerState, Actr_Disable);
     if(Error)	return Error;
 
-    /* µÈ´ı¹Ø»ú³É¹¦ */
+    /* ç­‰å¾…å…³æœºæˆåŠŸ */
     while((pSCA->Power_State != Actr_Disable) && (waitime++ < CanPowertime));
     if(waitime >= CanPowertime)	return SCA_OperationFailed;
 
@@ -375,12 +375,12 @@ uint8_t disableActuator(uint8_t id)
 }
 
 /**
-  * @¹¦	ÄÜ	Ö´ĞĞÆ÷ÇĞ»»²Ù×÷Ä£Ê½
-  * @²Î	Êı	id£ºÒª²Ù×÷µÄÖ´ĞĞÆ÷id
-  *			mode£º²Ù×÷Ä£Ê½£¬Ïê¼û SCA_Protocol.h
-  *			isBlock£ºBlockÎª×èÈûÊ½£¬UnblockÎª·Ç×èÈûÊ½
-  * @·µ	»Ø	SCA_NoError£º²Ù×÷³É¹¦
-  *			ÆäËûÍ¨ĞÅ´íÎó²Î¼û SCA_Error ´íÎóÁĞ±í
+  * @åŠŸ	èƒ½	æ‰§è¡Œå™¨åˆ‡æ¢æ“ä½œæ¨¡å¼
+  * @å‚	æ•°	idï¼šè¦æ“ä½œçš„æ‰§è¡Œå™¨id
+  *			modeï¼šæ“ä½œæ¨¡å¼ï¼Œè¯¦è§ SCA_Protocol.h
+  *			isBlockï¼šBlockä¸ºé˜»å¡å¼ï¼ŒUnblockä¸ºéé˜»å¡å¼
+  * @è¿”	å›	SCA_NoErrorï¼šæ“ä½œæˆåŠŸ
+  *			å…¶ä»–é€šä¿¡é”™è¯¯å‚è§ SCA_Error é”™è¯¯åˆ—è¡¨
   */
 uint8_t activateActuatorMode(uint8_t id, uint8_t ActuatorMode, uint8_t isBlock)
 {
@@ -388,29 +388,29 @@ uint8_t activateActuatorMode(uint8_t id, uint8_t ActuatorMode, uint8_t isBlock)
     uint32_t waitime = 0;
     SCA_Handler_t* pSCA = NULL;
 
-    /* »ñÈ¡¸ÃIDµÄĞÅÏ¢¾ä±ú */
+    /* è·å–è¯¥IDçš„ä¿¡æ¯å¥æŸ„ */
     pSCA = getInstance(id);
     if(pSCA == NULL)	return SCA_UnknownID;
 
-    /* Èôµ±Ç°ÒÑ¾­´¦ÓÚÄ¿±ê×´Ì¬£¬Ö±½Ó·µ»Ø³É¹¦ */
+    /* è‹¥å½“å‰å·²ç»å¤„äºç›®æ ‡çŠ¶æ€ï¼Œç›´æ¥è¿”å›æˆåŠŸ */
     if(pSCA->Mode == ActuatorMode)	return SCA_NoError;
 
-    /* Ä¿±ê²ÎÊıĞ´Èë»º´æ´ı¸üĞÂ */
+    /* ç›®æ ‡å‚æ•°å†™å…¥ç¼“å­˜å¾…æ›´æ–° */
     pSCA->paraCache.Mode = ActuatorMode;
 
-    /* Ö´ĞĞÄ£Ê½ÇĞ»»ÃüÁî */
+    /* æ‰§è¡Œæ¨¡å¼åˆ‡æ¢å‘½ä»¤ */
     Error = SCA_Write_1(pSCA, W1_Mode, ActuatorMode);
     if(Error)	return Error;
 
-    /* ·Ç×èÈû */
+    /* éé˜»å¡ */
     if(isBlock == Unblock)
     {
-        /* ·Ç×èÈû·¢ËÍºóÑÓÊ±´¦Àí£¬·ÀÖ¹×ÜÏß¹ıÔØ */
+        /* éé˜»å¡å‘é€åå»¶æ—¶å¤„ç†ï¼Œé˜²æ­¢æ€»çº¿è¿‡è½½ */
         SCA_Delay(SendInterval);
         return Error;
     }
 
-    /* µÈ´ıÖ´ĞĞ½á¹û */
+    /* ç­‰å¾…æ‰§è¡Œç»“æœ */
     while((pSCA->Mode != ActuatorMode) && (waitime++ < CanOvertime));
     if(waitime >= CanOvertime)	return SCA_OperationFailed;
 
@@ -418,11 +418,11 @@ uint8_t activateActuatorMode(uint8_t id, uint8_t ActuatorMode, uint8_t isBlock)
 }
 
 /**
-  * @¹¦	ÄÜ	Ö´ĞĞÆ÷¶ÁÈ¡µ±Ç°²Ù×÷Ä£Ê½
-  * @²Î	Êı	id£ºÒª²Ù×÷µÄÖ´ĞĞÆ÷id
-  *			isBlock£ºBlockÎª×èÈûÊ½£¬UnblockÎª·Ç×èÈûÊ½
-  * @·µ	»Ø	SCA_NoError£º²Ù×÷³É¹¦
-  *			ÆäËûÍ¨ĞÅ´íÎó²Î¼û SCA_Error ´íÎóÁĞ±í
+  * @åŠŸ	èƒ½	æ‰§è¡Œå™¨è¯»å–å½“å‰æ“ä½œæ¨¡å¼
+  * @å‚	æ•°	idï¼šè¦æ“ä½œçš„æ‰§è¡Œå™¨id
+  *			isBlockï¼šBlockä¸ºé˜»å¡å¼ï¼ŒUnblockä¸ºéé˜»å¡å¼
+  * @è¿”	å›	SCA_NoErrorï¼šæ“ä½œæˆåŠŸ
+  *			å…¶ä»–é€šä¿¡é”™è¯¯å‚è§ SCA_Error é”™è¯¯åˆ—è¡¨
   */
 uint8_t getActuatorMode(uint8_t id, uint8_t isBlock)
 {
@@ -430,26 +430,26 @@ uint8_t getActuatorMode(uint8_t id, uint8_t isBlock)
     uint32_t waitime = 0;
     SCA_Handler_t* pSCA = NULL;
 
-    /* »ñÈ¡¸ÃIDµÄĞÅÏ¢¾ä±ú */
+    /* è·å–è¯¥IDçš„ä¿¡æ¯å¥æŸ„ */
     pSCA = getInstance(id);
     if(pSCA == NULL)	return SCA_UnknownID;
 
-    /* ÏÈÇå¿Õ¶ÁÈ¡µÈ´ı±êÖ¾Î» */
+    /* å…ˆæ¸…ç©ºè¯»å–ç­‰å¾…æ ‡å¿—ä½ */
     pSCA->paraCache.R_Mode = Actr_Disable;
 
-    /* ·â×°¶ÁÈ¡º¯Êı£¬¶Á³öÖµÖ±½Ó±£´æµ½¾ä±úÖĞ */
+    /* å°è£…è¯»å–å‡½æ•°ï¼Œè¯»å‡ºå€¼ç›´æ¥ä¿å­˜åˆ°å¥æŸ„ä¸­ */
     Error = SCA_Read(pSCA, R1_Mode);
     if(Error)	return Error;
 
-    /* ·Ç×èÈû */
+    /* éé˜»å¡ */
     if(isBlock == Unblock)
     {
-        /* ·Ç×èÈû·¢ËÍºóÑÓÊ±´¦Àí£¬·ÀÖ¹×ÜÏß¹ıÔØ */
+        /* éé˜»å¡å‘é€åå»¶æ—¶å¤„ç†ï¼Œé˜²æ­¢æ€»çº¿è¿‡è½½ */
         SCA_Delay(SendInterval);
         return Error;
     }
 
-    /* µÈ´ıÖ´ĞĞ½á¹û */
+    /* ç­‰å¾…æ‰§è¡Œç»“æœ */
     while((pSCA->paraCache.R_Mode != Actr_Enable) && (waitime++ < CanOvertime));
     if(waitime >= CanOvertime)	return SCA_OperationFailed;
 
@@ -457,11 +457,11 @@ uint8_t getActuatorMode(uint8_t id, uint8_t isBlock)
 }
 
 /**
-  * @¹¦	ÄÜ	Ö´ĞĞÆ÷¶ÁÈ¡±¨¾¯ĞÅÏ¢£¬¸üĞÂÖÁ¾ä±úÖĞ
-  * @²Î	Êı	id£ºÒª²Ù×÷µÄÖ´ĞĞÆ÷id
-  *			isBlock£ºBlockÎª×èÈûÊ½£¬UnblockÎª·Ç×èÈûÊ½
-  * @·µ	»Ø	SCA_NoError£º²Ù×÷³É¹¦
-  *			ÆäËûÍ¨ĞÅ´íÎó²Î¼û SCA_Error ´íÎóÁĞ±í
+  * @åŠŸ	èƒ½	æ‰§è¡Œå™¨è¯»å–æŠ¥è­¦ä¿¡æ¯ï¼Œæ›´æ–°è‡³å¥æŸ„ä¸­
+  * @å‚	æ•°	idï¼šè¦æ“ä½œçš„æ‰§è¡Œå™¨id
+  *			isBlockï¼šBlockä¸ºé˜»å¡å¼ï¼ŒUnblockä¸ºéé˜»å¡å¼
+  * @è¿”	å›	SCA_NoErrorï¼šæ“ä½œæˆåŠŸ
+  *			å…¶ä»–é€šä¿¡é”™è¯¯å‚è§ SCA_Error é”™è¯¯åˆ—è¡¨
   */
 uint8_t getErrorCode(uint8_t id, uint8_t isBlock)
 {
@@ -469,26 +469,26 @@ uint8_t getErrorCode(uint8_t id, uint8_t isBlock)
     uint32_t waitime = 0;
     SCA_Handler_t* pSCA = NULL;
 
-    /* »ñÈ¡¸ÃIDµÄĞÅÏ¢¾ä±ú */
+    /* è·å–è¯¥IDçš„ä¿¡æ¯å¥æŸ„ */
     pSCA = getInstance(id);
     if(pSCA == NULL)	return SCA_UnknownID;
 
-    /* ÏÈÇå¿Õ¶ÁÈ¡µÈ´ı±êÖ¾Î» */
+    /* å…ˆæ¸…ç©ºè¯»å–ç­‰å¾…æ ‡å¿—ä½ */
     pSCA->paraCache.R_Error_Code = Actr_Disable;
 
-    /* Ö´ĞĞ¶ÁÈ¡´íÎóĞÅÏ¢ÃüÁî */
+    /* æ‰§è¡Œè¯»å–é”™è¯¯ä¿¡æ¯å‘½ä»¤ */
     Error = SCA_Read(pSCA, R2_Error);
     if(Error)	return Error;
 
-    /* ·Ç×èÈû */
+    /* éé˜»å¡ */
     if(isBlock == Unblock)
     {
-        /* ·Ç×èÈû·¢ËÍºóÑÓÊ±´¦Àí£¬·ÀÖ¹×ÜÏß¹ıÔØ */
+        /* éé˜»å¡å‘é€åå»¶æ—¶å¤„ç†ï¼Œé˜²æ­¢æ€»çº¿è¿‡è½½ */
         SCA_Delay(SendInterval);
         return Error;
     }
 
-    /* µÈ´ıÖ´ĞĞ½á¹û */
+    /* ç­‰å¾…æ‰§è¡Œç»“æœ */
     while((pSCA->paraCache.R_Error_Code != Actr_Enable) && (waitime++ < CanOvertime));
     if(waitime >= CanOvertime)	return SCA_OperationFailed;
 
@@ -496,11 +496,11 @@ uint8_t getErrorCode(uint8_t id, uint8_t isBlock)
 }
 
 /**
-  * @¹¦	ÄÜ	Ö´ĞĞÆ÷Çå³ı±¨¾¯ĞÅÏ¢
-  * @²Î	Êı	id£ºÒª²Ù×÷µÄÖ´ĞĞÆ÷id
-  *			isBlock£ºBlockÎª×èÈûÊ½£¬UnblockÎª·Ç×èÈûÊ½
-  * @·µ	»Ø	SCA_NoError£º²Ù×÷³É¹¦
-  *			ÆäËûÍ¨ĞÅ´íÎó²Î¼û SCA_Error ´íÎóÁĞ±í
+  * @åŠŸ	èƒ½	æ‰§è¡Œå™¨æ¸…é™¤æŠ¥è­¦ä¿¡æ¯
+  * @å‚	æ•°	idï¼šè¦æ“ä½œçš„æ‰§è¡Œå™¨id
+  *			isBlockï¼šBlockä¸ºé˜»å¡å¼ï¼ŒUnblockä¸ºéé˜»å¡å¼
+  * @è¿”	å›	SCA_NoErrorï¼šæ“ä½œæˆåŠŸ
+  *			å…¶ä»–é€šä¿¡é”™è¯¯å‚è§ SCA_Error é”™è¯¯åˆ—è¡¨
   */
 uint8_t clearError(uint8_t id, uint8_t isBlock)
 {
@@ -508,25 +508,25 @@ uint8_t clearError(uint8_t id, uint8_t isBlock)
     uint32_t waitime = 0;
     SCA_Handler_t* pSCA = NULL;
 
-    /* »ñÈ¡¸ÃIDµÄĞÅÏ¢¾ä±ú */
+    /* è·å–è¯¥IDçš„ä¿¡æ¯å¥æŸ„ */
     pSCA = getInstance(id);
     if(pSCA == NULL)	return SCA_UnknownID;
 
-    /* Èôµ±Ç°ÎŞ´íÎó£¬ÔòÎŞĞèœ[´í */
+    /* è‹¥å½“å‰æ— é”™è¯¯ï¼Œåˆ™æ— éœ€æ·¸é”™ */
     if(pSCA->SCA_Warn.Error_Code == 0)	return SCA_NoError;
 
-    /* Ö´ĞĞœ[´íÃüÁî */
+    /* æ‰§è¡Œæ·¸é”™å‘½ä»¤ */
     Error = SCA_Write_4(pSCA, W4_ClearError);
 
-    /* ·Ç×èÈû */
+    /* éé˜»å¡ */
     if(isBlock == Unblock)
     {
-        /* ·Ç×èÈû·¢ËÍºóÑÓÊ±´¦Àí£¬·ÀÖ¹×ÜÏß¹ıÔØ */
+        /* éé˜»å¡å‘é€åå»¶æ—¶å¤„ç†ï¼Œé˜²æ­¢æ€»çº¿è¿‡è½½ */
         SCA_Delay(SendInterval);
         return Error;
     }
 
-    /* µÈ´ıÖ´ĞĞ½á¹û */
+    /* ç­‰å¾…æ‰§è¡Œç»“æœ */
     while((pSCA->SCA_Warn.Error_Code != 0) && (waitime++ < CanOvertime));
     if(waitime >= CanOvertime)	return SCA_OperationFailed;
 
@@ -534,10 +534,10 @@ uint8_t clearError(uint8_t id, uint8_t isBlock)
 }
 
 /**
-  * @¹¦	ÄÜ	Ö´ĞĞÆ÷»ñÈ¡µ±Ç°ËùÓĞ²ÎÊı
-  * @²Î	Êı	id£ºÒª²Ù×÷µÄÖ´ĞĞÆ÷id
-  *			isBlock£ºBlockÎª×èÈûÊ½£¬UnblockÎª·Ç×èÈûÊ½
-  * @·µ	»Ø	ÎŞ
+  * @åŠŸ	èƒ½	æ‰§è¡Œå™¨è·å–å½“å‰æ‰€æœ‰å‚æ•°
+  * @å‚	æ•°	idï¼šè¦æ“ä½œçš„æ‰§è¡Œå™¨id
+  *			isBlockï¼šBlockä¸ºé˜»å¡å¼ï¼ŒUnblockä¸ºéé˜»å¡å¼
+  * @è¿”	å›	æ— 
   */
 void regainAttrbute(uint8_t id,uint8_t isBlock)
 {
@@ -582,11 +582,11 @@ void regainAttrbute(uint8_t id,uint8_t isBlock)
     getInverterRecoveryTemperature(id,isBlock);
 }
 /**
-  * @¹¦	ÄÜ	Ö´ĞĞÆ÷±£´æµ±Ç°ËùÓĞ²ÎÊı
-  * @²Î	Êı	id£ºÒª²Ù×÷µÄÖ´ĞĞÆ÷id
-  *			isBlock£ºBlockÎª×èÈûÊ½£¬UnblockÎª·Ç×èÈûÊ½
-  * @·µ	»Ø	SCA_NoError£º²Ù×÷³É¹¦
-  *			ÆäËûÍ¨ĞÅ´íÎó²Î¼û SCA_Error ´íÎóÁĞ±í
+  * @åŠŸ	èƒ½	æ‰§è¡Œå™¨ä¿å­˜å½“å‰æ‰€æœ‰å‚æ•°
+  * @å‚	æ•°	idï¼šè¦æ“ä½œçš„æ‰§è¡Œå™¨id
+  *			isBlockï¼šBlockä¸ºé˜»å¡å¼ï¼ŒUnblockä¸ºéé˜»å¡å¼
+  * @è¿”	å›	SCA_NoErrorï¼šæ“ä½œæˆåŠŸ
+  *			å…¶ä»–é€šä¿¡é”™è¯¯å‚è§ SCA_Error é”™è¯¯åˆ—è¡¨
   */
 uint8_t saveAllParams(uint8_t id, uint8_t isBlock)
 {
@@ -594,25 +594,25 @@ uint8_t saveAllParams(uint8_t id, uint8_t isBlock)
     uint32_t waitime = 0;
     SCA_Handler_t* pSCA = NULL;
 
-    /* »ñÈ¡¸ÃIDµÄĞÅÏ¢¾ä±ú */
+    /* è·å–è¯¥IDçš„ä¿¡æ¯å¥æŸ„ */
     pSCA = getInstance(id);
     if(pSCA == NULL)	return SCA_UnknownID;
 
-    /* Çå¿Õ´æ´¢×´Ì¬Î» */
+    /* æ¸…ç©ºå­˜å‚¨çŠ¶æ€ä½ */
     pSCA->Save_State = Actr_Disable;
 
     Error = SCA_Write_4(pSCA, W4_Save);
     if(Error)	return Error;
 
-    /* ·Ç×èÈû */
+    /* éé˜»å¡ */
     if(isBlock == Unblock)
     {
-        /* ·Ç×èÈû·¢ËÍºóÑÓÊ±´¦Àí£¬·ÀÖ¹×ÜÏß¹ıÔØ */
+        /* éé˜»å¡å‘é€åå»¶æ—¶å¤„ç†ï¼Œé˜²æ­¢æ€»çº¿è¿‡è½½ */
         SCA_Delay(SendInterval);
         return Error;
     }
 
-    /* µÈ´ıÖ´ĞĞ³É¹¦ */
+    /* ç­‰å¾…æ‰§è¡ŒæˆåŠŸ */
     while((pSCA->Save_State != Actr_Enable) && (waitime++ < CanOvertime));
     if(waitime >= CanPowertime)	return SCA_OperationFailed;
 
@@ -620,20 +620,20 @@ uint8_t saveAllParams(uint8_t id, uint8_t isBlock)
 }
 
 
-/****************************Î»ÖÃÏà¹Ø*******************************/
+/****************************ä½ç½®ç›¸å…³*******************************/
 
 /**
-  * @¹¦	ÄÜ	Ö´ĞĞÆ÷ÉèÖÃµ±Ç°Î»ÖÃÖµ
-  * @²Î	Êı	id£ºÒª²Ù×÷µÄÖ´ĞĞÆ÷id
-  *			pos£ºÄ¿±êÎ»ÖÃÖµ£¬Êµ¼ÊÖµ£¬·¶Î§ -127.0R ~ +127.0R
-  * @·µ	»Ø	SCA_NoError£º²Ù×÷³É¹¦
-  *			ÆäËûÍ¨ĞÅ´íÎó²Î¼û SCA_Error ´íÎóÁĞ±í
+  * @åŠŸ	èƒ½	æ‰§è¡Œå™¨è®¾ç½®å½“å‰ä½ç½®å€¼
+  * @å‚	æ•°	idï¼šè¦æ“ä½œçš„æ‰§è¡Œå™¨id
+  *			posï¼šç›®æ ‡ä½ç½®å€¼ï¼Œå®é™…å€¼ï¼ŒèŒƒå›´ -127.0R ~ +127.0R
+  * @è¿”	å›	SCA_NoErrorï¼šæ“ä½œæˆåŠŸ
+  *			å…¶ä»–é€šä¿¡é”™è¯¯å‚è§ SCA_Error é”™è¯¯åˆ—è¡¨
   */
 uint8_t setPosition(uint8_t id, float pos)
 {
     SCA_Handler_t* pSCA = NULL;
 
-    /* »ñÈ¡¸ÃIDµÄĞÅÏ¢¾ä±ú */
+    /* è·å–è¯¥IDçš„ä¿¡æ¯å¥æŸ„ */
     pSCA = getInstance(id);
     if(pSCA == NULL)	return SCA_UnknownID;
 
@@ -641,11 +641,11 @@ uint8_t setPosition(uint8_t id, float pos)
 }
 
 /**
-  * @¹¦	ÄÜ	Ö´ĞĞÆ÷ÉèÖÃµ±Ç°Î»ÖÃÖµ£¬¿ìËÙ
-  * @²Î	Êı	pSCA£ºÒª²Ù×÷µÄÖ´ĞĞÆ÷¾ä±úÖ¸Õë»òµØÖ·
-  *			pos£ºÄ¿±êÎ»ÖÃÖµ£¬Êµ¼ÊÖµ£¬·¶Î§ -127.0R ~ +127.0R
-  * @·µ	»Ø	SCA_NoError£º²Ù×÷³É¹¦
-  *			ÆäËûÍ¨ĞÅ´íÎó²Î¼û SCA_Error ´íÎóÁĞ±í
+  * @åŠŸ	èƒ½	æ‰§è¡Œå™¨è®¾ç½®å½“å‰ä½ç½®å€¼ï¼Œå¿«é€Ÿ
+  * @å‚	æ•°	pSCAï¼šè¦æ“ä½œçš„æ‰§è¡Œå™¨å¥æŸ„æŒ‡é’ˆæˆ–åœ°å€
+  *			posï¼šç›®æ ‡ä½ç½®å€¼ï¼Œå®é™…å€¼ï¼ŒèŒƒå›´ -127.0R ~ +127.0R
+  * @è¿”	å›	SCA_NoErrorï¼šæ“ä½œæˆåŠŸ
+  *			å…¶ä»–é€šä¿¡é”™è¯¯å‚è§ SCA_Error é”™è¯¯åˆ—è¡¨
   */
 uint8_t setPositionFast(SCA_Handler_t* pSCA, float pos)
 {
@@ -653,11 +653,11 @@ uint8_t setPositionFast(SCA_Handler_t* pSCA, float pos)
 }
 
 /**
-  * @¹¦	ÄÜ	Ö´ĞĞÆ÷¶ÁÈ¡µ±Ç°Î»ÖÃÖµ,¸üĞÂÖÁ¾ä±úÖĞ
-  * @²Î	Êı	id£ºÒª²Ù×÷µÄÖ´ĞĞÆ÷id
-  *			isBlock£ºBlockÎª×èÈûÊ½£¬UnblockÎª·Ç×èÈûÊ½
-  * @·µ	»Ø	SCA_NoError£º²Ù×÷³É¹¦
-  *			ÆäËûÍ¨ĞÅ´íÎó²Î¼û SCA_Error ´íÎóÁĞ±í
+  * @åŠŸ	èƒ½	æ‰§è¡Œå™¨è¯»å–å½“å‰ä½ç½®å€¼,æ›´æ–°è‡³å¥æŸ„ä¸­
+  * @å‚	æ•°	idï¼šè¦æ“ä½œçš„æ‰§è¡Œå™¨id
+  *			isBlockï¼šBlockä¸ºé˜»å¡å¼ï¼ŒUnblockä¸ºéé˜»å¡å¼
+  * @è¿”	å›	SCA_NoErrorï¼šæ“ä½œæˆåŠŸ
+  *			å…¶ä»–é€šä¿¡é”™è¯¯å‚è§ SCA_Error é”™è¯¯åˆ—è¡¨
   */
 uint8_t getPosition(uint8_t id, uint8_t isBlock)
 {
@@ -665,25 +665,25 @@ uint8_t getPosition(uint8_t id, uint8_t isBlock)
     uint32_t waitime = 0;
     SCA_Handler_t* pSCA = NULL;
 
-    /* »ñÈ¡¸ÃIDµÄĞÅÏ¢¾ä±ú */
+    /* è·å–è¯¥IDçš„ä¿¡æ¯å¥æŸ„ */
     pSCA = getInstance(id);
     if(pSCA == NULL)	return SCA_UnknownID;
 
-    /* Çå¿Õ×´Ì¬Î» */
+    /* æ¸…ç©ºçŠ¶æ€ä½ */
     pSCA->paraCache.R_Position_Real = Actr_Disable;
 
     Error = SCA_Read(pSCA, R3_Position);
     if(Error)	return Error;
 
-    /* ·Ç×èÈû */
+    /* éé˜»å¡ */
     if(isBlock == Unblock)
     {
-        /* ·Ç×èÈû·¢ËÍºóÑÓÊ±´¦Àí£¬·ÀÖ¹×ÜÏß¹ıÔØ */
+        /* éé˜»å¡å‘é€åå»¶æ—¶å¤„ç†ï¼Œé˜²æ­¢æ€»çº¿è¿‡è½½ */
         SCA_Delay(SendInterval);
         return Error;
     }
 
-    /* µÈ´ıÖ´ĞĞ³É¹¦ */
+    /* ç­‰å¾…æ‰§è¡ŒæˆåŠŸ */
     while((pSCA->paraCache.R_Position_Real != Actr_Enable) && (waitime++ < CanOvertime));
     if(waitime >= CanPowertime)	return SCA_OperationFailed;
 
@@ -691,32 +691,32 @@ uint8_t getPosition(uint8_t id, uint8_t isBlock)
 }
 
 /**
-  * @¹¦	ÄÜ	Ö´ĞĞÆ÷¶ÁÈ¡µ±Ç°Î»ÖÃÖµ,¸üĞÂÖÁ¾ä±úÖĞ£¬¿ìËÙ
-  * @²Î	Êı	pSCA£ºÒª²Ù×÷µÄÖ´ĞĞÆ÷¾ä±úµØÖ·»òÖ¸Õë
-  *			isBlock£ºBlockÎª×èÈûÊ½£¬UnblockÎª·Ç×èÈûÊ½
-  * @·µ	»Ø	SCA_NoError£º²Ù×÷³É¹¦
-  *			ÆäËûÍ¨ĞÅ´íÎó²Î¼û SCA_Error ´íÎóÁĞ±í
+  * @åŠŸ	èƒ½	æ‰§è¡Œå™¨è¯»å–å½“å‰ä½ç½®å€¼,æ›´æ–°è‡³å¥æŸ„ä¸­ï¼Œå¿«é€Ÿ
+  * @å‚	æ•°	pSCAï¼šè¦æ“ä½œçš„æ‰§è¡Œå™¨å¥æŸ„åœ°å€æˆ–æŒ‡é’ˆ
+  *			isBlockï¼šBlockä¸ºé˜»å¡å¼ï¼ŒUnblockä¸ºéé˜»å¡å¼
+  * @è¿”	å›	SCA_NoErrorï¼šæ“ä½œæˆåŠŸ
+  *			å…¶ä»–é€šä¿¡é”™è¯¯å‚è§ SCA_Error é”™è¯¯åˆ—è¡¨
   */
 uint8_t getPositionFast(SCA_Handler_t* pSCA, uint8_t isBlock)
 {
     uint8_t Error;
     uint32_t waitime = 0;
 
-    /* Çå¿Õ×´Ì¬Î» */
+    /* æ¸…ç©ºçŠ¶æ€ä½ */
     pSCA->paraCache.R_Position_Real = Actr_Disable;
 
     Error = SCA_Read(pSCA, R3_Position);
     if(Error)	return Error;
 
-    /* ·Ç×èÈû */
+    /* éé˜»å¡ */
     if(isBlock == Unblock)
     {
-        /* ·Ç×èÈû·¢ËÍºóÑÓÊ±´¦Àí£¬·ÀÖ¹×ÜÏß¹ıÔØ */
+        /* éé˜»å¡å‘é€åå»¶æ—¶å¤„ç†ï¼Œé˜²æ­¢æ€»çº¿è¿‡è½½ */
         SCA_Delay(SendInterval);
         return Error;
     }
 
-    /* µÈ´ıÖ´ĞĞ³É¹¦ */
+    /* ç­‰å¾…æ‰§è¡ŒæˆåŠŸ */
     while((pSCA->paraCache.R_Position_Real != Actr_Enable) && (waitime++ < CanOvertime));
     if(waitime >= CanPowertime)	return SCA_OperationFailed;
 
@@ -724,12 +724,12 @@ uint8_t getPositionFast(SCA_Handler_t* pSCA, uint8_t isBlock)
 }
 
 /**
-  * @¹¦	ÄÜ	ÉèÖÃÖ´ĞĞÆ÷Î»ÖÃ»· KpÖµ
-  * @²Î	Êı	id£ºÒª²Ù×÷µÄÖ´ĞĞÆ÷id
-  *			Kp£ºÄ¿±êÎ»ÖÃ»· KpÖµ£¬Êµ¼ÊÖµ
-  *			isBlock£ºBlockÎª×èÈûÊ½£¬UnblockÎª·Ç×èÈûÊ½
-  * @·µ	»Ø	SCA_NoError£º²Ù×÷³É¹¦
-  *			ÆäËûÍ¨ĞÅ´íÎó²Î¼û SCA_Error ´íÎóÁĞ±í
+  * @åŠŸ	èƒ½	è®¾ç½®æ‰§è¡Œå™¨ä½ç½®ç¯ Kpå€¼
+  * @å‚	æ•°	idï¼šè¦æ“ä½œçš„æ‰§è¡Œå™¨id
+  *			Kpï¼šç›®æ ‡ä½ç½®ç¯ Kpå€¼ï¼Œå®é™…å€¼
+  *			isBlockï¼šBlockä¸ºé˜»å¡å¼ï¼ŒUnblockä¸ºéé˜»å¡å¼
+  * @è¿”	å›	SCA_NoErrorï¼šæ“ä½œæˆåŠŸ
+  *			å…¶ä»–é€šä¿¡é”™è¯¯å‚è§ SCA_Error é”™è¯¯åˆ—è¡¨
   */
 uint8_t setPositionKp(uint8_t id,float Kp, uint8_t isBlock)
 {
@@ -737,25 +737,25 @@ uint8_t setPositionKp(uint8_t id,float Kp, uint8_t isBlock)
     uint32_t waitime = 0;
     SCA_Handler_t* pSCA = NULL;
 
-    /* »ñÈ¡¸ÃIDµÄĞÅÏ¢¾ä±ú */
+    /* è·å–è¯¥IDçš„ä¿¡æ¯å¥æŸ„ */
     pSCA = getInstance(id);
     if(pSCA == NULL)	return SCA_UnknownID;
 
-    /* Ä¿±ê²ÎÊıĞ´Èë»º´æ£¬µÈ´ı¸üĞÂ */
+    /* ç›®æ ‡å‚æ•°å†™å…¥ç¼“å­˜ï¼Œç­‰å¾…æ›´æ–° */
     pSCA->paraCache.Position_Filter_P = Kp;
 
     Error = SCA_Write_3(pSCA, W3_PositionFilterP, Kp);
     if(Error)	return Error;
 
-    /* ·Ç×èÈû */
+    /* éé˜»å¡ */
     if(isBlock == Unblock)
     {
-        /* ·Ç×èÈû·¢ËÍºóÑÓÊ±´¦Àí£¬·ÀÖ¹×ÜÏß¹ıÔØ */
+        /* éé˜»å¡å‘é€åå»¶æ—¶å¤„ç†ï¼Œé˜²æ­¢æ€»çº¿è¿‡è½½ */
         SCA_Delay(SendInterval);
         return Error;
     }
 
-    /* µÈ´ıÖ´ĞĞ½á¹û */
+    /* ç­‰å¾…æ‰§è¡Œç»“æœ */
     while((pSCA->Position_Filter_P != Kp) && (waitime++ < CanOvertime));
     if(waitime >= CanOvertime)	return SCA_OperationFailed;
 
@@ -763,11 +763,11 @@ uint8_t setPositionKp(uint8_t id,float Kp, uint8_t isBlock)
 }
 
 /**
-  * @¹¦	ÄÜ	»ñÈ¡Ö´ĞĞÆ÷Î»ÖÃ»· KpÖµ£¬¸üĞÂÖÁ¾ä±úÖĞ
-  * @²Î	Êı	id£ºÒª²Ù×÷µÄÖ´ĞĞÆ÷id
-  *			isBlock£ºBlockÎª×èÈûÊ½£¬UnblockÎª·Ç×èÈûÊ½
-  * @·µ	»Ø	SCA_NoError£º²Ù×÷³É¹¦
-  *			ÆäËûÍ¨ĞÅ´íÎó²Î¼û SCA_Error ´íÎóÁĞ±í
+  * @åŠŸ	èƒ½	è·å–æ‰§è¡Œå™¨ä½ç½®ç¯ Kpå€¼ï¼Œæ›´æ–°è‡³å¥æŸ„ä¸­
+  * @å‚	æ•°	idï¼šè¦æ“ä½œçš„æ‰§è¡Œå™¨id
+  *			isBlockï¼šBlockä¸ºé˜»å¡å¼ï¼ŒUnblockä¸ºéé˜»å¡å¼
+  * @è¿”	å›	SCA_NoErrorï¼šæ“ä½œæˆåŠŸ
+  *			å…¶ä»–é€šä¿¡é”™è¯¯å‚è§ SCA_Error é”™è¯¯åˆ—è¡¨
   */
 uint8_t getPositionKp(uint8_t id, uint8_t isBlock)
 {
@@ -775,25 +775,25 @@ uint8_t getPositionKp(uint8_t id, uint8_t isBlock)
     uint32_t waitime = 0;
     SCA_Handler_t* pSCA = NULL;
 
-    /* »ñÈ¡¸ÃIDµÄĞÅÏ¢¾ä±ú */
+    /* è·å–è¯¥IDçš„ä¿¡æ¯å¥æŸ„ */
     pSCA = getInstance(id);
     if(pSCA == NULL)	return SCA_UnknownID;
 
-    /* Çå¿Õ×´Ì¬Î» */
+    /* æ¸…ç©ºçŠ¶æ€ä½ */
     pSCA->paraCache.R_Position_Filter_P = Actr_Disable;
 
     Error = SCA_Read(pSCA, R3_PositionFilterP);
     if(Error)	return Error;
 
-    /* ·Ç×èÈû */
+    /* éé˜»å¡ */
     if(isBlock == Unblock)
     {
-        /* ·Ç×èÈû·¢ËÍºóÑÓÊ±´¦Àí£¬·ÀÖ¹×ÜÏß¹ıÔØ */
+        /* éé˜»å¡å‘é€åå»¶æ—¶å¤„ç†ï¼Œé˜²æ­¢æ€»çº¿è¿‡è½½ */
         SCA_Delay(SendInterval);
         return Error;
     }
 
-    /* µÈ´ıÖ´ĞĞ½á¹û */
+    /* ç­‰å¾…æ‰§è¡Œç»“æœ */
     while((pSCA->paraCache.R_Position_Filter_P != Actr_Enable) && (waitime++ < CanOvertime));
     if(waitime >= CanOvertime)	return SCA_OperationFailed;
 
@@ -801,12 +801,12 @@ uint8_t getPositionKp(uint8_t id, uint8_t isBlock)
 }
 
 /**
-  * @¹¦	ÄÜ	ÉèÖÃÖ´ĞĞÆ÷Î»ÖÃ»· KiÖµ
-  * @²Î	Êı	id£ºÒª²Ù×÷µÄÖ´ĞĞÆ÷id
-  *			Ki£ºÄ¿±êÎ»ÖÃ»· KiÖµ£¬Êµ¼ÊÖµ
-  *			isBlock£ºBlockÎª×èÈûÊ½£¬UnblockÎª·Ç×èÈûÊ½
-  * @·µ	»Ø	SCA_NoError£º²Ù×÷³É¹¦
-  *			ÆäËûÍ¨ĞÅ´íÎó²Î¼û SCA_Error ´íÎóÁĞ±í
+  * @åŠŸ	èƒ½	è®¾ç½®æ‰§è¡Œå™¨ä½ç½®ç¯ Kiå€¼
+  * @å‚	æ•°	idï¼šè¦æ“ä½œçš„æ‰§è¡Œå™¨id
+  *			Kiï¼šç›®æ ‡ä½ç½®ç¯ Kiå€¼ï¼Œå®é™…å€¼
+  *			isBlockï¼šBlockä¸ºé˜»å¡å¼ï¼ŒUnblockä¸ºéé˜»å¡å¼
+  * @è¿”	å›	SCA_NoErrorï¼šæ“ä½œæˆåŠŸ
+  *			å…¶ä»–é€šä¿¡é”™è¯¯å‚è§ SCA_Error é”™è¯¯åˆ—è¡¨
   */
 uint8_t setPositionKi(uint8_t id,float Ki, uint8_t isBlock)
 {
@@ -814,25 +814,25 @@ uint8_t setPositionKi(uint8_t id,float Ki, uint8_t isBlock)
     uint32_t waitime = 0;
     SCA_Handler_t* pSCA = NULL;
 
-    /* »ñÈ¡¸ÃIDµÄĞÅÏ¢¾ä±ú */
+    /* è·å–è¯¥IDçš„ä¿¡æ¯å¥æŸ„ */
     pSCA = getInstance(id);
     if(pSCA == NULL)	return SCA_UnknownID;
 
-    /* Ä¿±ê²ÎÊıĞ´Èë»º´æ£¬µÈ´ı¸üĞÂ */
+    /* ç›®æ ‡å‚æ•°å†™å…¥ç¼“å­˜ï¼Œç­‰å¾…æ›´æ–° */
     pSCA->paraCache.Position_Filter_I = Ki;
 
     Error = SCA_Write_3(pSCA, W3_PositionFilterI, Ki);
     if(Error)	return Error;
 
-    /* ·Ç×èÈû */
+    /* éé˜»å¡ */
     if(isBlock == Unblock)
     {
-        /* ·Ç×èÈû·¢ËÍºóÑÓÊ±´¦Àí£¬·ÀÖ¹×ÜÏß¹ıÔØ */
+        /* éé˜»å¡å‘é€åå»¶æ—¶å¤„ç†ï¼Œé˜²æ­¢æ€»çº¿è¿‡è½½ */
         SCA_Delay(SendInterval);
         return Error;
     }
 
-    /* µÈ´ıÖ´ĞĞ½á¹û */
+    /* ç­‰å¾…æ‰§è¡Œç»“æœ */
     while((pSCA->Position_Filter_I != Ki) && (waitime++ < CanOvertime));
     if(waitime >= CanOvertime)	return SCA_OperationFailed;
 
@@ -840,11 +840,11 @@ uint8_t setPositionKi(uint8_t id,float Ki, uint8_t isBlock)
 }
 
 /**
-  * @¹¦	ÄÜ	»ñÈ¡Ö´ĞĞÆ÷Î»ÖÃ»· KiÖµ£¬¸üĞÂÖÁ¾ä±úÖĞ
-  * @²Î	Êı	id£ºÒª²Ù×÷µÄÖ´ĞĞÆ÷id
-  *			isBlock£ºBlockÎª×èÈûÊ½£¬UnblockÎª·Ç×èÈûÊ½
-  * @·µ	»Ø	SCA_NoError£º²Ù×÷³É¹¦
-  *			ÆäËûÍ¨ĞÅ´íÎó²Î¼û SCA_Error ´íÎóÁĞ±í
+  * @åŠŸ	èƒ½	è·å–æ‰§è¡Œå™¨ä½ç½®ç¯ Kiå€¼ï¼Œæ›´æ–°è‡³å¥æŸ„ä¸­
+  * @å‚	æ•°	idï¼šè¦æ“ä½œçš„æ‰§è¡Œå™¨id
+  *			isBlockï¼šBlockä¸ºé˜»å¡å¼ï¼ŒUnblockä¸ºéé˜»å¡å¼
+  * @è¿”	å›	SCA_NoErrorï¼šæ“ä½œæˆåŠŸ
+  *			å…¶ä»–é€šä¿¡é”™è¯¯å‚è§ SCA_Error é”™è¯¯åˆ—è¡¨
   */
 uint8_t getPositionKi(uint8_t id, uint8_t isBlock)
 {
@@ -852,25 +852,25 @@ uint8_t getPositionKi(uint8_t id, uint8_t isBlock)
     uint32_t waitime = 0;
     SCA_Handler_t* pSCA = NULL;
 
-    /* »ñÈ¡¸ÃIDµÄĞÅÏ¢¾ä±ú */
+    /* è·å–è¯¥IDçš„ä¿¡æ¯å¥æŸ„ */
     pSCA = getInstance(id);
     if(pSCA == NULL)	return SCA_UnknownID;
 
-    /* Çå¿Õ×´Ì¬Î» */
+    /* æ¸…ç©ºçŠ¶æ€ä½ */
     pSCA->paraCache.R_Position_Filter_I = Actr_Disable;
 
     Error = SCA_Read(pSCA, R3_PositionFilterI);
     if(Error)	return Error;
 
-    /* ·Ç×èÈû */
+    /* éé˜»å¡ */
     if(isBlock == Unblock)
     {
-        /* ·Ç×èÈû·¢ËÍºóÑÓÊ±´¦Àí£¬·ÀÖ¹×ÜÏß¹ıÔØ */
+        /* éé˜»å¡å‘é€åå»¶æ—¶å¤„ç†ï¼Œé˜²æ­¢æ€»çº¿è¿‡è½½ */
         SCA_Delay(SendInterval);
         return Error;
     }
 
-    /* µÈ´ıÖ´ĞĞ½á¹û */
+    /* ç­‰å¾…æ‰§è¡Œç»“æœ */
     while((pSCA->paraCache.R_Position_Filter_I != Actr_Enable) && (waitime++ < CanOvertime));
     if(waitime >= CanOvertime)	return SCA_OperationFailed;
 
@@ -878,12 +878,12 @@ uint8_t getPositionKi(uint8_t id, uint8_t isBlock)
 }
 
 /**
-  * @¹¦	ÄÜ	ÉèÖÃÖ´ĞĞÆ÷Î»ÖÃ»·Êä³öÉÏÏŞÖµ
-  * @²Î	Êı	id£ºÒª²Ù×÷µÄÖ´ĞĞÆ÷id
-  *			max£ºÄ¿±êÎ»ÖÃ»·Êä³öÉÏÏŞÖµ£¬Êµ¼ÊÖµ
-  *			isBlock£ºBlockÎª×èÈûÊ½£¬UnblockÎª·Ç×èÈûÊ½
-  * @·µ	»Ø	SCA_NoError£º²Ù×÷³É¹¦
-  *			ÆäËûÍ¨ĞÅ´íÎó²Î¼û SCA_Error ´íÎóÁĞ±í
+  * @åŠŸ	èƒ½	è®¾ç½®æ‰§è¡Œå™¨ä½ç½®ç¯è¾“å‡ºä¸Šé™å€¼
+  * @å‚	æ•°	idï¼šè¦æ“ä½œçš„æ‰§è¡Œå™¨id
+  *			maxï¼šç›®æ ‡ä½ç½®ç¯è¾“å‡ºä¸Šé™å€¼ï¼Œå®é™…å€¼
+  *			isBlockï¼šBlockä¸ºé˜»å¡å¼ï¼ŒUnblockä¸ºéé˜»å¡å¼
+  * @è¿”	å›	SCA_NoErrorï¼šæ“ä½œæˆåŠŸ
+  *			å…¶ä»–é€šä¿¡é”™è¯¯å‚è§ SCA_Error é”™è¯¯åˆ—è¡¨
   */
 uint8_t setPositionUmax(uint8_t id,float max,uint8_t isBlock)
 {
@@ -891,25 +891,25 @@ uint8_t setPositionUmax(uint8_t id,float max,uint8_t isBlock)
     uint32_t waitime = 0;
     SCA_Handler_t* pSCA = NULL;
 
-    /* »ñÈ¡¸ÃIDµÄĞÅÏ¢¾ä±ú */
+    /* è·å–è¯¥IDçš„ä¿¡æ¯å¥æŸ„ */
     pSCA = getInstance(id);
     if(pSCA == NULL)	return SCA_UnknownID;
 
-    /* Ä¿±ê²ÎÊıĞ´Èë»º´æ£¬µÈ´ı¸üĞÂ */
+    /* ç›®æ ‡å‚æ•°å†™å…¥ç¼“å­˜ï¼Œç­‰å¾…æ›´æ–° */
     pSCA->paraCache.Position_Filter_Limit_H = max;
 
     Error = SCA_Write_3(pSCA, W3_PositionFilterLimitH, max);
     if(Error)	return Error;
 
-    /* ·Ç×èÈû */
+    /* éé˜»å¡ */
     if(isBlock == Unblock)
     {
-        /* ·Ç×èÈû·¢ËÍºóÑÓÊ±´¦Àí£¬·ÀÖ¹×ÜÏß¹ıÔØ */
+        /* éé˜»å¡å‘é€åå»¶æ—¶å¤„ç†ï¼Œé˜²æ­¢æ€»çº¿è¿‡è½½ */
         SCA_Delay(SendInterval);
         return Error;
     }
 
-    /* µÈ´ıÖ´ĞĞ½á¹û */
+    /* ç­‰å¾…æ‰§è¡Œç»“æœ */
     while((pSCA->Position_Filter_Limit_H != max) && (waitime++ < CanOvertime));
     if(waitime >= CanOvertime)	return SCA_OperationFailed;
 
@@ -917,11 +917,11 @@ uint8_t setPositionUmax(uint8_t id,float max,uint8_t isBlock)
 }
 
 /**
-  * @¹¦	ÄÜ	»ñÈ¡Ö´ĞĞÆ÷Î»ÖÃ»·Êä³öÉÏÏŞÖµ£¬¸üĞÂÖÁ¾ä±úÖĞ
-  * @²Î	Êı	id£ºÒª²Ù×÷µÄÖ´ĞĞÆ÷id
-  *			isBlock£ºBlockÎª×èÈûÊ½£¬UnblockÎª·Ç×èÈûÊ½
-  * @·µ	»Ø	SCA_NoError£º²Ù×÷³É¹¦
-  *			ÆäËûÍ¨ĞÅ´íÎó²Î¼û SCA_Error ´íÎóÁĞ±í
+  * @åŠŸ	èƒ½	è·å–æ‰§è¡Œå™¨ä½ç½®ç¯è¾“å‡ºä¸Šé™å€¼ï¼Œæ›´æ–°è‡³å¥æŸ„ä¸­
+  * @å‚	æ•°	idï¼šè¦æ“ä½œçš„æ‰§è¡Œå™¨id
+  *			isBlockï¼šBlockä¸ºé˜»å¡å¼ï¼ŒUnblockä¸ºéé˜»å¡å¼
+  * @è¿”	å›	SCA_NoErrorï¼šæ“ä½œæˆåŠŸ
+  *			å…¶ä»–é€šä¿¡é”™è¯¯å‚è§ SCA_Error é”™è¯¯åˆ—è¡¨
   */
 uint8_t getPositionUmax(uint8_t id,uint8_t isBlock)
 {
@@ -929,25 +929,25 @@ uint8_t getPositionUmax(uint8_t id,uint8_t isBlock)
     uint32_t waitime = 0;
     SCA_Handler_t* pSCA = NULL;
 
-    /* »ñÈ¡¸ÃIDµÄĞÅÏ¢¾ä±ú */
+    /* è·å–è¯¥IDçš„ä¿¡æ¯å¥æŸ„ */
     pSCA = getInstance(id);
     if(pSCA == NULL)	return SCA_UnknownID;
 
-    /* Çå¿Õ×´Ì¬Î» */
+    /* æ¸…ç©ºçŠ¶æ€ä½ */
     pSCA->paraCache.R_Position_Filter_Limit_H = Actr_Disable;
 
     Error = SCA_Read(pSCA, R3_PositionFilterLimitH);
     if(Error)	return Error;
 
-    /* ·Ç×èÈû */
+    /* éé˜»å¡ */
     if(isBlock == Unblock)
     {
-        /* ·Ç×èÈû·¢ËÍºóÑÓÊ±´¦Àí£¬·ÀÖ¹×ÜÏß¹ıÔØ */
+        /* éé˜»å¡å‘é€åå»¶æ—¶å¤„ç†ï¼Œé˜²æ­¢æ€»çº¿è¿‡è½½ */
         SCA_Delay(SendInterval);
         return Error;
     }
 
-    /* µÈ´ıÖ´ĞĞ½á¹û */
+    /* ç­‰å¾…æ‰§è¡Œç»“æœ */
     while((pSCA->paraCache.R_Position_Filter_Limit_H != Actr_Enable) && (waitime++ < CanOvertime));
     if(waitime >= CanOvertime)	return SCA_OperationFailed;
 
@@ -955,12 +955,12 @@ uint8_t getPositionUmax(uint8_t id,uint8_t isBlock)
 }
 
 /**
-  * @¹¦	ÄÜ	ÉèÖÃÖ´ĞĞÆ÷Î»ÖÃ»·Êä³öÏÂÏŞÖµ
-  * @²Î	Êı	id£ºÒª²Ù×÷µÄÖ´ĞĞÆ÷id
-  *			min£ºÄ¿±êÎ»ÖÃ»·Êä³öÏÂÏŞÖµ£¬Êµ¼ÊÖµ
-  *			isBlock£ºBlockÎª×èÈûÊ½£¬UnblockÎª·Ç×èÈûÊ½
-  * @·µ	»Ø	SCA_NoError£º²Ù×÷³É¹¦
-  *			ÆäËûÍ¨ĞÅ´íÎó²Î¼û SCA_Error ´íÎóÁĞ±í
+  * @åŠŸ	èƒ½	è®¾ç½®æ‰§è¡Œå™¨ä½ç½®ç¯è¾“å‡ºä¸‹é™å€¼
+  * @å‚	æ•°	idï¼šè¦æ“ä½œçš„æ‰§è¡Œå™¨id
+  *			minï¼šç›®æ ‡ä½ç½®ç¯è¾“å‡ºä¸‹é™å€¼ï¼Œå®é™…å€¼
+  *			isBlockï¼šBlockä¸ºé˜»å¡å¼ï¼ŒUnblockä¸ºéé˜»å¡å¼
+  * @è¿”	å›	SCA_NoErrorï¼šæ“ä½œæˆåŠŸ
+  *			å…¶ä»–é€šä¿¡é”™è¯¯å‚è§ SCA_Error é”™è¯¯åˆ—è¡¨
   */
 uint8_t setPositionUmin(uint8_t id,float min,uint8_t isBlock)
 {
@@ -968,25 +968,25 @@ uint8_t setPositionUmin(uint8_t id,float min,uint8_t isBlock)
     uint32_t waitime = 0;
     SCA_Handler_t* pSCA = NULL;
 
-    /* »ñÈ¡¸ÃIDµÄĞÅÏ¢¾ä±ú */
+    /* è·å–è¯¥IDçš„ä¿¡æ¯å¥æŸ„ */
     pSCA = getInstance(id);
     if(pSCA == NULL)	return SCA_UnknownID;
 
-    /* Ä¿±ê²ÎÊıĞ´Èë»º´æ£¬µÈ´ı¸üĞÂ */
+    /* ç›®æ ‡å‚æ•°å†™å…¥ç¼“å­˜ï¼Œç­‰å¾…æ›´æ–° */
     pSCA->paraCache.Position_Filter_Limit_L = min;
 
     Error = SCA_Write_3(pSCA, W3_PositionFilterLimitL, min);
     if(Error)	return Error;
 
-    /* ·Ç×èÈû */
+    /* éé˜»å¡ */
     if(isBlock == Unblock)
     {
-        /* ·Ç×èÈû·¢ËÍºóÑÓÊ±´¦Àí£¬·ÀÖ¹×ÜÏß¹ıÔØ */
+        /* éé˜»å¡å‘é€åå»¶æ—¶å¤„ç†ï¼Œé˜²æ­¢æ€»çº¿è¿‡è½½ */
         SCA_Delay(SendInterval);
         return Error;
     }
 
-    /* µÈ´ıÖ´ĞĞ½á¹û */
+    /* ç­‰å¾…æ‰§è¡Œç»“æœ */
     while((pSCA->Position_Filter_Limit_L != min) && (waitime++ < CanOvertime));
     if(waitime >= CanOvertime)	return SCA_OperationFailed;
 
@@ -994,11 +994,11 @@ uint8_t setPositionUmin(uint8_t id,float min,uint8_t isBlock)
 }
 
 /**
-  * @¹¦	ÄÜ	»ñÈ¡Ö´ĞĞÆ÷Î»ÖÃ»·Êä³öÏÂÏŞÖµ£¬¸üĞÂÖÁ¾ä±úÖĞ
-  * @²Î	Êı	id£ºÒª²Ù×÷µÄÖ´ĞĞÆ÷id
-  *			isBlock£ºBlockÎª×èÈûÊ½£¬UnblockÎª·Ç×èÈûÊ½
-  * @·µ	»Ø	SCA_NoError£º²Ù×÷³É¹¦
-  *			ÆäËûÍ¨ĞÅ´íÎó²Î¼û SCA_Error ´íÎóÁĞ±í
+  * @åŠŸ	èƒ½	è·å–æ‰§è¡Œå™¨ä½ç½®ç¯è¾“å‡ºä¸‹é™å€¼ï¼Œæ›´æ–°è‡³å¥æŸ„ä¸­
+  * @å‚	æ•°	idï¼šè¦æ“ä½œçš„æ‰§è¡Œå™¨id
+  *			isBlockï¼šBlockä¸ºé˜»å¡å¼ï¼ŒUnblockä¸ºéé˜»å¡å¼
+  * @è¿”	å›	SCA_NoErrorï¼šæ“ä½œæˆåŠŸ
+  *			å…¶ä»–é€šä¿¡é”™è¯¯å‚è§ SCA_Error é”™è¯¯åˆ—è¡¨
   */
 uint8_t getPositionUmin(uint8_t id,uint8_t isBlock)
 {
@@ -1006,25 +1006,25 @@ uint8_t getPositionUmin(uint8_t id,uint8_t isBlock)
     uint32_t waitime = 0;
     SCA_Handler_t* pSCA = NULL;
 
-    /* »ñÈ¡¸ÃIDµÄĞÅÏ¢¾ä±ú */
+    /* è·å–è¯¥IDçš„ä¿¡æ¯å¥æŸ„ */
     pSCA = getInstance(id);
     if(pSCA == NULL)	return SCA_UnknownID;
 
-    /* Çå¿Õ×´Ì¬Î» */
+    /* æ¸…ç©ºçŠ¶æ€ä½ */
     pSCA->paraCache.R_Position_Filter_Limit_L = Actr_Disable;
 
     Error = SCA_Read(pSCA, R3_PositionFilterLimitL);
     if(Error)	return Error;
 
-    /* ·Ç×èÈû */
+    /* éé˜»å¡ */
     if(isBlock == Unblock)
     {
-        /* ·Ç×èÈû·¢ËÍºóÑÓÊ±´¦Àí£¬·ÀÖ¹×ÜÏß¹ıÔØ */
+        /* éé˜»å¡å‘é€åå»¶æ—¶å¤„ç†ï¼Œé˜²æ­¢æ€»çº¿è¿‡è½½ */
         SCA_Delay(SendInterval);
         return Error;
     }
 
-    /* µÈ´ıÖ´ĞĞ½á¹û */
+    /* ç­‰å¾…æ‰§è¡Œç»“æœ */
     while((pSCA->paraCache.R_Position_Filter_Limit_L != Actr_Enable) && (waitime++ < CanOvertime));
     if(waitime >= CanOvertime)	return SCA_OperationFailed;
 
@@ -1032,12 +1032,12 @@ uint8_t getPositionUmin(uint8_t id,uint8_t isBlock)
 }
 
 /**
-  * @¹¦	ÄÜ	ÉèÖÃÖ´ĞĞÆ÷Î»ÖÃÆ«ÖÃÖµ
-  * @²Î	Êı	id£ºÒª²Ù×÷µÄÖ´ĞĞÆ÷id
-  *			offset£ºÄ¿±êÎ»ÖÃÆ«ÖÃÖµ£¬Êµ¼ÊÖµ
-  *			isBlock£ºBlockÎª×èÈûÊ½£¬UnblockÎª·Ç×èÈûÊ½
-  * @·µ	»Ø	SCA_NoError£º²Ù×÷³É¹¦
-  *			ÆäËûÍ¨ĞÅ´íÎó²Î¼û SCA_Error ´íÎóÁĞ±í
+  * @åŠŸ	èƒ½	è®¾ç½®æ‰§è¡Œå™¨ä½ç½®åç½®å€¼
+  * @å‚	æ•°	idï¼šè¦æ“ä½œçš„æ‰§è¡Œå™¨id
+  *			offsetï¼šç›®æ ‡ä½ç½®åç½®å€¼ï¼Œå®é™…å€¼
+  *			isBlockï¼šBlockä¸ºé˜»å¡å¼ï¼ŒUnblockä¸ºéé˜»å¡å¼
+  * @è¿”	å›	SCA_NoErrorï¼šæ“ä½œæˆåŠŸ
+  *			å…¶ä»–é€šä¿¡é”™è¯¯å‚è§ SCA_Error é”™è¯¯åˆ—è¡¨
   */
 uint8_t setPositionOffset(uint8_t id, float offset,uint8_t isBlock)
 {
@@ -1045,25 +1045,25 @@ uint8_t setPositionOffset(uint8_t id, float offset,uint8_t isBlock)
     uint32_t waitime = 0;
     SCA_Handler_t* pSCA = NULL;
 
-    /* »ñÈ¡¸ÃIDµÄĞÅÏ¢¾ä±ú */
+    /* è·å–è¯¥IDçš„ä¿¡æ¯å¥æŸ„ */
     pSCA = getInstance(id);
     if(pSCA == NULL)	return SCA_UnknownID;
 
-    /* Ä¿±ê²ÎÊıĞ´Èë»º´æ£¬µÈ´ı¸üĞÂ */
+    /* ç›®æ ‡å‚æ•°å†™å…¥ç¼“å­˜ï¼Œç­‰å¾…æ›´æ–° */
     pSCA->paraCache.Position_Offset = offset;
 
     Error = SCA_Write_3(pSCA, W3_PositionOffset, offset);
     if(Error)	return Error;
 
-    /* ·Ç×èÈû */
+    /* éé˜»å¡ */
     if(isBlock == Unblock)
     {
-        /* ·Ç×èÈû·¢ËÍºóÑÓÊ±´¦Àí£¬·ÀÖ¹×ÜÏß¹ıÔØ */
+        /* éé˜»å¡å‘é€åå»¶æ—¶å¤„ç†ï¼Œé˜²æ­¢æ€»çº¿è¿‡è½½ */
         SCA_Delay(SendInterval);
         return Error;
     }
 
-    /* µÈ´ıÖ´ĞĞ½á¹û */
+    /* ç­‰å¾…æ‰§è¡Œç»“æœ */
     while((pSCA->Position_Offset != offset) && (waitime++ < CanOvertime));
     if(waitime >= CanOvertime)	return SCA_OperationFailed;
 
@@ -1071,11 +1071,11 @@ uint8_t setPositionOffset(uint8_t id, float offset,uint8_t isBlock)
 }
 
 /**
-  * @¹¦	ÄÜ	»ñÈ¡Ö´ĞĞÆ÷Î»ÖÃÆ«ÖÃÖµ£¬¸üĞÂÖÁ¾ä±úÖĞ
-  * @²Î	Êı	id£ºÒª²Ù×÷µÄÖ´ĞĞÆ÷id
-  *			isBlock£ºBlockÎª×èÈûÊ½£¬UnblockÎª·Ç×èÈûÊ½
-  * @·µ	»Ø	SCA_NoError£º²Ù×÷³É¹¦
-  *			ÆäËûÍ¨ĞÅ´íÎó²Î¼û SCA_Error ´íÎóÁĞ±í
+  * @åŠŸ	èƒ½	è·å–æ‰§è¡Œå™¨ä½ç½®åç½®å€¼ï¼Œæ›´æ–°è‡³å¥æŸ„ä¸­
+  * @å‚	æ•°	idï¼šè¦æ“ä½œçš„æ‰§è¡Œå™¨id
+  *			isBlockï¼šBlockä¸ºé˜»å¡å¼ï¼ŒUnblockä¸ºéé˜»å¡å¼
+  * @è¿”	å›	SCA_NoErrorï¼šæ“ä½œæˆåŠŸ
+  *			å…¶ä»–é€šä¿¡é”™è¯¯å‚è§ SCA_Error é”™è¯¯åˆ—è¡¨
   */
 uint8_t getPositionOffset(uint8_t id,uint8_t isBlock)
 {
@@ -1083,25 +1083,25 @@ uint8_t getPositionOffset(uint8_t id,uint8_t isBlock)
     uint32_t waitime = 0;
     SCA_Handler_t* pSCA = NULL;
 
-    /* »ñÈ¡¸ÃIDµÄĞÅÏ¢¾ä±ú */
+    /* è·å–è¯¥IDçš„ä¿¡æ¯å¥æŸ„ */
     pSCA = getInstance(id);
     if(pSCA == NULL)	return SCA_UnknownID;
 
-    /* Çå¿Õ×´Ì¬Î» */
+    /* æ¸…ç©ºçŠ¶æ€ä½ */
     pSCA->paraCache.R_Position_Offset = Actr_Disable;
 
     Error = SCA_Read(pSCA, R3_PositionOffset);
     if(Error)	return Error;
 
-    /* ·Ç×èÈû */
+    /* éé˜»å¡ */
     if(isBlock == Unblock)
     {
-        /* ·Ç×èÈû·¢ËÍºóÑÓÊ±´¦Àí£¬·ÀÖ¹×ÜÏß¹ıÔØ */
+        /* éé˜»å¡å‘é€åå»¶æ—¶å¤„ç†ï¼Œé˜²æ­¢æ€»çº¿è¿‡è½½ */
         SCA_Delay(SendInterval);
         return Error;
     }
 
-    /* µÈ´ıÖ´ĞĞ½á¹û */
+    /* ç­‰å¾…æ‰§è¡Œç»“æœ */
     while((pSCA->paraCache.R_Position_Offset != Actr_Enable) && (waitime++ < CanOvertime));
     if(waitime >= CanOvertime)	return SCA_OperationFailed;
 
@@ -1109,12 +1109,12 @@ uint8_t getPositionOffset(uint8_t id,uint8_t isBlock)
 }
 
 /**
-  * @¹¦	ÄÜ	ÉèÖÃÖ´ĞĞÆ÷Î»ÖÃ×î´óÖµ
-  * @²Î	Êı	id£ºÒª²Ù×÷µÄÖ´ĞĞÆ÷id
-  *			maxPos£ºÄ¿±êÎ»ÖÃ×î´óÖµ£¬Êµ¼ÊÖµ
-  *			isBlock£ºBlockÎª×èÈûÊ½£¬UnblockÎª·Ç×èÈûÊ½
-  * @·µ	»Ø	SCA_NoError£º²Ù×÷³É¹¦
-  *			ÆäËûÍ¨ĞÅ´íÎó²Î¼û SCA_Error ´íÎóÁĞ±í
+  * @åŠŸ	èƒ½	è®¾ç½®æ‰§è¡Œå™¨ä½ç½®æœ€å¤§å€¼
+  * @å‚	æ•°	idï¼šè¦æ“ä½œçš„æ‰§è¡Œå™¨id
+  *			maxPosï¼šç›®æ ‡ä½ç½®æœ€å¤§å€¼ï¼Œå®é™…å€¼
+  *			isBlockï¼šBlockä¸ºé˜»å¡å¼ï¼ŒUnblockä¸ºéé˜»å¡å¼
+  * @è¿”	å›	SCA_NoErrorï¼šæ“ä½œæˆåŠŸ
+  *			å…¶ä»–é€šä¿¡é”™è¯¯å‚è§ SCA_Error é”™è¯¯åˆ—è¡¨
   */
 uint8_t setMaximumPosition(uint8_t id,float maxPos,uint8_t isBlock)
 {
@@ -1122,25 +1122,25 @@ uint8_t setMaximumPosition(uint8_t id,float maxPos,uint8_t isBlock)
     uint32_t waitime = 0;
     SCA_Handler_t* pSCA = NULL;
 
-    /* »ñÈ¡¸ÃIDµÄĞÅÏ¢¾ä±ú */
+    /* è·å–è¯¥IDçš„ä¿¡æ¯å¥æŸ„ */
     pSCA = getInstance(id);
     if(pSCA == NULL)	return SCA_UnknownID;
 
-    /* Ä¿±ê²ÎÊıĞ´Èë»º´æ£¬µÈ´ı¸üĞÂ */
+    /* ç›®æ ‡å‚æ•°å†™å…¥ç¼“å­˜ï¼Œç­‰å¾…æ›´æ–° */
     pSCA->paraCache.Position_Limit_H = maxPos;
 
     Error = SCA_Write_3(pSCA, W3_PositionLimitH, maxPos);
     if(Error)	return Error;
 
-    /* ·Ç×èÈû */
+    /* éé˜»å¡ */
     if(isBlock == Unblock)
     {
-        /* ·Ç×èÈû·¢ËÍºóÑÓÊ±´¦Àí£¬·ÀÖ¹×ÜÏß¹ıÔØ */
+        /* éé˜»å¡å‘é€åå»¶æ—¶å¤„ç†ï¼Œé˜²æ­¢æ€»çº¿è¿‡è½½ */
         SCA_Delay(SendInterval);
         return Error;
     }
 
-    /* µÈ´ıÖ´ĞĞ½á¹û */
+    /* ç­‰å¾…æ‰§è¡Œç»“æœ */
     while((pSCA->Position_Limit_H != maxPos) && (waitime++ < CanOvertime));
     if(waitime >= CanOvertime)	return SCA_OperationFailed;
 
@@ -1148,11 +1148,11 @@ uint8_t setMaximumPosition(uint8_t id,float maxPos,uint8_t isBlock)
 }
 
 /**
-  * @¹¦	ÄÜ	»ñÈ¡Ö´ĞĞÆ÷Î»ÖÃ×î´óÖµ£¬¸üĞÂÖÁ¾ä±úÖĞ
-  * @²Î	Êı	id£ºÒª²Ù×÷µÄÖ´ĞĞÆ÷id
-  *			isBlock£ºBlockÎª×èÈûÊ½£¬UnblockÎª·Ç×èÈûÊ½
-  * @·µ	»Ø	SCA_NoError£º²Ù×÷³É¹¦
-  *			ÆäËûÍ¨ĞÅ´íÎó²Î¼û SCA_Error ´íÎóÁĞ±í
+  * @åŠŸ	èƒ½	è·å–æ‰§è¡Œå™¨ä½ç½®æœ€å¤§å€¼ï¼Œæ›´æ–°è‡³å¥æŸ„ä¸­
+  * @å‚	æ•°	idï¼šè¦æ“ä½œçš„æ‰§è¡Œå™¨id
+  *			isBlockï¼šBlockä¸ºé˜»å¡å¼ï¼ŒUnblockä¸ºéé˜»å¡å¼
+  * @è¿”	å›	SCA_NoErrorï¼šæ“ä½œæˆåŠŸ
+  *			å…¶ä»–é€šä¿¡é”™è¯¯å‚è§ SCA_Error é”™è¯¯åˆ—è¡¨
   */
 uint8_t getMaximumPosition(uint8_t id,uint8_t isBlock)
 {
@@ -1160,25 +1160,25 @@ uint8_t getMaximumPosition(uint8_t id,uint8_t isBlock)
     uint32_t waitime = 0;
     SCA_Handler_t* pSCA = NULL;
 
-    /* »ñÈ¡¸ÃIDµÄĞÅÏ¢¾ä±ú */
+    /* è·å–è¯¥IDçš„ä¿¡æ¯å¥æŸ„ */
     pSCA = getInstance(id);
     if(pSCA == NULL)	return SCA_UnknownID;
 
-    /* Çå¿Õ×´Ì¬Î» */
+    /* æ¸…ç©ºçŠ¶æ€ä½ */
     pSCA->paraCache.R_Position_Limit_H = Actr_Disable;
 
     Error = SCA_Read(pSCA, R3_PositionLimitH);
     if(Error)	return Error;
 
-    /* ·Ç×èÈû */
+    /* éé˜»å¡ */
     if(isBlock == Unblock)
     {
-        /* ·Ç×èÈû·¢ËÍºóÑÓÊ±´¦Àí£¬·ÀÖ¹×ÜÏß¹ıÔØ */
+        /* éé˜»å¡å‘é€åå»¶æ—¶å¤„ç†ï¼Œé˜²æ­¢æ€»çº¿è¿‡è½½ */
         SCA_Delay(SendInterval);
         return Error;
     }
 
-    /* µÈ´ıÖ´ĞĞ½á¹û */
+    /* ç­‰å¾…æ‰§è¡Œç»“æœ */
     while((pSCA->paraCache.R_Position_Limit_H != Actr_Enable) && (waitime++ < CanOvertime));
     if(waitime >= CanOvertime)	return SCA_OperationFailed;
 
@@ -1186,12 +1186,12 @@ uint8_t getMaximumPosition(uint8_t id,uint8_t isBlock)
 }
 
 /**
-  * @¹¦	ÄÜ	ÉèÖÃÖ´ĞĞÆ÷Î»ÖÃ×îĞ¡Öµ
-  * @²Î	Êı	id£ºÒª²Ù×÷µÄÖ´ĞĞÆ÷id
-  *			minPos£ºÄ¿±êÎ»ÖÃ×îĞ¡Öµ£¬Êµ¼ÊÖµ
-  *			isBlock£ºBlockÎª×èÈûÊ½£¬UnblockÎª·Ç×èÈûÊ½
-  * @·µ	»Ø	SCA_NoError£º²Ù×÷³É¹¦
-  *			ÆäËûÍ¨ĞÅ´íÎó²Î¼û SCA_Error ´íÎóÁĞ±í
+  * @åŠŸ	èƒ½	è®¾ç½®æ‰§è¡Œå™¨ä½ç½®æœ€å°å€¼
+  * @å‚	æ•°	idï¼šè¦æ“ä½œçš„æ‰§è¡Œå™¨id
+  *			minPosï¼šç›®æ ‡ä½ç½®æœ€å°å€¼ï¼Œå®é™…å€¼
+  *			isBlockï¼šBlockä¸ºé˜»å¡å¼ï¼ŒUnblockä¸ºéé˜»å¡å¼
+  * @è¿”	å›	SCA_NoErrorï¼šæ“ä½œæˆåŠŸ
+  *			å…¶ä»–é€šä¿¡é”™è¯¯å‚è§ SCA_Error é”™è¯¯åˆ—è¡¨
   */
 uint8_t setMinimumPosition(uint8_t id,float minPos,uint8_t isBlock)
 {
@@ -1199,25 +1199,25 @@ uint8_t setMinimumPosition(uint8_t id,float minPos,uint8_t isBlock)
     uint32_t waitime = 0;
     SCA_Handler_t* pSCA = NULL;
 
-    /* »ñÈ¡¸ÃIDµÄĞÅÏ¢¾ä±ú */
+    /* è·å–è¯¥IDçš„ä¿¡æ¯å¥æŸ„ */
     pSCA = getInstance(id);
     if(pSCA == NULL)	return SCA_UnknownID;
 
-    /* Ä¿±ê²ÎÊıĞ´Èë»º´æ£¬µÈ´ı¸üĞÂ */
+    /* ç›®æ ‡å‚æ•°å†™å…¥ç¼“å­˜ï¼Œç­‰å¾…æ›´æ–° */
     pSCA->paraCache.Position_Limit_L = minPos;
 
     Error = SCA_Write_3(pSCA, W3_PositionLimitL, minPos);
     if(Error)	return Error;
 
-    /* ·Ç×èÈû */
+    /* éé˜»å¡ */
     if(isBlock == Unblock)
     {
-        /* ·Ç×èÈû·¢ËÍºóÑÓÊ±´¦Àí£¬·ÀÖ¹×ÜÏß¹ıÔØ */
+        /* éé˜»å¡å‘é€åå»¶æ—¶å¤„ç†ï¼Œé˜²æ­¢æ€»çº¿è¿‡è½½ */
         SCA_Delay(SendInterval);
         return Error;
     }
 
-    /* µÈ´ıÖ´ĞĞ½á¹û */
+    /* ç­‰å¾…æ‰§è¡Œç»“æœ */
     while((pSCA->Position_Limit_L != minPos) && (waitime++ < CanOvertime));
     if(waitime >= CanOvertime)	return SCA_OperationFailed;
 
@@ -1225,11 +1225,11 @@ uint8_t setMinimumPosition(uint8_t id,float minPos,uint8_t isBlock)
 }
 
 /**
-  * @¹¦	ÄÜ	»ñÈ¡Ö´ĞĞÆ÷Î»ÖÃ×îĞ¡Öµ£¬¸üĞÂÖÁ¾ä±úÖĞ
-  * @²Î	Êı	id£ºÒª²Ù×÷µÄÖ´ĞĞÆ÷id
-  *			isBlock£ºBlockÎª×èÈûÊ½£¬UnblockÎª·Ç×èÈûÊ½
-  * @·µ	»Ø	SCA_NoError£º²Ù×÷³É¹¦
-  *			ÆäËûÍ¨ĞÅ´íÎó²Î¼û SCA_Error ´íÎóÁĞ±í
+  * @åŠŸ	èƒ½	è·å–æ‰§è¡Œå™¨ä½ç½®æœ€å°å€¼ï¼Œæ›´æ–°è‡³å¥æŸ„ä¸­
+  * @å‚	æ•°	idï¼šè¦æ“ä½œçš„æ‰§è¡Œå™¨id
+  *			isBlockï¼šBlockä¸ºé˜»å¡å¼ï¼ŒUnblockä¸ºéé˜»å¡å¼
+  * @è¿”	å›	SCA_NoErrorï¼šæ“ä½œæˆåŠŸ
+  *			å…¶ä»–é€šä¿¡é”™è¯¯å‚è§ SCA_Error é”™è¯¯åˆ—è¡¨
   */
 uint8_t getMinimumPosition(uint8_t id,uint8_t isBlock)
 {
@@ -1237,25 +1237,25 @@ uint8_t getMinimumPosition(uint8_t id,uint8_t isBlock)
     uint32_t waitime = 0;
     SCA_Handler_t* pSCA = NULL;
 
-    /* »ñÈ¡¸ÃIDµÄĞÅÏ¢¾ä±ú */
+    /* è·å–è¯¥IDçš„ä¿¡æ¯å¥æŸ„ */
     pSCA = getInstance(id);
     if(pSCA == NULL)	return SCA_UnknownID;
 
-    /* Çå¿Õ×´Ì¬Î» */
+    /* æ¸…ç©ºçŠ¶æ€ä½ */
     pSCA->paraCache.R_Position_Limit_L = Actr_Disable;
 
     Error = SCA_Read(pSCA, R3_PositionLimitL);
     if(Error)	return Error;
 
-    /* ·Ç×èÈû */
+    /* éé˜»å¡ */
     if(isBlock == Unblock)
     {
-        /* ·Ç×èÈû·¢ËÍºóÑÓÊ±´¦Àí£¬·ÀÖ¹×ÜÏß¹ıÔØ */
+        /* éé˜»å¡å‘é€åå»¶æ—¶å¤„ç†ï¼Œé˜²æ­¢æ€»çº¿è¿‡è½½ */
         SCA_Delay(SendInterval);
         return Error;
     }
 
-    /* µÈ´ıÖ´ĞĞ½á¹û */
+    /* ç­‰å¾…æ‰§è¡Œç»“æœ */
     while((pSCA->paraCache.R_Position_Limit_L != Actr_Enable) && (waitime++ < CanOvertime));
     if(waitime >= CanOvertime)	return SCA_OperationFailed;
 
@@ -1263,12 +1263,12 @@ uint8_t getMinimumPosition(uint8_t id,uint8_t isBlock)
 }
 
 /**
-  * @¹¦	ÄÜ	Ê¹ÄÜ»òÊ§ÄÜÖ´ĞĞÆ÷Î»ÖÃÏŞÎ»
-  * @²Î	Êı	id£ºÒª²Ù×÷µÄÖ´ĞĞÆ÷id
-  *			enable£ºÊ¹ÄÜ×´Ì¬£¬Actr_EnableÊ¹ÄÜ£¬Actr_DisableÊ§ÄÜ
-  *			isBlock£ºBlockÎª×èÈûÊ½£¬UnblockÎª·Ç×èÈûÊ½
-  * @·µ	»Ø	SCA_NoError£º²Ù×÷³É¹¦
-  *			ÆäËûÍ¨ĞÅ´íÎó²Î¼û SCA_Error ´íÎóÁĞ±í
+  * @åŠŸ	èƒ½	ä½¿èƒ½æˆ–å¤±èƒ½æ‰§è¡Œå™¨ä½ç½®é™ä½
+  * @å‚	æ•°	idï¼šè¦æ“ä½œçš„æ‰§è¡Œå™¨id
+  *			enableï¼šä½¿èƒ½çŠ¶æ€ï¼ŒActr_Enableä½¿èƒ½ï¼ŒActr_Disableå¤±èƒ½
+  *			isBlockï¼šBlockä¸ºé˜»å¡å¼ï¼ŒUnblockä¸ºéé˜»å¡å¼
+  * @è¿”	å›	SCA_NoErrorï¼šæ“ä½œæˆåŠŸ
+  *			å…¶ä»–é€šä¿¡é”™è¯¯å‚è§ SCA_Error é”™è¯¯åˆ—è¡¨
   */
 uint8_t enablePositionLimit(uint8_t id, uint8_t enable,uint8_t isBlock)
 {
@@ -1276,25 +1276,25 @@ uint8_t enablePositionLimit(uint8_t id, uint8_t enable,uint8_t isBlock)
     uint32_t waitime = 0;
     SCA_Handler_t* pSCA = NULL;
 
-    /* »ñÈ¡¸ÃIDµÄĞÅÏ¢¾ä±ú */
+    /* è·å–è¯¥IDçš„ä¿¡æ¯å¥æŸ„ */
     pSCA = getInstance(id);
     if(pSCA == NULL)	return SCA_UnknownID;
 
-    /* Ä¿±ê²ÎÊıĞ´Èë»º´æ£¬µÈ´ı¸üĞÂ */
+    /* ç›®æ ‡å‚æ•°å†™å…¥ç¼“å­˜ï¼Œç­‰å¾…æ›´æ–° */
     pSCA->paraCache.Position_Limit_State = enable;
 
     Error = SCA_Write_1(pSCA, W1_PositionLimitState, enable);
     if(Error)	return Error;
 
-    /* ·Ç×èÈû */
+    /* éé˜»å¡ */
     if(isBlock == Unblock)
     {
-        /* ·Ç×èÈû·¢ËÍºóÑÓÊ±´¦Àí£¬·ÀÖ¹×ÜÏß¹ıÔØ */
+        /* éé˜»å¡å‘é€åå»¶æ—¶å¤„ç†ï¼Œé˜²æ­¢æ€»çº¿è¿‡è½½ */
         SCA_Delay(SendInterval);
         return Error;
     }
 
-    /* µÈ´ıÖ´ĞĞ½á¹û */
+    /* ç­‰å¾…æ‰§è¡Œç»“æœ */
     while((pSCA->Position_Limit_State != enable) && (waitime++ < CanOvertime));
     if(waitime >= CanOvertime)	return SCA_OperationFailed;
 
@@ -1302,11 +1302,11 @@ uint8_t enablePositionLimit(uint8_t id, uint8_t enable,uint8_t isBlock)
 }
 
 /**
-  * @¹¦	ÄÜ	»ñÈ¡Ö´ĞĞÆ÷Î»ÖÃÏŞÎ»Ê¹ÄÜ×´Ì¬£¬¸üĞÂÖÁ¾ä±úÖĞ
-  * @²Î	Êı	id£ºÒª²Ù×÷µÄÖ´ĞĞÆ÷id
-  *			isBlock£ºBlockÎª×èÈûÊ½£¬UnblockÎª·Ç×èÈûÊ½
-  * @·µ	»Ø	SCA_NoError£º²Ù×÷³É¹¦
-  *			ÆäËûÍ¨ĞÅ´íÎó²Î¼û SCA_Error ´íÎóÁĞ±í
+  * @åŠŸ	èƒ½	è·å–æ‰§è¡Œå™¨ä½ç½®é™ä½ä½¿èƒ½çŠ¶æ€ï¼Œæ›´æ–°è‡³å¥æŸ„ä¸­
+  * @å‚	æ•°	idï¼šè¦æ“ä½œçš„æ‰§è¡Œå™¨id
+  *			isBlockï¼šBlockä¸ºé˜»å¡å¼ï¼ŒUnblockä¸ºéé˜»å¡å¼
+  * @è¿”	å›	SCA_NoErrorï¼šæ“ä½œæˆåŠŸ
+  *			å…¶ä»–é€šä¿¡é”™è¯¯å‚è§ SCA_Error é”™è¯¯åˆ—è¡¨
   */
 uint8_t isPositionLimitEnable(uint8_t id,uint8_t isBlock)
 {
@@ -1314,25 +1314,25 @@ uint8_t isPositionLimitEnable(uint8_t id,uint8_t isBlock)
     uint32_t waitime = 0;
     SCA_Handler_t* pSCA = NULL;
 
-    /* »ñÈ¡¸ÃIDµÄĞÅÏ¢¾ä±ú */
+    /* è·å–è¯¥IDçš„ä¿¡æ¯å¥æŸ„ */
     pSCA = getInstance(id);
     if(pSCA == NULL)	return SCA_UnknownID;
 
-    /* Çå¿Õ×´Ì¬Î» */
+    /* æ¸…ç©ºçŠ¶æ€ä½ */
     pSCA->paraCache.R_Position_Limit_State = Actr_Disable;
 
     Error = SCA_Read(pSCA, R1_PositionLimitState);
     if(Error)	return Error;
 
-    /* ·Ç×èÈû */
+    /* éé˜»å¡ */
     if(isBlock == Unblock)
     {
-        /* ·Ç×èÈû·¢ËÍºóÑÓÊ±´¦Àí£¬·ÀÖ¹×ÜÏß¹ıÔØ */
+        /* éé˜»å¡å‘é€åå»¶æ—¶å¤„ç†ï¼Œé˜²æ­¢æ€»çº¿è¿‡è½½ */
         SCA_Delay(SendInterval);
         return Error;
     }
 
-    /* µÈ´ıÖ´ĞĞ½á¹û */
+    /* ç­‰å¾…æ‰§è¡Œç»“æœ */
     while((pSCA->paraCache.R_Position_Limit_State != Actr_Enable) && (waitime++ < CanOvertime));
     if(waitime >= CanOvertime)	return SCA_OperationFailed;
 
@@ -1340,12 +1340,12 @@ uint8_t isPositionLimitEnable(uint8_t id,uint8_t isBlock)
 }
 
 /**
-  * @¹¦	ÄÜ	ÉèÖÃÖ´ĞĞÆ÷ÁãµãÎ»ÖÃ£¬ÖØĞÂ¼ÆËã×óÓÒÏŞÎ»
-  * @²Î	Êı	id£ºÒª²Ù×÷µÄÖ´ĞĞÆ÷id
-  *			homingPos£ºÁãµãÎ»ÖÃ£¬Êµ¼ÊÖµ£¬µ¥Î» R
-  *			isBlock£ºBlockÎª×èÈûÊ½£¬UnblockÎª·Ç×èÈûÊ½
-  * @·µ	»Ø	SCA_NoError£º²Ù×÷³É¹¦
-  *			ÆäËûÍ¨ĞÅ´íÎó²Î¼û SCA_Error ´íÎóÁĞ±í
+  * @åŠŸ	èƒ½	è®¾ç½®æ‰§è¡Œå™¨é›¶ç‚¹ä½ç½®ï¼Œé‡æ–°è®¡ç®—å·¦å³é™ä½
+  * @å‚	æ•°	idï¼šè¦æ“ä½œçš„æ‰§è¡Œå™¨id
+  *			homingPosï¼šé›¶ç‚¹ä½ç½®ï¼Œå®é™…å€¼ï¼Œå•ä½ R
+  *			isBlockï¼šBlockä¸ºé˜»å¡å¼ï¼ŒUnblockä¸ºéé˜»å¡å¼
+  * @è¿”	å›	SCA_NoErrorï¼šæ“ä½œæˆåŠŸ
+  *			å…¶ä»–é€šä¿¡é”™è¯¯å‚è§ SCA_Error é”™è¯¯åˆ—è¡¨
   */
 uint8_t setHomingPosition(uint8_t id,float homingPos,uint8_t isBlock)
 {
@@ -1353,25 +1353,25 @@ uint8_t setHomingPosition(uint8_t id,float homingPos,uint8_t isBlock)
     uint32_t waitime = 0;
     SCA_Handler_t* pSCA = NULL;
 
-    /* »ñÈ¡¸ÃIDµÄĞÅÏ¢¾ä±ú */
+    /* è·å–è¯¥IDçš„ä¿¡æ¯å¥æŸ„ */
     pSCA = getInstance(id);
     if(pSCA == NULL)	return SCA_UnknownID;
 
-    /* Ä¿±ê²ÎÊıĞ´Èë»º´æ£¬µÈ´ı¸üĞÂ */
+    /* ç›®æ ‡å‚æ•°å†™å…¥ç¼“å­˜ï¼Œç­‰å¾…æ›´æ–° */
     pSCA->paraCache.Homing_Value = homingPos;
 
     Error = SCA_Write_3(pSCA, W3_HomingValue, homingPos);
     if(Error)	return Error;
 
-    /* ·Ç×èÈû */
+    /* éé˜»å¡ */
     if(isBlock == Unblock)
     {
-        /* ·Ç×èÈû·¢ËÍºóÑÓÊ±´¦Àí£¬·ÀÖ¹×ÜÏß¹ıÔØ */
+        /* éé˜»å¡å‘é€åå»¶æ—¶å¤„ç†ï¼Œé˜²æ­¢æ€»çº¿è¿‡è½½ */
         SCA_Delay(SendInterval);
         return Error;
     }
 
-    /* µÈ´ıÖ´ĞĞ½á¹û */
+    /* ç­‰å¾…æ‰§è¡Œç»“æœ */
     while((pSCA->Homing_Value != homingPos) && (waitime++ < CanOvertime));
     if(waitime >= CanOvertime)	return SCA_OperationFailed;
 
@@ -1379,12 +1379,12 @@ uint8_t setHomingPosition(uint8_t id,float homingPos,uint8_t isBlock)
 }
 
 /**
-  * @¹¦	ÄÜ	Ê¹ÄÜÖ´ĞĞÆ÷Î»ÖÃ»·ÂË²¨Æ÷
-  * @²Î	Êı	id£ºÒª²Ù×÷µÄÖ´ĞĞÆ÷id
-  *			enable£ºÊ¹ÄÜ×´Ì¬£¬Actr_EnableÊ¹ÄÜ£¬Actr_DisableÊ§ÄÜ
-  *			isBlock£ºBlockÎª×èÈûÊ½£¬UnblockÎª·Ç×èÈûÊ½
-  * @·µ	»Ø	SCA_NoError£º²Ù×÷³É¹¦
-  *			ÆäËûÍ¨ĞÅ´íÎó²Î¼û SCA_Error ´íÎóÁĞ±í
+  * @åŠŸ	èƒ½	ä½¿èƒ½æ‰§è¡Œå™¨ä½ç½®ç¯æ»¤æ³¢å™¨
+  * @å‚	æ•°	idï¼šè¦æ“ä½œçš„æ‰§è¡Œå™¨id
+  *			enableï¼šä½¿èƒ½çŠ¶æ€ï¼ŒActr_Enableä½¿èƒ½ï¼ŒActr_Disableå¤±èƒ½
+  *			isBlockï¼šBlockä¸ºé˜»å¡å¼ï¼ŒUnblockä¸ºéé˜»å¡å¼
+  * @è¿”	å›	SCA_NoErrorï¼šæ“ä½œæˆåŠŸ
+  *			å…¶ä»–é€šä¿¡é”™è¯¯å‚è§ SCA_Error é”™è¯¯åˆ—è¡¨
   */
 uint8_t enablePositionFilter(uint8_t id,uint8_t enable,uint8_t isBlock)
 {
@@ -1392,25 +1392,25 @@ uint8_t enablePositionFilter(uint8_t id,uint8_t enable,uint8_t isBlock)
     uint32_t waitime = 0;
     SCA_Handler_t* pSCA = NULL;
 
-    /* »ñÈ¡¸ÃIDµÄĞÅÏ¢¾ä±ú */
+    /* è·å–è¯¥IDçš„ä¿¡æ¯å¥æŸ„ */
     pSCA = getInstance(id);
     if(pSCA == NULL)	return SCA_UnknownID;
 
-    /* Ä¿±ê²ÎÊıĞ´Èë»º´æ£¬µÈ´ı¸üĞÂ */
+    /* ç›®æ ‡å‚æ•°å†™å…¥ç¼“å­˜ï¼Œç­‰å¾…æ›´æ–° */
     pSCA->paraCache.Position_Filter_State = enable;
 
     Error = SCA_Write_1(pSCA, W1_PositionFilterState, enable);
     if(Error)	return Error;
 
-    /* ·Ç×èÈû */
+    /* éé˜»å¡ */
     if(isBlock == Unblock)
     {
-        /* ·Ç×èÈû·¢ËÍºóÑÓÊ±´¦Àí£¬·ÀÖ¹×ÜÏß¹ıÔØ */
+        /* éé˜»å¡å‘é€åå»¶æ—¶å¤„ç†ï¼Œé˜²æ­¢æ€»çº¿è¿‡è½½ */
         SCA_Delay(SendInterval);
         return Error;
     }
 
-    /* µÈ´ıÖ´ĞĞ½á¹û */
+    /* ç­‰å¾…æ‰§è¡Œç»“æœ */
     while((pSCA->Position_Filter_State != enable) && (waitime++ < CanOvertime));
     if(waitime >= CanOvertime)	return SCA_OperationFailed;
 
@@ -1418,11 +1418,11 @@ uint8_t enablePositionFilter(uint8_t id,uint8_t enable,uint8_t isBlock)
 }
 
 /**
-  * @¹¦	ÄÜ	»ñÈ¡Ö´ĞĞÆ÷Î»ÖÃ»·ÂË²¨Æ÷Ê¹ÄÜ×´Ì¬£¬¸üĞÂÖÁ¾ä±úÖĞ
-  * @²Î	Êı	id£ºÒª²Ù×÷µÄÖ´ĞĞÆ÷id
-  *			isBlock£ºBlockÎª×èÈûÊ½£¬UnblockÎª·Ç×èÈûÊ½
-  * @·µ	»Ø	SCA_NoError£º²Ù×÷³É¹¦
-  *			ÆäËûÍ¨ĞÅ´íÎó²Î¼û SCA_Error ´íÎóÁĞ±í
+  * @åŠŸ	èƒ½	è·å–æ‰§è¡Œå™¨ä½ç½®ç¯æ»¤æ³¢å™¨ä½¿èƒ½çŠ¶æ€ï¼Œæ›´æ–°è‡³å¥æŸ„ä¸­
+  * @å‚	æ•°	idï¼šè¦æ“ä½œçš„æ‰§è¡Œå™¨id
+  *			isBlockï¼šBlockä¸ºé˜»å¡å¼ï¼ŒUnblockä¸ºéé˜»å¡å¼
+  * @è¿”	å›	SCA_NoErrorï¼šæ“ä½œæˆåŠŸ
+  *			å…¶ä»–é€šä¿¡é”™è¯¯å‚è§ SCA_Error é”™è¯¯åˆ—è¡¨
   */
 uint8_t isPositionFilterEnable(uint8_t id,uint8_t isBlock)
 {
@@ -1430,25 +1430,25 @@ uint8_t isPositionFilterEnable(uint8_t id,uint8_t isBlock)
     uint32_t waitime = 0;
     SCA_Handler_t* pSCA = NULL;
 
-    /* »ñÈ¡¸ÃIDµÄĞÅÏ¢¾ä±ú */
+    /* è·å–è¯¥IDçš„ä¿¡æ¯å¥æŸ„ */
     pSCA = getInstance(id);
     if(pSCA == NULL)	return SCA_UnknownID;
 
-    /* Çå¿Õ×´Ì¬Î» */
+    /* æ¸…ç©ºçŠ¶æ€ä½ */
     pSCA->paraCache.R_Position_Filter_State = Actr_Disable;
 
     Error = SCA_Read(pSCA, R1_PositionFilterState);
     if(Error)	return Error;
 
-    /* ·Ç×èÈû */
+    /* éé˜»å¡ */
     if(isBlock == Unblock)
     {
-        /* ·Ç×èÈû·¢ËÍºóÑÓÊ±´¦Àí£¬·ÀÖ¹×ÜÏß¹ıÔØ */
+        /* éé˜»å¡å‘é€åå»¶æ—¶å¤„ç†ï¼Œé˜²æ­¢æ€»çº¿è¿‡è½½ */
         SCA_Delay(SendInterval);
         return Error;
     }
 
-    /* µÈ´ıÖ´ĞĞ½á¹û */
+    /* ç­‰å¾…æ‰§è¡Œç»“æœ */
     while((pSCA->paraCache.R_Position_Filter_State != Actr_Enable) && (waitime++ < CanOvertime));
     if(waitime >= CanOvertime)	return SCA_OperationFailed;
 
@@ -1456,12 +1456,12 @@ uint8_t isPositionFilterEnable(uint8_t id,uint8_t isBlock)
 }
 
 /**
-  * @¹¦	ÄÜ	ÉèÖÃÖ´ĞĞÆ÷Î»ÖÃ»·ÂË²¨Æ÷´ø¿í
-  * @²Î	Êı	id£ºÒª²Ù×÷µÄÖ´ĞĞÆ÷id
-  *			frequency£ºÂË²¨Æ÷´ø¿í£¬Êµ¼ÊÖµ£¬µ¥Î» hz
-  *			isBlock£ºBlockÎª×èÈûÊ½£¬UnblockÎª·Ç×èÈûÊ½
-  * @·µ	»Ø	SCA_NoError£º²Ù×÷³É¹¦
-  *			ÆäËûÍ¨ĞÅ´íÎó²Î¼û SCA_Error ´íÎóÁĞ±í
+  * @åŠŸ	èƒ½	è®¾ç½®æ‰§è¡Œå™¨ä½ç½®ç¯æ»¤æ³¢å™¨å¸¦å®½
+  * @å‚	æ•°	idï¼šè¦æ“ä½œçš„æ‰§è¡Œå™¨id
+  *			frequencyï¼šæ»¤æ³¢å™¨å¸¦å®½ï¼Œå®é™…å€¼ï¼Œå•ä½ hz
+  *			isBlockï¼šBlockä¸ºé˜»å¡å¼ï¼ŒUnblockä¸ºéé˜»å¡å¼
+  * @è¿”	å›	SCA_NoErrorï¼šæ“ä½œæˆåŠŸ
+  *			å…¶ä»–é€šä¿¡é”™è¯¯å‚è§ SCA_Error é”™è¯¯åˆ—è¡¨
   */
 uint8_t setPositionCutoffFrequency(uint8_t id, float frequency,uint8_t isBlock)
 {
@@ -1469,25 +1469,25 @@ uint8_t setPositionCutoffFrequency(uint8_t id, float frequency,uint8_t isBlock)
     uint32_t waitime = 0;
     SCA_Handler_t* pSCA = NULL;
 
-    /* »ñÈ¡¸ÃIDµÄĞÅÏ¢¾ä±ú */
+    /* è·å–è¯¥IDçš„ä¿¡æ¯å¥æŸ„ */
     pSCA = getInstance(id);
     if(pSCA == NULL)	return SCA_UnknownID;
 
-    /* Ä¿±ê²ÎÊıĞ´Èë»º´æ£¬µÈ´ı¸üĞÂ */
+    /* ç›®æ ‡å‚æ•°å†™å…¥ç¼“å­˜ï¼Œç­‰å¾…æ›´æ–° */
     pSCA->paraCache.Position_Filter_Value = frequency;
 
     Error = SCA_Write_2(pSCA, W2_PositionFilterValue, frequency);
     if(Error)	return Error;
 
-    /* ·Ç×èÈû */
+    /* éé˜»å¡ */
     if(isBlock == Unblock)
     {
-        /* ·Ç×èÈû·¢ËÍºóÑÓÊ±´¦Àí£¬·ÀÖ¹×ÜÏß¹ıÔØ */
+        /* éé˜»å¡å‘é€åå»¶æ—¶å¤„ç†ï¼Œé˜²æ­¢æ€»çº¿è¿‡è½½ */
         SCA_Delay(SendInterval);
         return Error;
     }
 
-    /* µÈ´ıÖ´ĞĞ½á¹û */
+    /* ç­‰å¾…æ‰§è¡Œç»“æœ */
     while((pSCA->Position_Filter_Value != frequency) && (waitime++ < CanOvertime));
     if(waitime >= CanOvertime)	return SCA_OperationFailed;
 
@@ -1495,11 +1495,11 @@ uint8_t setPositionCutoffFrequency(uint8_t id, float frequency,uint8_t isBlock)
 }
 
 /**
-  * @¹¦	ÄÜ	»ñÈ¡Ö´ĞĞÆ÷Î»ÖÃ»·ÂË²¨Æ÷´ø¿í£¬¸üĞÂÖÁ¾ä±úÖĞ
-  * @²Î	Êı	id£ºÒª²Ù×÷µÄÖ´ĞĞÆ÷id
-  *			isBlock£ºBlockÎª×èÈûÊ½£¬UnblockÎª·Ç×èÈûÊ½
-  * @·µ	»Ø	SCA_NoError£º²Ù×÷³É¹¦
-  *			ÆäËûÍ¨ĞÅ´íÎó²Î¼û SCA_Error ´íÎóÁĞ±í
+  * @åŠŸ	èƒ½	è·å–æ‰§è¡Œå™¨ä½ç½®ç¯æ»¤æ³¢å™¨å¸¦å®½ï¼Œæ›´æ–°è‡³å¥æŸ„ä¸­
+  * @å‚	æ•°	idï¼šè¦æ“ä½œçš„æ‰§è¡Œå™¨id
+  *			isBlockï¼šBlockä¸ºé˜»å¡å¼ï¼ŒUnblockä¸ºéé˜»å¡å¼
+  * @è¿”	å›	SCA_NoErrorï¼šæ“ä½œæˆåŠŸ
+  *			å…¶ä»–é€šä¿¡é”™è¯¯å‚è§ SCA_Error é”™è¯¯åˆ—è¡¨
   */
 uint8_t getPositionCutoffFrequency(uint8_t id,uint8_t isBlock)
 {
@@ -1507,25 +1507,25 @@ uint8_t getPositionCutoffFrequency(uint8_t id,uint8_t isBlock)
     uint32_t waitime = 0;
     SCA_Handler_t* pSCA = NULL;
 
-    /* »ñÈ¡¸ÃIDµÄĞÅÏ¢¾ä±ú */
+    /* è·å–è¯¥IDçš„ä¿¡æ¯å¥æŸ„ */
     pSCA = getInstance(id);
     if(pSCA == NULL)	return SCA_UnknownID;
 
-    /* Çå¿Õ×´Ì¬Î» */
+    /* æ¸…ç©ºçŠ¶æ€ä½ */
     pSCA->paraCache.R_Position_Filter_Value = Actr_Disable;
 
     Error = SCA_Read(pSCA, R2_PositionFilterValue);
     if(Error)	return Error;
 
-    /* ·Ç×èÈû */
+    /* éé˜»å¡ */
     if(isBlock == Unblock)
     {
-        /* ·Ç×èÈû·¢ËÍºóÑÓÊ±´¦Àí£¬·ÀÖ¹×ÜÏß¹ıÔØ */
+        /* éé˜»å¡å‘é€åå»¶æ—¶å¤„ç†ï¼Œé˜²æ­¢æ€»çº¿è¿‡è½½ */
         SCA_Delay(SendInterval);
         return Error;
     }
 
-    /* µÈ´ıÖ´ĞĞ½á¹û */
+    /* ç­‰å¾…æ‰§è¡Œç»“æœ */
     while((pSCA->paraCache.R_Position_Filter_Value != Actr_Enable) && (waitime++ < CanOvertime));
     if(waitime >= CanOvertime)	return SCA_OperationFailed;
 
@@ -1533,11 +1533,11 @@ uint8_t getPositionCutoffFrequency(uint8_t id,uint8_t isBlock)
 }
 
 /**
-  * @¹¦	ÄÜ	Çå³ıhomingĞÅÏ¢£¬°üÀ¨×óÓÒ¼«ÏŞºÍ0Î»£¬´ı¶¨
-  * @²Î	Êı	id£ºÖ´ĞĞÆ÷id
-  *			isBlock£ºBlockÎª×èÈûÊ½£¬UnblockÎª·Ç×èÈûÊ½
-  * @·µ	»Ø	SCA_NoError£º²Ù×÷³É¹¦
-  *			ÆäËûÍ¨ĞÅ´íÎó²Î¼û SCA_Error ´íÎóÁĞ±í
+  * @åŠŸ	èƒ½	æ¸…é™¤homingä¿¡æ¯ï¼ŒåŒ…æ‹¬å·¦å³æé™å’Œ0ä½ï¼Œå¾…å®š
+  * @å‚	æ•°	idï¼šæ‰§è¡Œå™¨id
+  *			isBlockï¼šBlockä¸ºé˜»å¡å¼ï¼ŒUnblockä¸ºéé˜»å¡å¼
+  * @è¿”	å›	SCA_NoErrorï¼šæ“ä½œæˆåŠŸ
+  *			å…¶ä»–é€šä¿¡é”™è¯¯å‚è§ SCA_Error é”™è¯¯åˆ—è¡¨
   */
 uint8_t clearHomingInfo(uint8_t id,uint8_t isBlock)
 {
@@ -1545,25 +1545,25 @@ uint8_t clearHomingInfo(uint8_t id,uint8_t isBlock)
     uint32_t waitime = 0;
     SCA_Handler_t* pSCA = NULL;
 
-    /* »ñÈ¡¸ÃIDµÄĞÅÏ¢¾ä±ú */
+    /* è·å–è¯¥IDçš„ä¿¡æ¯å¥æŸ„ */
     pSCA = getInstance(id);
     if(pSCA == NULL)	return SCA_UnknownID;
 
-    /* Çå¿Õ×´Ì¬Î» */
+    /* æ¸…ç©ºçŠ¶æ€ä½ */
     pSCA->paraCache.W_ClearHome = Actr_Disable;
 
     Error = SCA_Write_4(pSCA, W4_ClearHome);
     if(Error)	return Error;
 
-    /* ·Ç×èÈû */
+    /* éé˜»å¡ */
     if(isBlock == Unblock)
     {
-        /* ·Ç×èÈû·¢ËÍºóÑÓÊ±´¦Àí£¬·ÀÖ¹×ÜÏß¹ıÔØ */
+        /* éé˜»å¡å‘é€åå»¶æ—¶å¤„ç†ï¼Œé˜²æ­¢æ€»çº¿è¿‡è½½ */
         SCA_Delay(SendInterval);
         return Error;
     }
 
-    /* µÈ´ıÖ´ĞĞ½á¹û */
+    /* ç­‰å¾…æ‰§è¡Œç»“æœ */
     while((pSCA->paraCache.W_ClearHome != Actr_Enable) && (waitime++ < CanOvertime));
     if(waitime >= CanOvertime)	return SCA_OperationFailed;
 
@@ -1571,12 +1571,12 @@ uint8_t clearHomingInfo(uint8_t id,uint8_t isBlock)
 }
 
 /**
-  * @¹¦	ÄÜ	ÉèÖÃÖ´ĞĞÆ÷ÌİĞÎÎ»ÖÃ»·×î´ó¼ÓËÙ¶È
-  * @²Î	Êı	id£ºÒª²Ù×÷µÄÖ´ĞĞÆ÷id
-  *			acceleration£º×î´ó¼ÓËÙ¶È£¬Êµ¼ÊÖµ£¬µ¥Î» RPM/S^2
-  *			isBlock£ºBlockÎª×èÈûÊ½£¬UnblockÎª·Ç×èÈûÊ½
-  * @·µ	»Ø	SCA_NoError£º²Ù×÷³É¹¦
-  *			ÆäËûÍ¨ĞÅ´íÎó²Î¼û SCA_Error ´íÎóÁĞ±í
+  * @åŠŸ	èƒ½	è®¾ç½®æ‰§è¡Œå™¨æ¢¯å½¢ä½ç½®ç¯æœ€å¤§åŠ é€Ÿåº¦
+  * @å‚	æ•°	idï¼šè¦æ“ä½œçš„æ‰§è¡Œå™¨id
+  *			accelerationï¼šæœ€å¤§åŠ é€Ÿåº¦ï¼Œå®é™…å€¼ï¼Œå•ä½ RPM/S^2
+  *			isBlockï¼šBlockä¸ºé˜»å¡å¼ï¼ŒUnblockä¸ºéé˜»å¡å¼
+  * @è¿”	å›	SCA_NoErrorï¼šæ“ä½œæˆåŠŸ
+  *			å…¶ä»–é€šä¿¡é”™è¯¯å‚è§ SCA_Error é”™è¯¯åˆ—è¡¨
   */
 uint8_t setProfilePositionAcceleration(uint8_t id, float acceleration,uint8_t isBlock)
 {
@@ -1584,32 +1584,32 @@ uint8_t setProfilePositionAcceleration(uint8_t id, float acceleration,uint8_t is
     uint32_t waitime = 0;
     SCA_Handler_t* pSCA = NULL;
 
-    /* »ñÈ¡¸ÃIDµÄĞÅÏ¢¾ä±ú */
+    /* è·å–è¯¥IDçš„ä¿¡æ¯å¥æŸ„ */
     pSCA = getInstance(id);
     if(pSCA == NULL)	return SCA_UnknownID;
 
-    /* Ä¿±ê²ÎÊıĞ´Èë»º´æ£¬µÈ´ı¸üĞÂ */
+    /* ç›®æ ‡å‚æ•°å†™å…¥ç¼“å­˜ï¼Œç­‰å¾…æ›´æ–° */
     pSCA->paraCache.PP_Max_Acceleration = acceleration;
 
-    /*  ÌİĞÎ¼ÓËÙ¶È´«ÊäÖµÊÇÕæÊµÖµµÄIQ20±¶£¬µÚÈıÀà¶ÁĞ´½Ó¿ÚÊÇÒÔ
-        IQ24¸ñÊ½´«ÊäµÄ£¬ĞèÒª×öIQ4µÄ±¶Êı´¦Àí¡£ÁíÍâ£¬¸ÄÊıÖµµÄ
-        µ¥Î»ÊÇRPM£¬Ğè½«¸ÃÊıÖµËõ·Å60±ä³ÉRPMµ¥Î»¡£
-        ×îÖÕËõ·ÅÖµ = 2^4 * 60 = 960
+    /*  æ¢¯å½¢åŠ é€Ÿåº¦ä¼ è¾“å€¼æ˜¯çœŸå®å€¼çš„IQ20å€ï¼Œç¬¬ä¸‰ç±»è¯»å†™æ¥å£æ˜¯ä»¥
+        IQ24æ ¼å¼ä¼ è¾“çš„ï¼Œéœ€è¦åšIQ4çš„å€æ•°å¤„ç†ã€‚å¦å¤–ï¼Œæ”¹æ•°å€¼çš„
+        å•ä½æ˜¯RPMï¼Œéœ€å°†è¯¥æ•°å€¼ç¼©æ”¾60å˜æˆRPMå•ä½ã€‚
+        æœ€ç»ˆç¼©æ”¾å€¼ = 2^4 * 60 = 960
     */
     acceleration /= Profile_Scal;
 
     Error = SCA_Write_3(pSCA, W3_PPMaxAcceleration, acceleration);
     if(Error)	return Error;
 
-    /* ·Ç×èÈû */
+    /* éé˜»å¡ */
     if(isBlock == Unblock)
     {
-        /* ·Ç×èÈû·¢ËÍºóÑÓÊ±´¦Àí£¬·ÀÖ¹×ÜÏß¹ıÔØ */
+        /* éé˜»å¡å‘é€åå»¶æ—¶å¤„ç†ï¼Œé˜²æ­¢æ€»çº¿è¿‡è½½ */
         SCA_Delay(SendInterval);
         return Error;
     }
 
-    /* µÈ´ıÖ´ĞĞ½á¹û */
+    /* ç­‰å¾…æ‰§è¡Œç»“æœ */
     while((pSCA->PP_Max_Acceleration != acceleration) && (waitime++ < CanOvertime));
     if(waitime >= CanOvertime)	return SCA_OperationFailed;
 
@@ -1617,11 +1617,11 @@ uint8_t setProfilePositionAcceleration(uint8_t id, float acceleration,uint8_t is
 }
 
 /**
-  * @¹¦	ÄÜ	»ñÈ¡Ö´ĞĞÆ÷ÌİĞÎÎ»ÖÃ»·×î´ó¼ÓËÙ¶È£¬¸üĞÂÖÁ¾ä±úÖĞ
-  * @²Î	Êı	id£ºÒª²Ù×÷µÄÖ´ĞĞÆ÷id
-  *			isBlock£ºBlockÎª×èÈûÊ½£¬UnblockÎª·Ç×èÈûÊ½
-  * @·µ	»Ø	SCA_NoError£º²Ù×÷³É¹¦
-  *			ÆäËûÍ¨ĞÅ´íÎó²Î¼û SCA_Error ´íÎóÁĞ±í
+  * @åŠŸ	èƒ½	è·å–æ‰§è¡Œå™¨æ¢¯å½¢ä½ç½®ç¯æœ€å¤§åŠ é€Ÿåº¦ï¼Œæ›´æ–°è‡³å¥æŸ„ä¸­
+  * @å‚	æ•°	idï¼šè¦æ“ä½œçš„æ‰§è¡Œå™¨id
+  *			isBlockï¼šBlockä¸ºé˜»å¡å¼ï¼ŒUnblockä¸ºéé˜»å¡å¼
+  * @è¿”	å›	SCA_NoErrorï¼šæ“ä½œæˆåŠŸ
+  *			å…¶ä»–é€šä¿¡é”™è¯¯å‚è§ SCA_Error é”™è¯¯åˆ—è¡¨
   */
 uint8_t getProfilePositionAcceleration(uint8_t id,uint8_t isBlock)
 {
@@ -1629,25 +1629,25 @@ uint8_t getProfilePositionAcceleration(uint8_t id,uint8_t isBlock)
     uint32_t waitime = 0;
     SCA_Handler_t* pSCA = NULL;
 
-    /* »ñÈ¡¸ÃIDµÄĞÅÏ¢¾ä±ú */
+    /* è·å–è¯¥IDçš„ä¿¡æ¯å¥æŸ„ */
     pSCA = getInstance(id);
     if(pSCA == NULL)	return SCA_UnknownID;
 
-    /* Çå¿Õ×´Ì¬Î» */
+    /* æ¸…ç©ºçŠ¶æ€ä½ */
     pSCA->paraCache.R_PP_Max_Acceleration = Actr_Disable;
 
     Error = SCA_Read(pSCA, R3_PPMaxAcceleration);
     if(Error)	return Error;
 
-    /* ·Ç×èÈû */
+    /* éé˜»å¡ */
     if(isBlock == Unblock)
     {
-        /* ·Ç×èÈû·¢ËÍºóÑÓÊ±´¦Àí£¬·ÀÖ¹×ÜÏß¹ıÔØ */
+        /* éé˜»å¡å‘é€åå»¶æ—¶å¤„ç†ï¼Œé˜²æ­¢æ€»çº¿è¿‡è½½ */
         SCA_Delay(SendInterval);
         return Error;
     }
 
-    /* µÈ´ıÖ´ĞĞ½á¹û */
+    /* ç­‰å¾…æ‰§è¡Œç»“æœ */
     while((pSCA->paraCache.R_PP_Max_Acceleration != Actr_Enable) && (waitime++ < CanOvertime));
     if(waitime >= CanOvertime)	return SCA_OperationFailed;
 
@@ -1655,12 +1655,12 @@ uint8_t getProfilePositionAcceleration(uint8_t id,uint8_t isBlock)
 }
 
 /**
-  * @¹¦	ÄÜ	ÉèÖÃÖ´ĞĞÆ÷ÌİĞÎÎ»ÖÃ»·×î´ó¼õËÙ¶È
-  * @²Î	Êı	id£ºÒª²Ù×÷µÄÖ´ĞĞÆ÷id
-  *			deceleration£º×î´ó¼õËÙ¶È£¬Êµ¼ÊÖµ£¬µ¥Î» RPM/S^2
-  *			isBlock£ºBlockÎª×èÈûÊ½£¬UnblockÎª·Ç×èÈûÊ½
-  * @·µ	»Ø	SCA_NoError£º²Ù×÷³É¹¦
-  *			ÆäËûÍ¨ĞÅ´íÎó²Î¼û SCA_Error ´íÎóÁĞ±í
+  * @åŠŸ	èƒ½	è®¾ç½®æ‰§è¡Œå™¨æ¢¯å½¢ä½ç½®ç¯æœ€å¤§å‡é€Ÿåº¦
+  * @å‚	æ•°	idï¼šè¦æ“ä½œçš„æ‰§è¡Œå™¨id
+  *			decelerationï¼šæœ€å¤§å‡é€Ÿåº¦ï¼Œå®é™…å€¼ï¼Œå•ä½ RPM/S^2
+  *			isBlockï¼šBlockä¸ºé˜»å¡å¼ï¼ŒUnblockä¸ºéé˜»å¡å¼
+  * @è¿”	å›	SCA_NoErrorï¼šæ“ä½œæˆåŠŸ
+  *			å…¶ä»–é€šä¿¡é”™è¯¯å‚è§ SCA_Error é”™è¯¯åˆ—è¡¨
   */
 uint8_t setProfilePositionDeceleration(uint8_t id, float deceleration,uint8_t isBlock)
 {
@@ -1668,11 +1668,11 @@ uint8_t setProfilePositionDeceleration(uint8_t id, float deceleration,uint8_t is
     uint32_t waitime = 0;
     SCA_Handler_t* pSCA = NULL;
 
-    /* »ñÈ¡¸ÃIDµÄĞÅÏ¢¾ä±ú */
+    /* è·å–è¯¥IDçš„ä¿¡æ¯å¥æŸ„ */
     pSCA = getInstance(id);
     if(pSCA == NULL)	return SCA_UnknownID;
 
-    /* Ä¿±ê²ÎÊıĞ´Èë»º´æ£¬µÈ´ı¸üĞÂ */
+    /* ç›®æ ‡å‚æ•°å†™å…¥ç¼“å­˜ï¼Œç­‰å¾…æ›´æ–° */
     pSCA->paraCache.PP_Max_Deceleration = deceleration;
 
     deceleration /= Profile_Scal;
@@ -1680,15 +1680,15 @@ uint8_t setProfilePositionDeceleration(uint8_t id, float deceleration,uint8_t is
     Error = SCA_Write_3(pSCA, W3_PPMaxDeceleration, deceleration);
     if(Error)	return Error;
 
-    /* ·Ç×èÈû */
+    /* éé˜»å¡ */
     if(isBlock == Unblock)
     {
-        /* ·Ç×èÈû·¢ËÍºóÑÓÊ±´¦Àí£¬·ÀÖ¹×ÜÏß¹ıÔØ */
+        /* éé˜»å¡å‘é€åå»¶æ—¶å¤„ç†ï¼Œé˜²æ­¢æ€»çº¿è¿‡è½½ */
         SCA_Delay(SendInterval);
         return Error;
     }
 
-    /* µÈ´ıÖ´ĞĞ½á¹û */
+    /* ç­‰å¾…æ‰§è¡Œç»“æœ */
     while((pSCA->PP_Max_Deceleration != deceleration) && (waitime++ < CanOvertime));
     if(waitime >= CanOvertime)	return SCA_OperationFailed;
 
@@ -1696,11 +1696,11 @@ uint8_t setProfilePositionDeceleration(uint8_t id, float deceleration,uint8_t is
 }
 
 /**
-  * @¹¦	ÄÜ	»ñÈ¡Ö´ĞĞÆ÷ÌİĞÎÎ»ÖÃ»·×î´ó¼õËÙ¶È£¬¸üĞÂÖÁ¾ä±úÖĞ
-  * @²Î	Êı	id£ºÒª²Ù×÷µÄÖ´ĞĞÆ÷id
-  *			isBlock£ºBlockÎª×èÈûÊ½£¬UnblockÎª·Ç×èÈûÊ½
-  * @·µ	»Ø	SCA_NoError£º²Ù×÷³É¹¦
-  *			ÆäËûÍ¨ĞÅ´íÎó²Î¼û SCA_Error ´íÎóÁĞ±í
+  * @åŠŸ	èƒ½	è·å–æ‰§è¡Œå™¨æ¢¯å½¢ä½ç½®ç¯æœ€å¤§å‡é€Ÿåº¦ï¼Œæ›´æ–°è‡³å¥æŸ„ä¸­
+  * @å‚	æ•°	idï¼šè¦æ“ä½œçš„æ‰§è¡Œå™¨id
+  *			isBlockï¼šBlockä¸ºé˜»å¡å¼ï¼ŒUnblockä¸ºéé˜»å¡å¼
+  * @è¿”	å›	SCA_NoErrorï¼šæ“ä½œæˆåŠŸ
+  *			å…¶ä»–é€šä¿¡é”™è¯¯å‚è§ SCA_Error é”™è¯¯åˆ—è¡¨
   */
 uint8_t getProfilePositionDeceleration(uint8_t id,uint8_t isBlock)
 {
@@ -1708,25 +1708,25 @@ uint8_t getProfilePositionDeceleration(uint8_t id,uint8_t isBlock)
     uint32_t waitime = 0;
     SCA_Handler_t* pSCA = NULL;
 
-    /* »ñÈ¡¸ÃIDµÄĞÅÏ¢¾ä±ú */
+    /* è·å–è¯¥IDçš„ä¿¡æ¯å¥æŸ„ */
     pSCA = getInstance(id);
     if(pSCA == NULL)	return SCA_UnknownID;
 
-    /* Çå¿Õ×´Ì¬Î» */
+    /* æ¸…ç©ºçŠ¶æ€ä½ */
     pSCA->paraCache.R_PP_Max_Deceleration = Actr_Disable;
 
     Error = SCA_Read(pSCA, R3_PPMaxDeceleration);
     if(Error)	return Error;
 
-    /* ·Ç×èÈû */
+    /* éé˜»å¡ */
     if(isBlock == Unblock)
     {
-        /* ·Ç×èÈû·¢ËÍºóÑÓÊ±´¦Àí£¬·ÀÖ¹×ÜÏß¹ıÔØ */
+        /* éé˜»å¡å‘é€åå»¶æ—¶å¤„ç†ï¼Œé˜²æ­¢æ€»çº¿è¿‡è½½ */
         SCA_Delay(SendInterval);
         return Error;
     }
 
-    /* µÈ´ıÖ´ĞĞ½á¹û */
+    /* ç­‰å¾…æ‰§è¡Œç»“æœ */
     while((pSCA->paraCache.R_PP_Max_Deceleration != Actr_Enable) && (waitime++ < CanOvertime));
     if(waitime >= CanOvertime)	return SCA_OperationFailed;
 
@@ -1734,12 +1734,12 @@ uint8_t getProfilePositionDeceleration(uint8_t id,uint8_t isBlock)
 }
 
 /**
-  * @¹¦	ÄÜ	ÉèÖÃÖ´ĞĞÆ÷ÌİĞÎÎ»ÖÃ»·×î´óËÙ¶È
-  * @²Î	Êı	id£ºÒª²Ù×÷µÄÖ´ĞĞÆ÷id
-  *			maxVelocity£º×î´óËÙ¶È£¬Êµ¼ÊÖµ£¬µ¥Î» RPM
-  *			isBlock£ºBlockÎª×èÈûÊ½£¬UnblockÎª·Ç×èÈûÊ½
-  * @·µ	»Ø	SCA_NoError£º²Ù×÷³É¹¦
-  *			ÆäËûÍ¨ĞÅ´íÎó²Î¼û SCA_Error ´íÎóÁĞ±í
+  * @åŠŸ	èƒ½	è®¾ç½®æ‰§è¡Œå™¨æ¢¯å½¢ä½ç½®ç¯æœ€å¤§é€Ÿåº¦
+  * @å‚	æ•°	idï¼šè¦æ“ä½œçš„æ‰§è¡Œå™¨id
+  *			maxVelocityï¼šæœ€å¤§é€Ÿåº¦ï¼Œå®é™…å€¼ï¼Œå•ä½ RPM
+  *			isBlockï¼šBlockä¸ºé˜»å¡å¼ï¼ŒUnblockä¸ºéé˜»å¡å¼
+  * @è¿”	å›	SCA_NoErrorï¼šæ“ä½œæˆåŠŸ
+  *			å…¶ä»–é€šä¿¡é”™è¯¯å‚è§ SCA_Error é”™è¯¯åˆ—è¡¨
   */
 uint8_t setProfilePositionMaxVelocity(uint8_t id, float maxVelocity,uint8_t isBlock)
 {
@@ -1747,11 +1747,11 @@ uint8_t setProfilePositionMaxVelocity(uint8_t id, float maxVelocity,uint8_t isBl
     uint32_t waitime = 0;
     SCA_Handler_t* pSCA = NULL;
 
-    /* »ñÈ¡¸ÃIDµÄĞÅÏ¢¾ä±ú */
+    /* è·å–è¯¥IDçš„ä¿¡æ¯å¥æŸ„ */
     pSCA = getInstance(id);
     if(pSCA == NULL)	return SCA_UnknownID;
 
-    /* Ä¿±ê²ÎÊıĞ´Èë»º´æ£¬µÈ´ı¸üĞÂ */
+    /* ç›®æ ‡å‚æ•°å†™å…¥ç¼“å­˜ï¼Œç­‰å¾…æ›´æ–° */
     pSCA->paraCache.PP_Max_Velocity = maxVelocity;
 
     maxVelocity /= Profile_Scal;
@@ -1759,15 +1759,15 @@ uint8_t setProfilePositionMaxVelocity(uint8_t id, float maxVelocity,uint8_t isBl
     Error = SCA_Write_3(pSCA, W3_PPMaxVelocity, maxVelocity);
     if(Error)	return Error;
 
-    /* ·Ç×èÈû */
+    /* éé˜»å¡ */
     if(isBlock == Unblock)
     {
-        /* ·Ç×èÈû·¢ËÍºóÑÓÊ±´¦Àí£¬·ÀÖ¹×ÜÏß¹ıÔØ */
+        /* éé˜»å¡å‘é€åå»¶æ—¶å¤„ç†ï¼Œé˜²æ­¢æ€»çº¿è¿‡è½½ */
         SCA_Delay(SendInterval);
         return Error;
     }
 
-    /* µÈ´ıÖ´ĞĞ½á¹û */
+    /* ç­‰å¾…æ‰§è¡Œç»“æœ */
     while((pSCA->PP_Max_Velocity != maxVelocity) && (waitime++ < CanOvertime));
     if(waitime >= CanOvertime)	return SCA_OperationFailed;
 
@@ -1775,11 +1775,11 @@ uint8_t setProfilePositionMaxVelocity(uint8_t id, float maxVelocity,uint8_t isBl
 }
 
 /**
-  * @¹¦	ÄÜ	»ñÈ¡Ö´ĞĞÆ÷ÌİĞÎÎ»ÖÃ»·×î´óËÙ¶È£¬¸üĞÂÖÁ¾ä±úÖĞ
-  * @²Î	Êı	id£ºÒª²Ù×÷µÄÖ´ĞĞÆ÷id
-  *			isBlock£ºBlockÎª×èÈûÊ½£¬UnblockÎª·Ç×èÈûÊ½
-  * @·µ	»Ø	SCA_NoError£º²Ù×÷³É¹¦
-  *			ÆäËûÍ¨ĞÅ´íÎó²Î¼û SCA_Error ´íÎóÁĞ±í
+  * @åŠŸ	èƒ½	è·å–æ‰§è¡Œå™¨æ¢¯å½¢ä½ç½®ç¯æœ€å¤§é€Ÿåº¦ï¼Œæ›´æ–°è‡³å¥æŸ„ä¸­
+  * @å‚	æ•°	idï¼šè¦æ“ä½œçš„æ‰§è¡Œå™¨id
+  *			isBlockï¼šBlockä¸ºé˜»å¡å¼ï¼ŒUnblockä¸ºéé˜»å¡å¼
+  * @è¿”	å›	SCA_NoErrorï¼šæ“ä½œæˆåŠŸ
+  *			å…¶ä»–é€šä¿¡é”™è¯¯å‚è§ SCA_Error é”™è¯¯åˆ—è¡¨
   */
 uint8_t getProfilePositionMaxVelocity(uint8_t id,uint8_t isBlock)
 {
@@ -1787,25 +1787,25 @@ uint8_t getProfilePositionMaxVelocity(uint8_t id,uint8_t isBlock)
     uint32_t waitime = 0;
     SCA_Handler_t* pSCA = NULL;
 
-    /* »ñÈ¡¸ÃIDµÄĞÅÏ¢¾ä±ú */
+    /* è·å–è¯¥IDçš„ä¿¡æ¯å¥æŸ„ */
     pSCA = getInstance(id);
     if(pSCA == NULL)	return SCA_UnknownID;
 
-    /* Çå¿Õ×´Ì¬Î» */
+    /* æ¸…ç©ºçŠ¶æ€ä½ */
     pSCA->paraCache.R_PP_Max_Velocity = Actr_Disable;
 
     Error = SCA_Read(pSCA, R3_PPMaxVelocity);
     if(Error)	return Error;
 
-    /* ·Ç×èÈû */
+    /* éé˜»å¡ */
     if(isBlock == Unblock)
     {
-        /* ·Ç×èÈû·¢ËÍºóÑÓÊ±´¦Àí£¬·ÀÖ¹×ÜÏß¹ıÔØ */
+        /* éé˜»å¡å‘é€åå»¶æ—¶å¤„ç†ï¼Œé˜²æ­¢æ€»çº¿è¿‡è½½ */
         SCA_Delay(SendInterval);
         return Error;
     }
 
-    /* µÈ´ıÖ´ĞĞ½á¹û */
+    /* ç­‰å¾…æ‰§è¡Œç»“æœ */
     while((pSCA->paraCache.R_PP_Max_Velocity != Actr_Enable) && (waitime++ < CanOvertime));
     if(waitime >= CanOvertime)	return SCA_OperationFailed;
 
@@ -1813,20 +1813,20 @@ uint8_t getProfilePositionMaxVelocity(uint8_t id,uint8_t isBlock)
 }
 
 
-/****************************ËÙ¶ÈÏà¹Ø*******************************/
+/****************************é€Ÿåº¦ç›¸å…³*******************************/
 
 /**
-  * @¹¦	ÄÜ	ÉèÖÃÖ´ĞĞÆ÷µ±Ç°ËÙ¶ÈÖµ
-  * @²Î	Êı	id£ºÒª²Ù×÷µÄÖ´ĞĞÆ÷id
-  *			vel£ºÄ¿±êËÙ¶È£¬Êµ¼ÊÖµ£¬µ¥Î» RPM
-  * @·µ	»Ø	SCA_NoError£º²Ù×÷³É¹¦
-  *			ÆäËûÍ¨ĞÅ´íÎó²Î¼û SCA_Error ´íÎóÁĞ±í
+  * @åŠŸ	èƒ½	è®¾ç½®æ‰§è¡Œå™¨å½“å‰é€Ÿåº¦å€¼
+  * @å‚	æ•°	idï¼šè¦æ“ä½œçš„æ‰§è¡Œå™¨id
+  *			velï¼šç›®æ ‡é€Ÿåº¦ï¼Œå®é™…å€¼ï¼Œå•ä½ RPM
+  * @è¿”	å›	SCA_NoErrorï¼šæ“ä½œæˆåŠŸ
+  *			å…¶ä»–é€šä¿¡é”™è¯¯å‚è§ SCA_Error é”™è¯¯åˆ—è¡¨
   */
 uint8_t setVelocity(uint8_t id,float vel)
 {
     SCA_Handler_t* pSCA = NULL;
 
-    /* »ñÈ¡¸ÃIDµÄĞÅÏ¢¾ä±ú */
+    /* è·å–è¯¥IDçš„ä¿¡æ¯å¥æŸ„ */
     pSCA = getInstance(id);
     if(pSCA == NULL)	return SCA_UnknownID;
 
@@ -1834,11 +1834,11 @@ uint8_t setVelocity(uint8_t id,float vel)
 }
 
 /**
-  * @¹¦	ÄÜ	ÉèÖÃÖ´ĞĞÆ÷µ±Ç°ËÙ¶ÈÖµ,¿ìËÙ
-  * @²Î	Êı	pSCA£ºÒª²Ù×÷µÄÖ´ĞĞÆ÷¾ä±úÖ¸Õë»òµØÖ·
-  *			vel£ºÄ¿±êËÙ¶È£¬Êµ¼ÊÖµ£¬µ¥Î» RPM
-  * @·µ	»Ø	SCA_NoError£º²Ù×÷³É¹¦
-  *			ÆäËûÍ¨ĞÅ´íÎó²Î¼û SCA_Error ´íÎóÁĞ±í
+  * @åŠŸ	èƒ½	è®¾ç½®æ‰§è¡Œå™¨å½“å‰é€Ÿåº¦å€¼,å¿«é€Ÿ
+  * @å‚	æ•°	pSCAï¼šè¦æ“ä½œçš„æ‰§è¡Œå™¨å¥æŸ„æŒ‡é’ˆæˆ–åœ°å€
+  *			velï¼šç›®æ ‡é€Ÿåº¦ï¼Œå®é™…å€¼ï¼Œå•ä½ RPM
+  * @è¿”	å›	SCA_NoErrorï¼šæ“ä½œæˆåŠŸ
+  *			å…¶ä»–é€šä¿¡é”™è¯¯å‚è§ SCA_Error é”™è¯¯åˆ—è¡¨
   */
 uint8_t setVelocityFast(SCA_Handler_t* pSCA,float vel)
 {
@@ -1847,11 +1847,11 @@ uint8_t setVelocityFast(SCA_Handler_t* pSCA,float vel)
 
 
 /**
-  * @¹¦	ÄÜ	»ñÈ¡Ö´ĞĞÆ÷µ±Ç°ËÙ¶È£¬¸üĞÂÖÁ¾ä±úÖĞ
-  * @²Î	Êı	id£ºÒª²Ù×÷µÄÖ´ĞĞÆ÷id
-  *			isBlock£ºBlockÎª×èÈûÊ½£¬UnblockÎª·Ç×èÈûÊ½
-  * @·µ	»Ø	SCA_NoError£º²Ù×÷³É¹¦
-  *			ÆäËûÍ¨ĞÅ´íÎó²Î¼û SCA_Error ´íÎóÁĞ±í
+  * @åŠŸ	èƒ½	è·å–æ‰§è¡Œå™¨å½“å‰é€Ÿåº¦ï¼Œæ›´æ–°è‡³å¥æŸ„ä¸­
+  * @å‚	æ•°	idï¼šè¦æ“ä½œçš„æ‰§è¡Œå™¨id
+  *			isBlockï¼šBlockä¸ºé˜»å¡å¼ï¼ŒUnblockä¸ºéé˜»å¡å¼
+  * @è¿”	å›	SCA_NoErrorï¼šæ“ä½œæˆåŠŸ
+  *			å…¶ä»–é€šä¿¡é”™è¯¯å‚è§ SCA_Error é”™è¯¯åˆ—è¡¨
   */
 uint8_t getVelocity(uint8_t id,uint8_t isBlock)
 {
@@ -1859,25 +1859,25 @@ uint8_t getVelocity(uint8_t id,uint8_t isBlock)
     uint32_t waitime = 0;
     SCA_Handler_t* pSCA = NULL;
 
-    /* »ñÈ¡¸ÃIDµÄĞÅÏ¢¾ä±ú */
+    /* è·å–è¯¥IDçš„ä¿¡æ¯å¥æŸ„ */
     pSCA = getInstance(id);
     if(pSCA == NULL)	return SCA_UnknownID;
 
-    /* Çå¿Õ×´Ì¬Î» */
+    /* æ¸…ç©ºçŠ¶æ€ä½ */
     pSCA->paraCache.R_Velocity_Real = Actr_Disable;
 
     Error = SCA_Read(pSCA, R3_Velocity);
     if(Error)	return Error;
 
-    /* ·Ç×èÈû */
+    /* éé˜»å¡ */
     if(isBlock == Unblock)
     {
-        /* ·Ç×èÈû·¢ËÍºóÑÓÊ±´¦Àí£¬·ÀÖ¹×ÜÏß¹ıÔØ */
+        /* éé˜»å¡å‘é€åå»¶æ—¶å¤„ç†ï¼Œé˜²æ­¢æ€»çº¿è¿‡è½½ */
         SCA_Delay(SendInterval);
         return Error;
     }
 
-    /* µÈ´ıÖ´ĞĞ½á¹û */
+    /* ç­‰å¾…æ‰§è¡Œç»“æœ */
     while((pSCA->paraCache.R_Velocity_Real != Actr_Enable) && (waitime++ < CanOvertime));
     if(waitime >= CanOvertime)	return SCA_OperationFailed;
 
@@ -1885,32 +1885,32 @@ uint8_t getVelocity(uint8_t id,uint8_t isBlock)
 }
 
 /**
-  * @¹¦	ÄÜ	»ñÈ¡Ö´ĞĞÆ÷µ±Ç°ËÙ¶È£¬¸üĞÂÖÁ¾ä±úÖĞ,¿ìËÙ
-  * @²Î	Êı	id£ºÒª²Ù×÷µÄÖ´ĞĞÆ÷id
-  *			isBlock£ºBlockÎª×èÈûÊ½£¬UnblockÎª·Ç×èÈûÊ½
-  * @·µ	»Ø	SCA_NoError£º²Ù×÷³É¹¦
-  *			ÆäËûÍ¨ĞÅ´íÎó²Î¼û SCA_Error ´íÎóÁĞ±í
+  * @åŠŸ	èƒ½	è·å–æ‰§è¡Œå™¨å½“å‰é€Ÿåº¦ï¼Œæ›´æ–°è‡³å¥æŸ„ä¸­,å¿«é€Ÿ
+  * @å‚	æ•°	idï¼šè¦æ“ä½œçš„æ‰§è¡Œå™¨id
+  *			isBlockï¼šBlockä¸ºé˜»å¡å¼ï¼ŒUnblockä¸ºéé˜»å¡å¼
+  * @è¿”	å›	SCA_NoErrorï¼šæ“ä½œæˆåŠŸ
+  *			å…¶ä»–é€šä¿¡é”™è¯¯å‚è§ SCA_Error é”™è¯¯åˆ—è¡¨
   */
 uint8_t getVelocityFast(SCA_Handler_t* pSCA,uint8_t isBlock)
 {
     uint8_t Error;
     uint32_t waitime = 0;
 
-    /* Çå¿Õ×´Ì¬Î» */
+    /* æ¸…ç©ºçŠ¶æ€ä½ */
     pSCA->paraCache.R_Velocity_Real = Actr_Disable;
 
     Error = SCA_Read(pSCA, R3_Velocity);
     if(Error)	return Error;
 
-    /* ·Ç×èÈû */
+    /* éé˜»å¡ */
     if(isBlock == Unblock)
     {
-        /* ·Ç×èÈû·¢ËÍºóÑÓÊ±´¦Àí£¬·ÀÖ¹×ÜÏß¹ıÔØ */
+        /* éé˜»å¡å‘é€åå»¶æ—¶å¤„ç†ï¼Œé˜²æ­¢æ€»çº¿è¿‡è½½ */
         SCA_Delay(SendInterval);
         return Error;
     }
 
-    /* µÈ´ıÖ´ĞĞ½á¹û */
+    /* ç­‰å¾…æ‰§è¡Œç»“æœ */
     while((pSCA->paraCache.R_Velocity_Real != Actr_Enable) && (waitime++ < CanOvertime));
     if(waitime >= CanOvertime)	return SCA_OperationFailed;
 
@@ -1918,11 +1918,11 @@ uint8_t getVelocityFast(SCA_Handler_t* pSCA,uint8_t isBlock)
 }
 
 /**
-  * @¹¦	ÄÜ	»ñÈ¡Ö´ĞĞÆ÷ËÙ¶È»·±ÈÀı£¬¸üĞÂÖÁ¾ä±úÖĞ
-  * @²Î	Êı	id£ºÒª²Ù×÷µÄÖ´ĞĞÆ÷id
-  *			isBlock£ºBlockÎª×èÈûÊ½£¬UnblockÎª·Ç×èÈûÊ½
-  * @·µ	»Ø	SCA_NoError£º²Ù×÷³É¹¦
-  *			ÆäËûÍ¨ĞÅ´íÎó²Î¼û SCA_Error ´íÎóÁĞ±í
+  * @åŠŸ	èƒ½	è·å–æ‰§è¡Œå™¨é€Ÿåº¦ç¯æ¯”ä¾‹ï¼Œæ›´æ–°è‡³å¥æŸ„ä¸­
+  * @å‚	æ•°	idï¼šè¦æ“ä½œçš„æ‰§è¡Œå™¨id
+  *			isBlockï¼šBlockä¸ºé˜»å¡å¼ï¼ŒUnblockä¸ºéé˜»å¡å¼
+  * @è¿”	å›	SCA_NoErrorï¼šæ“ä½œæˆåŠŸ
+  *			å…¶ä»–é€šä¿¡é”™è¯¯å‚è§ SCA_Error é”™è¯¯åˆ—è¡¨
   */
 uint8_t getVelocityKp(uint8_t id,uint8_t isBlock)
 {
@@ -1930,25 +1930,25 @@ uint8_t getVelocityKp(uint8_t id,uint8_t isBlock)
     uint32_t waitime = 0;
     SCA_Handler_t* pSCA = NULL;
 
-    /* »ñÈ¡¸ÃIDµÄĞÅÏ¢¾ä±ú */
+    /* è·å–è¯¥IDçš„ä¿¡æ¯å¥æŸ„ */
     pSCA = getInstance(id);
     if(pSCA == NULL)	return SCA_UnknownID;
 
-    /* Çå¿Õ×´Ì¬Î» */
+    /* æ¸…ç©ºçŠ¶æ€ä½ */
     pSCA->paraCache.R_Velocity_Filter_P = Actr_Disable;
 
     Error = SCA_Read(pSCA, R3_VelocityFilterP);
     if(Error)	return Error;
 
-    /* ·Ç×èÈû */
+    /* éé˜»å¡ */
     if(isBlock == Unblock)
     {
-        /* ·Ç×èÈû·¢ËÍºóÑÓÊ±´¦Àí£¬·ÀÖ¹×ÜÏß¹ıÔØ */
+        /* éé˜»å¡å‘é€åå»¶æ—¶å¤„ç†ï¼Œé˜²æ­¢æ€»çº¿è¿‡è½½ */
         SCA_Delay(SendInterval);
         return Error;
     }
 
-    /* µÈ´ıÖ´ĞĞ½á¹û */
+    /* ç­‰å¾…æ‰§è¡Œç»“æœ */
     while((pSCA->paraCache.R_Velocity_Filter_P != Actr_Enable) && (waitime++ < CanOvertime));
     if(waitime >= CanOvertime)	return SCA_OperationFailed;
 
@@ -1956,12 +1956,12 @@ uint8_t getVelocityKp(uint8_t id,uint8_t isBlock)
 }
 
 /**
-  * @¹¦	ÄÜ	ÉèÖÃÖ´ĞĞÆ÷ËÙ¶È»·±ÈÀı
-  * @²Î	Êı	id£ºÒª²Ù×÷µÄÖ´ĞĞÆ÷id
-  *			Kp£ºËÙ¶È»·±ÈÀı£¬Êµ¼ÊÖµ
-  *			isBlock£ºBlockÎª×èÈûÊ½£¬UnblockÎª·Ç×èÈûÊ½
-  * @·µ	»Ø	SCA_NoError£º²Ù×÷³É¹¦
-  *			ÆäËûÍ¨ĞÅ´íÎó²Î¼û SCA_Error ´íÎóÁĞ±í
+  * @åŠŸ	èƒ½	è®¾ç½®æ‰§è¡Œå™¨é€Ÿåº¦ç¯æ¯”ä¾‹
+  * @å‚	æ•°	idï¼šè¦æ“ä½œçš„æ‰§è¡Œå™¨id
+  *			Kpï¼šé€Ÿåº¦ç¯æ¯”ä¾‹ï¼Œå®é™…å€¼
+  *			isBlockï¼šBlockä¸ºé˜»å¡å¼ï¼ŒUnblockä¸ºéé˜»å¡å¼
+  * @è¿”	å›	SCA_NoErrorï¼šæ“ä½œæˆåŠŸ
+  *			å…¶ä»–é€šä¿¡é”™è¯¯å‚è§ SCA_Error é”™è¯¯åˆ—è¡¨
   */
 uint8_t setVelocityKp(uint8_t id,float Kp,uint8_t isBlock)
 {
@@ -1969,25 +1969,25 @@ uint8_t setVelocityKp(uint8_t id,float Kp,uint8_t isBlock)
     uint32_t waitime = 0;
     SCA_Handler_t* pSCA = NULL;
 
-    /* »ñÈ¡¸ÃIDµÄĞÅÏ¢¾ä±ú */
+    /* è·å–è¯¥IDçš„ä¿¡æ¯å¥æŸ„ */
     pSCA = getInstance(id);
     if(pSCA == NULL)	return SCA_UnknownID;
 
-    /* Ä¿±ê²ÎÊıĞ´Èë»º´æ£¬µÈ´ı¸üĞÂ */
+    /* ç›®æ ‡å‚æ•°å†™å…¥ç¼“å­˜ï¼Œç­‰å¾…æ›´æ–° */
     pSCA->paraCache.Velocity_Filter_P = Kp;
 
     Error = SCA_Write_3(pSCA, W3_VelocityFilterP, Kp);
     if(Error)	return Error;
 
-    /* ·Ç×èÈû */
+    /* éé˜»å¡ */
     if(isBlock == Unblock)
     {
-        /* ·Ç×èÈû·¢ËÍºóÑÓÊ±´¦Àí£¬·ÀÖ¹×ÜÏß¹ıÔØ */
+        /* éé˜»å¡å‘é€åå»¶æ—¶å¤„ç†ï¼Œé˜²æ­¢æ€»çº¿è¿‡è½½ */
         SCA_Delay(SendInterval);
         return Error;
     }
 
-    /* µÈ´ıÖ´ĞĞ½á¹û */
+    /* ç­‰å¾…æ‰§è¡Œç»“æœ */
     while((pSCA->Velocity_Filter_P != Kp) && (waitime++ < CanOvertime));
     if(waitime >= CanOvertime)	return SCA_OperationFailed;
 
@@ -1995,11 +1995,11 @@ uint8_t setVelocityKp(uint8_t id,float Kp,uint8_t isBlock)
 }
 
 /**
-  * @¹¦	ÄÜ	»ñÈ¡Ö´ĞĞÆ÷ËÙ¶È»·»ı·Ö£¬¸üĞÂÖÁ¾ä±úÖĞ
-  * @²Î	Êı	id£ºÒª²Ù×÷µÄÖ´ĞĞÆ÷id
-  *			isBlock£ºBlockÎª×èÈûÊ½£¬UnblockÎª·Ç×èÈûÊ½
-  * @·µ	»Ø	SCA_NoError£º²Ù×÷³É¹¦
-  *			ÆäËûÍ¨ĞÅ´íÎó²Î¼û SCA_Error ´íÎóÁĞ±í
+  * @åŠŸ	èƒ½	è·å–æ‰§è¡Œå™¨é€Ÿåº¦ç¯ç§¯åˆ†ï¼Œæ›´æ–°è‡³å¥æŸ„ä¸­
+  * @å‚	æ•°	idï¼šè¦æ“ä½œçš„æ‰§è¡Œå™¨id
+  *			isBlockï¼šBlockä¸ºé˜»å¡å¼ï¼ŒUnblockä¸ºéé˜»å¡å¼
+  * @è¿”	å›	SCA_NoErrorï¼šæ“ä½œæˆåŠŸ
+  *			å…¶ä»–é€šä¿¡é”™è¯¯å‚è§ SCA_Error é”™è¯¯åˆ—è¡¨
   */
 uint8_t getVelocityKi(uint8_t id,uint8_t isBlock)
 {
@@ -2007,25 +2007,25 @@ uint8_t getVelocityKi(uint8_t id,uint8_t isBlock)
     uint32_t waitime = 0;
     SCA_Handler_t* pSCA = NULL;
 
-    /* »ñÈ¡¸ÃIDµÄĞÅÏ¢¾ä±ú */
+    /* è·å–è¯¥IDçš„ä¿¡æ¯å¥æŸ„ */
     pSCA = getInstance(id);
     if(pSCA == NULL)	return SCA_UnknownID;
 
-    /* Çå¿Õ×´Ì¬Î» */
+    /* æ¸…ç©ºçŠ¶æ€ä½ */
     pSCA->paraCache.R_Velocity_Filter_I = Actr_Disable;
 
     Error = SCA_Read(pSCA, R3_VelocityFilterI);
     if(Error)	return Error;
 
-    /* ·Ç×èÈû */
+    /* éé˜»å¡ */
     if(isBlock == Unblock)
     {
-        /* ·Ç×èÈû·¢ËÍºóÑÓÊ±´¦Àí£¬·ÀÖ¹×ÜÏß¹ıÔØ */
+        /* éé˜»å¡å‘é€åå»¶æ—¶å¤„ç†ï¼Œé˜²æ­¢æ€»çº¿è¿‡è½½ */
         SCA_Delay(SendInterval);
         return Error;
     }
 
-    /* µÈ´ıÖ´ĞĞ½á¹û */
+    /* ç­‰å¾…æ‰§è¡Œç»“æœ */
     while((pSCA->paraCache.R_Velocity_Filter_I != Actr_Enable) && (waitime++ < CanOvertime));
     if(waitime >= CanOvertime)	return SCA_OperationFailed;
 
@@ -2033,12 +2033,12 @@ uint8_t getVelocityKi(uint8_t id,uint8_t isBlock)
 }
 
 /**
-  * @¹¦	ÄÜ	ÉèÖÃÖ´ĞĞÆ÷ËÙ¶È»·»ı·Ö
-  * @²Î	Êı	id£ºÒª²Ù×÷µÄÖ´ĞĞÆ÷id
-  *			Ki£ºËÙ¶È»·»ı·Ö£¬Êµ¼ÊÖµ
-  *			isBlock£ºBlockÎª×èÈûÊ½£¬UnblockÎª·Ç×èÈûÊ½
-  * @·µ	»Ø	SCA_NoError£º²Ù×÷³É¹¦
-  *			ÆäËûÍ¨ĞÅ´íÎó²Î¼û SCA_Error ´íÎóÁĞ±í
+  * @åŠŸ	èƒ½	è®¾ç½®æ‰§è¡Œå™¨é€Ÿåº¦ç¯ç§¯åˆ†
+  * @å‚	æ•°	idï¼šè¦æ“ä½œçš„æ‰§è¡Œå™¨id
+  *			Kiï¼šé€Ÿåº¦ç¯ç§¯åˆ†ï¼Œå®é™…å€¼
+  *			isBlockï¼šBlockä¸ºé˜»å¡å¼ï¼ŒUnblockä¸ºéé˜»å¡å¼
+  * @è¿”	å›	SCA_NoErrorï¼šæ“ä½œæˆåŠŸ
+  *			å…¶ä»–é€šä¿¡é”™è¯¯å‚è§ SCA_Error é”™è¯¯åˆ—è¡¨
   */
 uint8_t setVelocityKi(uint8_t id, float Ki,uint8_t isBlock)
 {
@@ -2046,25 +2046,25 @@ uint8_t setVelocityKi(uint8_t id, float Ki,uint8_t isBlock)
     uint32_t waitime = 0;
     SCA_Handler_t* pSCA = NULL;
 
-    /* »ñÈ¡¸ÃIDµÄĞÅÏ¢¾ä±ú */
+    /* è·å–è¯¥IDçš„ä¿¡æ¯å¥æŸ„ */
     pSCA = getInstance(id);
     if(pSCA == NULL)	return SCA_UnknownID;
 
-    /* Ä¿±ê²ÎÊıĞ´Èë»º´æ£¬µÈ´ı¸üĞÂ */
+    /* ç›®æ ‡å‚æ•°å†™å…¥ç¼“å­˜ï¼Œç­‰å¾…æ›´æ–° */
     pSCA->paraCache.Velocity_Filter_I = Ki;
 
     Error = SCA_Write_3(pSCA, W3_VelocityFilterI, Ki);
     if(Error)	return Error;
 
-    /* ·Ç×èÈû */
+    /* éé˜»å¡ */
     if(isBlock == Unblock)
     {
-        /* ·Ç×èÈû·¢ËÍºóÑÓÊ±´¦Àí£¬·ÀÖ¹×ÜÏß¹ıÔØ */
+        /* éé˜»å¡å‘é€åå»¶æ—¶å¤„ç†ï¼Œé˜²æ­¢æ€»çº¿è¿‡è½½ */
         SCA_Delay(SendInterval);
         return Error;
     }
 
-    /* µÈ´ıÖ´ĞĞ½á¹û */
+    /* ç­‰å¾…æ‰§è¡Œç»“æœ */
     while((pSCA->Velocity_Filter_I != Ki) && (waitime++ < CanOvertime));
     if(waitime >= CanOvertime)	return SCA_OperationFailed;
 
@@ -2072,11 +2072,11 @@ uint8_t setVelocityKi(uint8_t id, float Ki,uint8_t isBlock)
 }
 
 /**
-  * @¹¦	ÄÜ	»ñÈ¡Ö´ĞĞÆ÷ËÙ¶È»·×î´óÊä³öÏŞ·ù£¬¸üĞÂÖÁ¾ä±úÖĞ
-  * @²Î	Êı	id£ºÒª²Ù×÷µÄÖ´ĞĞÆ÷id
-  *			isBlock£ºBlockÎª×èÈûÊ½£¬UnblockÎª·Ç×èÈûÊ½
-  * @·µ	»Ø	SCA_NoError£º²Ù×÷³É¹¦
-  *			ÆäËûÍ¨ĞÅ´íÎó²Î¼û SCA_Error ´íÎóÁĞ±í
+  * @åŠŸ	èƒ½	è·å–æ‰§è¡Œå™¨é€Ÿåº¦ç¯æœ€å¤§è¾“å‡ºé™å¹…ï¼Œæ›´æ–°è‡³å¥æŸ„ä¸­
+  * @å‚	æ•°	idï¼šè¦æ“ä½œçš„æ‰§è¡Œå™¨id
+  *			isBlockï¼šBlockä¸ºé˜»å¡å¼ï¼ŒUnblockä¸ºéé˜»å¡å¼
+  * @è¿”	å›	SCA_NoErrorï¼šæ“ä½œæˆåŠŸ
+  *			å…¶ä»–é€šä¿¡é”™è¯¯å‚è§ SCA_Error é”™è¯¯åˆ—è¡¨
   */
 uint8_t getVelocityUmax(uint8_t id,uint8_t isBlock)
 {
@@ -2084,25 +2084,25 @@ uint8_t getVelocityUmax(uint8_t id,uint8_t isBlock)
     uint32_t waitime = 0;
     SCA_Handler_t* pSCA = NULL;
 
-    /* »ñÈ¡¸ÃIDµÄĞÅÏ¢¾ä±ú */
+    /* è·å–è¯¥IDçš„ä¿¡æ¯å¥æŸ„ */
     pSCA = getInstance(id);
     if(pSCA == NULL)	return SCA_UnknownID;
 
-    /* Çå¿Õ×´Ì¬Î» */
+    /* æ¸…ç©ºçŠ¶æ€ä½ */
     pSCA->paraCache.R_Velocity_Filter_Limit_H = Actr_Disable;
 
     Error = SCA_Read(pSCA, R3_VelocityFilterLimitH);
     if(Error)	return Error;
 
-    /* ·Ç×èÈû */
+    /* éé˜»å¡ */
     if(isBlock == Unblock)
     {
-        /* ·Ç×èÈû·¢ËÍºóÑÓÊ±´¦Àí£¬·ÀÖ¹×ÜÏß¹ıÔØ */
+        /* éé˜»å¡å‘é€åå»¶æ—¶å¤„ç†ï¼Œé˜²æ­¢æ€»çº¿è¿‡è½½ */
         SCA_Delay(SendInterval);
         return Error;
     }
 
-    /* µÈ´ıÖ´ĞĞ½á¹û */
+    /* ç­‰å¾…æ‰§è¡Œç»“æœ */
     while((pSCA->paraCache.R_Velocity_Filter_Limit_H != Actr_Enable) && (waitime++ < CanOvertime));
     if(waitime >= CanOvertime)	return SCA_OperationFailed;
 
@@ -2110,12 +2110,12 @@ uint8_t getVelocityUmax(uint8_t id,uint8_t isBlock)
 }
 
 /**
-  * @¹¦	ÄÜ	ÉèÖÃÖ´ĞĞÆ÷ËÙ¶È»·×î´óÊä³öÏŞ·ù
-  * @²Î	Êı	id£ºÒª²Ù×÷µÄÖ´ĞĞÆ÷id
-  *			max£º×î´óÊä³öÏŞ·ù£¬Êµ¼ÊÖµ
-  *			isBlock£ºBlockÎª×èÈûÊ½£¬UnblockÎª·Ç×èÈûÊ½
-  * @·µ	»Ø	SCA_NoError£º²Ù×÷³É¹¦
-  *			ÆäËûÍ¨ĞÅ´íÎó²Î¼û SCA_Error ´íÎóÁĞ±í
+  * @åŠŸ	èƒ½	è®¾ç½®æ‰§è¡Œå™¨é€Ÿåº¦ç¯æœ€å¤§è¾“å‡ºé™å¹…
+  * @å‚	æ•°	idï¼šè¦æ“ä½œçš„æ‰§è¡Œå™¨id
+  *			maxï¼šæœ€å¤§è¾“å‡ºé™å¹…ï¼Œå®é™…å€¼
+  *			isBlockï¼šBlockä¸ºé˜»å¡å¼ï¼ŒUnblockä¸ºéé˜»å¡å¼
+  * @è¿”	å›	SCA_NoErrorï¼šæ“ä½œæˆåŠŸ
+  *			å…¶ä»–é€šä¿¡é”™è¯¯å‚è§ SCA_Error é”™è¯¯åˆ—è¡¨
   */
 uint8_t setVelocityUmax(uint8_t id, float max,uint8_t isBlock)
 {
@@ -2123,25 +2123,25 @@ uint8_t setVelocityUmax(uint8_t id, float max,uint8_t isBlock)
     uint32_t waitime = 0;
     SCA_Handler_t* pSCA = NULL;
 
-    /* »ñÈ¡¸ÃIDµÄĞÅÏ¢¾ä±ú */
+    /* è·å–è¯¥IDçš„ä¿¡æ¯å¥æŸ„ */
     pSCA = getInstance(id);
     if(pSCA == NULL)	return SCA_UnknownID;
 
-    /* Ä¿±ê²ÎÊıĞ´Èë»º´æ£¬µÈ´ı¸üĞÂ */
+    /* ç›®æ ‡å‚æ•°å†™å…¥ç¼“å­˜ï¼Œç­‰å¾…æ›´æ–° */
     pSCA->paraCache.Velocity_Filter_Limit_H = max;
 
     Error = SCA_Write_3(pSCA, W3_VelocityFilterLimitH, max);
     if(Error)	return Error;
 
-    /* ·Ç×èÈû */
+    /* éé˜»å¡ */
     if(isBlock == Unblock)
     {
-        /* ·Ç×èÈû·¢ËÍºóÑÓÊ±´¦Àí£¬·ÀÖ¹×ÜÏß¹ıÔØ */
+        /* éé˜»å¡å‘é€åå»¶æ—¶å¤„ç†ï¼Œé˜²æ­¢æ€»çº¿è¿‡è½½ */
         SCA_Delay(SendInterval);
         return Error;
     }
 
-    /* µÈ´ıÖ´ĞĞ½á¹û */
+    /* ç­‰å¾…æ‰§è¡Œç»“æœ */
     while((pSCA->Velocity_Filter_Limit_H != max) && (waitime++ < CanOvertime));
     if(waitime >= CanOvertime)	return SCA_OperationFailed;
 
@@ -2149,11 +2149,11 @@ uint8_t setVelocityUmax(uint8_t id, float max,uint8_t isBlock)
 }
 
 /**
-  * @¹¦	ÄÜ	»ñÈ¡Ö´ĞĞÆ÷ËÙ¶È»·×îĞ¡Êä³öÏŞ·ù£¬¸üĞÂÖÁ¾ä±úÖĞ
-  * @²Î	Êı	id£ºÒª²Ù×÷µÄÖ´ĞĞÆ÷id
-  *			isBlock£ºBlockÎª×èÈûÊ½£¬UnblockÎª·Ç×èÈûÊ½
-  * @·µ	»Ø	SCA_NoError£º²Ù×÷³É¹¦
-  *			ÆäËûÍ¨ĞÅ´íÎó²Î¼û SCA_Error ´íÎóÁĞ±í
+  * @åŠŸ	èƒ½	è·å–æ‰§è¡Œå™¨é€Ÿåº¦ç¯æœ€å°è¾“å‡ºé™å¹…ï¼Œæ›´æ–°è‡³å¥æŸ„ä¸­
+  * @å‚	æ•°	idï¼šè¦æ“ä½œçš„æ‰§è¡Œå™¨id
+  *			isBlockï¼šBlockä¸ºé˜»å¡å¼ï¼ŒUnblockä¸ºéé˜»å¡å¼
+  * @è¿”	å›	SCA_NoErrorï¼šæ“ä½œæˆåŠŸ
+  *			å…¶ä»–é€šä¿¡é”™è¯¯å‚è§ SCA_Error é”™è¯¯åˆ—è¡¨
   */
 uint8_t getVelocityUmin(uint8_t id,uint8_t isBlock)
 {
@@ -2161,25 +2161,25 @@ uint8_t getVelocityUmin(uint8_t id,uint8_t isBlock)
     uint32_t waitime = 0;
     SCA_Handler_t* pSCA = NULL;
 
-    /* »ñÈ¡¸ÃIDµÄĞÅÏ¢¾ä±ú */
+    /* è·å–è¯¥IDçš„ä¿¡æ¯å¥æŸ„ */
     pSCA = getInstance(id);
     if(pSCA == NULL)	return SCA_UnknownID;
 
-    /* Çå¿Õ×´Ì¬Î» */
+    /* æ¸…ç©ºçŠ¶æ€ä½ */
     pSCA->paraCache.R_Velocity_Filter_Limit_L = Actr_Disable;
 
     Error = SCA_Read(pSCA, R3_VelocityFilterLimitL);
     if(Error)	return Error;
 
-    /* ·Ç×èÈû */
+    /* éé˜»å¡ */
     if(isBlock == Unblock)
     {
-        /* ·Ç×èÈû·¢ËÍºóÑÓÊ±´¦Àí£¬·ÀÖ¹×ÜÏß¹ıÔØ */
+        /* éé˜»å¡å‘é€åå»¶æ—¶å¤„ç†ï¼Œé˜²æ­¢æ€»çº¿è¿‡è½½ */
         SCA_Delay(SendInterval);
         return Error;
     }
 
-    /* µÈ´ıÖ´ĞĞ½á¹û */
+    /* ç­‰å¾…æ‰§è¡Œç»“æœ */
     while((pSCA->paraCache.R_Velocity_Filter_Limit_L != Actr_Enable) && (waitime++ < CanOvertime));
     if(waitime >= CanOvertime)	return SCA_OperationFailed;
 
@@ -2187,12 +2187,12 @@ uint8_t getVelocityUmin(uint8_t id,uint8_t isBlock)
 }
 
 /**
-  * @¹¦	ÄÜ	ÉèÖÃÖ´ĞĞÆ÷ËÙ¶È»·×îĞ¡Êä³öÏŞ·ù
-  * @²Î	Êı	id£ºÒª²Ù×÷µÄÖ´ĞĞÆ÷id
-  *			min£º×îĞ¡Êä³öÏŞ·ù£¬Êµ¼ÊÖµ
-  *			isBlock£ºBlockÎª×èÈûÊ½£¬UnblockÎª·Ç×èÈûÊ½
-  * @·µ	»Ø	SCA_NoError£º²Ù×÷³É¹¦
-  *			ÆäËûÍ¨ĞÅ´íÎó²Î¼û SCA_Error ´íÎóÁĞ±í
+  * @åŠŸ	èƒ½	è®¾ç½®æ‰§è¡Œå™¨é€Ÿåº¦ç¯æœ€å°è¾“å‡ºé™å¹…
+  * @å‚	æ•°	idï¼šè¦æ“ä½œçš„æ‰§è¡Œå™¨id
+  *			minï¼šæœ€å°è¾“å‡ºé™å¹…ï¼Œå®é™…å€¼
+  *			isBlockï¼šBlockä¸ºé˜»å¡å¼ï¼ŒUnblockä¸ºéé˜»å¡å¼
+  * @è¿”	å›	SCA_NoErrorï¼šæ“ä½œæˆåŠŸ
+  *			å…¶ä»–é€šä¿¡é”™è¯¯å‚è§ SCA_Error é”™è¯¯åˆ—è¡¨
   */
 uint8_t setVelocityUmin(uint8_t id, float min,uint8_t isBlock)
 {
@@ -2200,25 +2200,25 @@ uint8_t setVelocityUmin(uint8_t id, float min,uint8_t isBlock)
     uint32_t waitime = 0;
     SCA_Handler_t* pSCA = NULL;
 
-    /* »ñÈ¡¸ÃIDµÄĞÅÏ¢¾ä±ú */
+    /* è·å–è¯¥IDçš„ä¿¡æ¯å¥æŸ„ */
     pSCA = getInstance(id);
     if(pSCA == NULL)	return SCA_UnknownID;
 
-    /* Ä¿±ê²ÎÊıĞ´Èë»º´æ£¬µÈ´ı¸üĞÂ */
+    /* ç›®æ ‡å‚æ•°å†™å…¥ç¼“å­˜ï¼Œç­‰å¾…æ›´æ–° */
     pSCA->paraCache.Velocity_Filter_Limit_L = min;
 
     Error = SCA_Write_3(pSCA, W3_VelocityFilterLimitL, min);
     if(Error)	return Error;
 
-    /* ·Ç×èÈû */
+    /* éé˜»å¡ */
     if(isBlock == Unblock)
     {
-        /* ·Ç×èÈû·¢ËÍºóÑÓÊ±´¦Àí£¬·ÀÖ¹×ÜÏß¹ıÔØ */
+        /* éé˜»å¡å‘é€åå»¶æ—¶å¤„ç†ï¼Œé˜²æ­¢æ€»çº¿è¿‡è½½ */
         SCA_Delay(SendInterval);
         return Error;
     }
 
-    /* µÈ´ıÖ´ĞĞ½á¹û */
+    /* ç­‰å¾…æ‰§è¡Œç»“æœ */
     while((pSCA->Velocity_Filter_Limit_L != min) && (waitime++ < CanOvertime));
     if(waitime >= CanOvertime)	return SCA_OperationFailed;
 
@@ -2226,9 +2226,9 @@ uint8_t setVelocityUmin(uint8_t id, float min,uint8_t isBlock)
 }
 
 /**
-  * @¹¦	ÄÜ	»ñÈ¡Ö´ĞĞÆ÷ËÙ¶È»·ËÙ¶ÈÁ¿³Ì
-  * @²Î	Êı	id£ºÒª²Ù×÷µÄÖ´ĞĞÆ÷id
-  * @·µ	»Ø	ËÙ¶È»·ËÙ¶ÈÁ¿³Ì£¬Êµ¼ÊÖµ
+  * @åŠŸ	èƒ½	è·å–æ‰§è¡Œå™¨é€Ÿåº¦ç¯é€Ÿåº¦é‡ç¨‹
+  * @å‚	æ•°	idï¼šè¦æ“ä½œçš„æ‰§è¡Œå™¨id
+  * @è¿”	å›	é€Ÿåº¦ç¯é€Ÿåº¦é‡ç¨‹ï¼Œå®é™…å€¼
   */
 float getVelocityRange(uint8_t id)
 {
@@ -2236,12 +2236,12 @@ float getVelocityRange(uint8_t id)
 }
 
 /**
-  * @¹¦	ÄÜ	Ê¹ÄÜÖ´ĞĞÆ÷ËÙ¶È»·ÂË²¨Æ÷
-  * @²Î	Êı	id£ºÒª²Ù×÷µÄÖ´ĞĞÆ÷id
-  *			enable£ºÊ¹ÄÜ×´Ì¬£¬Actr_EnableÊ¹ÄÜ£¬Actr_DisableÊ§ÄÜ
-  *			isBlock£ºBlockÎª×èÈûÊ½£¬UnblockÎª·Ç×èÈûÊ½
-  * @·µ	»Ø	SCA_NoError£º²Ù×÷³É¹¦
-  *			ÆäËûÍ¨ĞÅ´íÎó²Î¼û SCA_Error ´íÎóÁĞ±í
+  * @åŠŸ	èƒ½	ä½¿èƒ½æ‰§è¡Œå™¨é€Ÿåº¦ç¯æ»¤æ³¢å™¨
+  * @å‚	æ•°	idï¼šè¦æ“ä½œçš„æ‰§è¡Œå™¨id
+  *			enableï¼šä½¿èƒ½çŠ¶æ€ï¼ŒActr_Enableä½¿èƒ½ï¼ŒActr_Disableå¤±èƒ½
+  *			isBlockï¼šBlockä¸ºé˜»å¡å¼ï¼ŒUnblockä¸ºéé˜»å¡å¼
+  * @è¿”	å›	SCA_NoErrorï¼šæ“ä½œæˆåŠŸ
+  *			å…¶ä»–é€šä¿¡é”™è¯¯å‚è§ SCA_Error é”™è¯¯åˆ—è¡¨
   */
 uint8_t enableVelocityFilter(uint8_t id,uint8_t enable,uint8_t isBlock)
 {
@@ -2249,25 +2249,25 @@ uint8_t enableVelocityFilter(uint8_t id,uint8_t enable,uint8_t isBlock)
     uint32_t waitime = 0;
     SCA_Handler_t* pSCA = NULL;
 
-    /* »ñÈ¡¸ÃIDµÄĞÅÏ¢¾ä±ú */
+    /* è·å–è¯¥IDçš„ä¿¡æ¯å¥æŸ„ */
     pSCA = getInstance(id);
     if(pSCA == NULL)	return SCA_UnknownID;
 
-    /* Ä¿±ê²ÎÊıĞ´Èë»º´æ£¬µÈ´ı¸üĞÂ */
+    /* ç›®æ ‡å‚æ•°å†™å…¥ç¼“å­˜ï¼Œç­‰å¾…æ›´æ–° */
     pSCA->paraCache.Velocity_Filter_State = enable;
 
     Error = SCA_Write_1(pSCA, W1_VelocityFilterState, enable);
     if(Error)	return Error;
 
-    /* ·Ç×èÈû */
+    /* éé˜»å¡ */
     if(isBlock == Unblock)
     {
-        /* ·Ç×èÈû·¢ËÍºóÑÓÊ±´¦Àí£¬·ÀÖ¹×ÜÏß¹ıÔØ */
+        /* éé˜»å¡å‘é€åå»¶æ—¶å¤„ç†ï¼Œé˜²æ­¢æ€»çº¿è¿‡è½½ */
         SCA_Delay(SendInterval);
         return Error;
     }
 
-    /* µÈ´ıÖ´ĞĞ½á¹û */
+    /* ç­‰å¾…æ‰§è¡Œç»“æœ */
     while((pSCA->Velocity_Filter_State != enable) && (waitime++ < CanOvertime));
     if(waitime >= CanOvertime)	return SCA_OperationFailed;
 
@@ -2275,11 +2275,11 @@ uint8_t enableVelocityFilter(uint8_t id,uint8_t enable,uint8_t isBlock)
 }
 
 /**
-  * @¹¦	ÄÜ	»ñÈ¡Ö´ĞĞÆ÷ËÙ¶È»·ÂË²¨Æ÷Ê¹ÄÜ×´Ì¬£¬¸üĞÂÖÁ¾ä±úÖĞ
-  * @²Î	Êı	id£ºÒª²Ù×÷µÄÖ´ĞĞÆ÷id
-  *			isBlock£ºBlockÎª×èÈûÊ½£¬UnblockÎª·Ç×èÈûÊ½
-  * @·µ	»Ø	SCA_NoError£º²Ù×÷³É¹¦
-  *			ÆäËûÍ¨ĞÅ´íÎó²Î¼û SCA_Error ´íÎóÁĞ±í
+  * @åŠŸ	èƒ½	è·å–æ‰§è¡Œå™¨é€Ÿåº¦ç¯æ»¤æ³¢å™¨ä½¿èƒ½çŠ¶æ€ï¼Œæ›´æ–°è‡³å¥æŸ„ä¸­
+  * @å‚	æ•°	idï¼šè¦æ“ä½œçš„æ‰§è¡Œå™¨id
+  *			isBlockï¼šBlockä¸ºé˜»å¡å¼ï¼ŒUnblockä¸ºéé˜»å¡å¼
+  * @è¿”	å›	SCA_NoErrorï¼šæ“ä½œæˆåŠŸ
+  *			å…¶ä»–é€šä¿¡é”™è¯¯å‚è§ SCA_Error é”™è¯¯åˆ—è¡¨
   */
 uint8_t isVelocityFilterEnable(uint8_t id,uint8_t isBlock)
 {
@@ -2287,25 +2287,25 @@ uint8_t isVelocityFilterEnable(uint8_t id,uint8_t isBlock)
     uint32_t waitime = 0;
     SCA_Handler_t* pSCA = NULL;
 
-    /* »ñÈ¡¸ÃIDµÄĞÅÏ¢¾ä±ú */
+    /* è·å–è¯¥IDçš„ä¿¡æ¯å¥æŸ„ */
     pSCA = getInstance(id);
     if(pSCA == NULL)	return SCA_UnknownID;
 
-    /* Çå¿Õ×´Ì¬Î» */
+    /* æ¸…ç©ºçŠ¶æ€ä½ */
     pSCA->paraCache.R_Velocity_Filter_State = Actr_Disable;
 
     Error = SCA_Read(pSCA, R1_VelocityFilterState);
     if(Error)	return Error;
 
-    /* ·Ç×èÈû */
+    /* éé˜»å¡ */
     if(isBlock == Unblock)
     {
-        /* ·Ç×èÈû·¢ËÍºóÑÓÊ±´¦Àí£¬·ÀÖ¹×ÜÏß¹ıÔØ */
+        /* éé˜»å¡å‘é€åå»¶æ—¶å¤„ç†ï¼Œé˜²æ­¢æ€»çº¿è¿‡è½½ */
         SCA_Delay(SendInterval);
         return Error;
     }
 
-    /* µÈ´ıÖ´ĞĞ½á¹û */
+    /* ç­‰å¾…æ‰§è¡Œç»“æœ */
     while((pSCA->paraCache.R_Velocity_Filter_State != Actr_Enable) && (waitime++ < CanOvertime));
     if(waitime >= CanOvertime)	return SCA_OperationFailed;
 
@@ -2313,11 +2313,11 @@ uint8_t isVelocityFilterEnable(uint8_t id,uint8_t isBlock)
 }
 
 /**
-  * @¹¦	ÄÜ	»ñÈ¡Ö´ĞĞÆ÷ËÙ¶È»·ÂË²¨Æ÷´ø¿í£¬¸üĞÂÖÁ¾ä±úÖĞ
-  * @²Î	Êı	id£ºÒª²Ù×÷µÄÖ´ĞĞÆ÷id
-  *			isBlock£ºBlockÎª×èÈûÊ½£¬UnblockÎª·Ç×èÈûÊ½
-  * @·µ	»Ø	SCA_NoError£º²Ù×÷³É¹¦
-  *			ÆäËûÍ¨ĞÅ´íÎó²Î¼û SCA_Error ´íÎóÁĞ±í
+  * @åŠŸ	èƒ½	è·å–æ‰§è¡Œå™¨é€Ÿåº¦ç¯æ»¤æ³¢å™¨å¸¦å®½ï¼Œæ›´æ–°è‡³å¥æŸ„ä¸­
+  * @å‚	æ•°	idï¼šè¦æ“ä½œçš„æ‰§è¡Œå™¨id
+  *			isBlockï¼šBlockä¸ºé˜»å¡å¼ï¼ŒUnblockä¸ºéé˜»å¡å¼
+  * @è¿”	å›	SCA_NoErrorï¼šæ“ä½œæˆåŠŸ
+  *			å…¶ä»–é€šä¿¡é”™è¯¯å‚è§ SCA_Error é”™è¯¯åˆ—è¡¨
   */
 uint8_t getVelocityCutoffFrequency(uint8_t id,uint8_t isBlock)
 {
@@ -2325,25 +2325,25 @@ uint8_t getVelocityCutoffFrequency(uint8_t id,uint8_t isBlock)
     uint32_t waitime = 0;
     SCA_Handler_t* pSCA = NULL;
 
-    /* »ñÈ¡¸ÃIDµÄĞÅÏ¢¾ä±ú */
+    /* è·å–è¯¥IDçš„ä¿¡æ¯å¥æŸ„ */
     pSCA = getInstance(id);
     if(pSCA == NULL)	return SCA_UnknownID;
 
-    /* Çå¿Õ×´Ì¬Î» */
+    /* æ¸…ç©ºçŠ¶æ€ä½ */
     pSCA->paraCache.R_Velocity_Filter_Value = Actr_Disable;
 
     Error = SCA_Read(pSCA, R2_VelocityFilterValue);
     if(Error)	return Error;
 
-    /* ·Ç×èÈû */
+    /* éé˜»å¡ */
     if(isBlock == Unblock)
     {
-        /* ·Ç×èÈû·¢ËÍºóÑÓÊ±´¦Àí£¬·ÀÖ¹×ÜÏß¹ıÔØ */
+        /* éé˜»å¡å‘é€åå»¶æ—¶å¤„ç†ï¼Œé˜²æ­¢æ€»çº¿è¿‡è½½ */
         SCA_Delay(SendInterval);
         return Error;
     }
 
-    /* µÈ´ıÖ´ĞĞ½á¹û */
+    /* ç­‰å¾…æ‰§è¡Œç»“æœ */
     while((pSCA->paraCache.R_Velocity_Filter_Value != Actr_Enable) && (waitime++ < CanOvertime));
     if(waitime >= CanOvertime)	return SCA_OperationFailed;
 
@@ -2351,12 +2351,12 @@ uint8_t getVelocityCutoffFrequency(uint8_t id,uint8_t isBlock)
 }
 
 /**
-  * @¹¦	ÄÜ	ÉèÖÃÖ´ĞĞÆ÷ËÙ¶È»·ÂË²¨Æ÷´ø¿í
-  * @²Î	Êı	id£ºÒª²Ù×÷µÄÖ´ĞĞÆ÷id
-  *			frequency£ºÂË²¨Æ÷´ø¿í£¬Êµ¼ÊÖµ£¬µ¥Î» hz
-  *			isBlock£ºBlockÎª×èÈûÊ½£¬UnblockÎª·Ç×èÈûÊ½
-  * @·µ	»Ø	SCA_NoError£º²Ù×÷³É¹¦
-  *			ÆäËûÍ¨ĞÅ´íÎó²Î¼û SCA_Error ´íÎóÁĞ±í
+  * @åŠŸ	èƒ½	è®¾ç½®æ‰§è¡Œå™¨é€Ÿåº¦ç¯æ»¤æ³¢å™¨å¸¦å®½
+  * @å‚	æ•°	idï¼šè¦æ“ä½œçš„æ‰§è¡Œå™¨id
+  *			frequencyï¼šæ»¤æ³¢å™¨å¸¦å®½ï¼Œå®é™…å€¼ï¼Œå•ä½ hz
+  *			isBlockï¼šBlockä¸ºé˜»å¡å¼ï¼ŒUnblockä¸ºéé˜»å¡å¼
+  * @è¿”	å›	SCA_NoErrorï¼šæ“ä½œæˆåŠŸ
+  *			å…¶ä»–é€šä¿¡é”™è¯¯å‚è§ SCA_Error é”™è¯¯åˆ—è¡¨
   */
 uint8_t setVelocityCutoffFrequency(uint8_t id, float frequency,uint8_t isBlock)
 {
@@ -2364,25 +2364,25 @@ uint8_t setVelocityCutoffFrequency(uint8_t id, float frequency,uint8_t isBlock)
     uint32_t waitime = 0;
     SCA_Handler_t* pSCA = NULL;
 
-    /* »ñÈ¡¸ÃIDµÄĞÅÏ¢¾ä±ú */
+    /* è·å–è¯¥IDçš„ä¿¡æ¯å¥æŸ„ */
     pSCA = getInstance(id);
     if(pSCA == NULL)	return SCA_UnknownID;
 
-    /* Ä¿±ê²ÎÊıĞ´Èë»º´æ£¬µÈ´ı¸üĞÂ */
+    /* ç›®æ ‡å‚æ•°å†™å…¥ç¼“å­˜ï¼Œç­‰å¾…æ›´æ–° */
     pSCA->paraCache.Velocity_Filter_Value = frequency;
 
     Error = SCA_Write_2(pSCA, W2_VelocityFilterValue, frequency);
     if(Error)	return Error;
 
-    /* ·Ç×èÈû */
+    /* éé˜»å¡ */
     if(isBlock == Unblock)
     {
-        /* ·Ç×èÈû·¢ËÍºóÑÓÊ±´¦Àí£¬·ÀÖ¹×ÜÏß¹ıÔØ */
+        /* éé˜»å¡å‘é€åå»¶æ—¶å¤„ç†ï¼Œé˜²æ­¢æ€»çº¿è¿‡è½½ */
         SCA_Delay(SendInterval);
         return Error;
     }
 
-    /* µÈ´ıÖ´ĞĞ½á¹û */
+    /* ç­‰å¾…æ‰§è¡Œç»“æœ */
     while((pSCA->Velocity_Filter_Value != frequency) && (waitime++ < CanOvertime));
     if(waitime >= CanOvertime)	return SCA_OperationFailed;
 
@@ -2390,12 +2390,12 @@ uint8_t setVelocityCutoffFrequency(uint8_t id, float frequency,uint8_t isBlock)
 }
 
 /**
-  * @¹¦	ÄÜ	ÉèÖÃÖ´ĞĞÆ÷ËÙ¶È»·ÊäÈëÏŞ·ù
-  * @²Î	Êı	id£ºÒª²Ù×÷µÄÖ´ĞĞÆ÷id
-  *			limit£ºÊäÈëÏŞ·ù
-  *			isBlock£ºBlockÎª×èÈûÊ½£¬UnblockÎª·Ç×èÈûÊ½
-  * @·µ	»Ø	SCA_NoError£º²Ù×÷³É¹¦
-  *			ÆäËûÍ¨ĞÅ´íÎó²Î¼û SCA_Error ´íÎóÁĞ±í
+  * @åŠŸ	èƒ½	è®¾ç½®æ‰§è¡Œå™¨é€Ÿåº¦ç¯è¾“å…¥é™å¹…
+  * @å‚	æ•°	idï¼šè¦æ“ä½œçš„æ‰§è¡Œå™¨id
+  *			limitï¼šè¾“å…¥é™å¹…
+  *			isBlockï¼šBlockä¸ºé˜»å¡å¼ï¼ŒUnblockä¸ºéé˜»å¡å¼
+  * @è¿”	å›	SCA_NoErrorï¼šæ“ä½œæˆåŠŸ
+  *			å…¶ä»–é€šä¿¡é”™è¯¯å‚è§ SCA_Error é”™è¯¯åˆ—è¡¨
   */
 uint8_t setVelocityLimit(uint8_t id,float limit,uint8_t isBlock)
 {
@@ -2403,25 +2403,25 @@ uint8_t setVelocityLimit(uint8_t id,float limit,uint8_t isBlock)
     uint32_t waitime = 0;
     SCA_Handler_t* pSCA = NULL;
 
-    /* »ñÈ¡¸ÃIDµÄĞÅÏ¢¾ä±ú */
+    /* è·å–è¯¥IDçš„ä¿¡æ¯å¥æŸ„ */
     pSCA = getInstance(id);
     if(pSCA == NULL)	return SCA_UnknownID;
 
-    /* Ä¿±ê²ÎÊıĞ´Èë»º´æ£¬µÈ´ı¸üĞÂ */
+    /* ç›®æ ‡å‚æ•°å†™å…¥ç¼“å­˜ï¼Œç­‰å¾…æ›´æ–° */
     pSCA->paraCache.Velocity_Limit = limit;
 
     Error = SCA_Write_3(pSCA, W3_VelocityLimit, limit);
     if(Error)	return Error;
 
-    /* ·Ç×èÈû */
+    /* éé˜»å¡ */
     if(isBlock == Unblock)
     {
-        /* ·Ç×èÈû·¢ËÍºóÑÓÊ±´¦Àí£¬·ÀÖ¹×ÜÏß¹ıÔØ */
+        /* éé˜»å¡å‘é€åå»¶æ—¶å¤„ç†ï¼Œé˜²æ­¢æ€»çº¿è¿‡è½½ */
         SCA_Delay(SendInterval);
         return Error;
     }
 
-    /* µÈ´ıÖ´ĞĞ½á¹û */
+    /* ç­‰å¾…æ‰§è¡Œç»“æœ */
     while((pSCA->Velocity_Limit != limit) && (waitime++ < CanOvertime));
     if(waitime >= CanOvertime)	return SCA_OperationFailed;
 
@@ -2429,11 +2429,11 @@ uint8_t setVelocityLimit(uint8_t id,float limit,uint8_t isBlock)
 }
 
 /**
-  * @¹¦	ÄÜ	»ñÈ¡Ö´ĞĞÆ÷ËÙ¶È»·ÊäÈëÏŞ·ù£¬¸üĞÂÖÁ¾ä±úÖĞ
-  * @²Î	Êı	id£ºÒª²Ù×÷µÄÖ´ĞĞÆ÷id
-  *			isBlock£ºBlockÎª×èÈûÊ½£¬UnblockÎª·Ç×èÈûÊ½
-  * @·µ	»Ø	SCA_NoError£º²Ù×÷³É¹¦
-  *			ÆäËûÍ¨ĞÅ´íÎó²Î¼û SCA_Error ´íÎóÁĞ±í
+  * @åŠŸ	èƒ½	è·å–æ‰§è¡Œå™¨é€Ÿåº¦ç¯è¾“å…¥é™å¹…ï¼Œæ›´æ–°è‡³å¥æŸ„ä¸­
+  * @å‚	æ•°	idï¼šè¦æ“ä½œçš„æ‰§è¡Œå™¨id
+  *			isBlockï¼šBlockä¸ºé˜»å¡å¼ï¼ŒUnblockä¸ºéé˜»å¡å¼
+  * @è¿”	å›	SCA_NoErrorï¼šæ“ä½œæˆåŠŸ
+  *			å…¶ä»–é€šä¿¡é”™è¯¯å‚è§ SCA_Error é”™è¯¯åˆ—è¡¨
   */
 uint8_t getVelocityLimit(uint8_t id,uint8_t isBlock)
 {
@@ -2441,25 +2441,25 @@ uint8_t getVelocityLimit(uint8_t id,uint8_t isBlock)
     uint32_t waitime = 0;
     SCA_Handler_t* pSCA = NULL;
 
-    /* »ñÈ¡¸ÃIDµÄĞÅÏ¢¾ä±ú */
+    /* è·å–è¯¥IDçš„ä¿¡æ¯å¥æŸ„ */
     pSCA = getInstance(id);
     if(pSCA == NULL)	return SCA_UnknownID;
 
-    /* Çå¿Õ×´Ì¬Î» */
+    /* æ¸…ç©ºçŠ¶æ€ä½ */
     pSCA->paraCache.R_Velocity_Limit = Actr_Disable;
 
     Error = SCA_Read(pSCA, R3_VelocityLimit);
     if(Error)	return Error;
 
-    /* ·Ç×èÈû */
+    /* éé˜»å¡ */
     if(isBlock == Unblock)
     {
-        /* ·Ç×èÈû·¢ËÍºóÑÓÊ±´¦Àí£¬·ÀÖ¹×ÜÏß¹ıÔØ */
+        /* éé˜»å¡å‘é€åå»¶æ—¶å¤„ç†ï¼Œé˜²æ­¢æ€»çº¿è¿‡è½½ */
         SCA_Delay(SendInterval);
         return Error;
     }
 
-    /* µÈ´ıÖ´ĞĞ½á¹û */
+    /* ç­‰å¾…æ‰§è¡Œç»“æœ */
     while((pSCA->paraCache.R_Velocity_Limit != Actr_Enable) && (waitime++ < CanOvertime));
     if(waitime >= CanOvertime)	return SCA_OperationFailed;
 
@@ -2467,12 +2467,12 @@ uint8_t getVelocityLimit(uint8_t id,uint8_t isBlock)
 }
 
 /**
-  * @¹¦	ÄÜ	ÉèÖÃÖ´ĞĞÆ÷ÌİĞÎËÙ¶È»·¼ÓËÙ¶È
-  * @²Î	Êı	id£ºÒª²Ù×÷µÄÖ´ĞĞÆ÷id
-  *			acceleration£º¼ÓËÙ¶È£¬Êµ¼ÊÖµ
-  *			isBlock£ºBlockÎª×èÈûÊ½£¬UnblockÎª·Ç×èÈûÊ½
-  * @·µ	»Ø	SCA_NoError£º²Ù×÷³É¹¦
-  *			ÆäËûÍ¨ĞÅ´íÎó²Î¼û SCA_Error ´íÎóÁĞ±í
+  * @åŠŸ	èƒ½	è®¾ç½®æ‰§è¡Œå™¨æ¢¯å½¢é€Ÿåº¦ç¯åŠ é€Ÿåº¦
+  * @å‚	æ•°	idï¼šè¦æ“ä½œçš„æ‰§è¡Œå™¨id
+  *			accelerationï¼šåŠ é€Ÿåº¦ï¼Œå®é™…å€¼
+  *			isBlockï¼šBlockä¸ºé˜»å¡å¼ï¼ŒUnblockä¸ºéé˜»å¡å¼
+  * @è¿”	å›	SCA_NoErrorï¼šæ“ä½œæˆåŠŸ
+  *			å…¶ä»–é€šä¿¡é”™è¯¯å‚è§ SCA_Error é”™è¯¯åˆ—è¡¨
   */
 uint8_t setProfileVelocityAcceleration(uint8_t id,float acceleration,uint8_t isBlock)
 {
@@ -2480,11 +2480,11 @@ uint8_t setProfileVelocityAcceleration(uint8_t id,float acceleration,uint8_t isB
     uint32_t waitime = 0;
     SCA_Handler_t* pSCA = NULL;
 
-    /* »ñÈ¡¸ÃIDµÄĞÅÏ¢¾ä±ú */
+    /* è·å–è¯¥IDçš„ä¿¡æ¯å¥æŸ„ */
     pSCA = getInstance(id);
     if(pSCA == NULL)	return SCA_UnknownID;
 
-    /* Ä¿±ê²ÎÊıĞ´Èë»º´æ£¬µÈ´ı¸üĞÂ */
+    /* ç›®æ ‡å‚æ•°å†™å…¥ç¼“å­˜ï¼Œç­‰å¾…æ›´æ–° */
     pSCA->paraCache.PV_Max_Acceleration = acceleration;
 
     acceleration /= Profile_Scal;
@@ -2492,15 +2492,15 @@ uint8_t setProfileVelocityAcceleration(uint8_t id,float acceleration,uint8_t isB
     Error = SCA_Write_3(pSCA, W3_PVMaxAcceleration, acceleration);
     if(Error)	return Error;
 
-    /* ·Ç×èÈû */
+    /* éé˜»å¡ */
     if(isBlock == Unblock)
     {
-        /* ·Ç×èÈû·¢ËÍºóÑÓÊ±´¦Àí£¬·ÀÖ¹×ÜÏß¹ıÔØ */
+        /* éé˜»å¡å‘é€åå»¶æ—¶å¤„ç†ï¼Œé˜²æ­¢æ€»çº¿è¿‡è½½ */
         SCA_Delay(SendInterval);
         return Error;
     }
 
-    /* µÈ´ıÖ´ĞĞ½á¹û */
+    /* ç­‰å¾…æ‰§è¡Œç»“æœ */
     while((pSCA->PV_Max_Acceleration != acceleration) && (waitime++ < CanOvertime));
     if(waitime >= CanOvertime)	return SCA_OperationFailed;
 
@@ -2508,11 +2508,11 @@ uint8_t setProfileVelocityAcceleration(uint8_t id,float acceleration,uint8_t isB
 }
 
 /**
-  * @¹¦	ÄÜ	»ñÈ¡Ö´ĞĞÆ÷ÌİĞÎËÙ¶È»·¼ÓËÙ¶È£¬¸üĞÂÖÁ¾ä±úÖĞ
-  * @²Î	Êı	id£ºÒª²Ù×÷µÄÖ´ĞĞÆ÷id
-  *			isBlock£ºBlockÎª×èÈûÊ½£¬UnblockÎª·Ç×èÈûÊ½
-  * @·µ	»Ø	SCA_NoError£º²Ù×÷³É¹¦
-  *			ÆäËûÍ¨ĞÅ´íÎó²Î¼û SCA_Error ´íÎóÁĞ±í
+  * @åŠŸ	èƒ½	è·å–æ‰§è¡Œå™¨æ¢¯å½¢é€Ÿåº¦ç¯åŠ é€Ÿåº¦ï¼Œæ›´æ–°è‡³å¥æŸ„ä¸­
+  * @å‚	æ•°	idï¼šè¦æ“ä½œçš„æ‰§è¡Œå™¨id
+  *			isBlockï¼šBlockä¸ºé˜»å¡å¼ï¼ŒUnblockä¸ºéé˜»å¡å¼
+  * @è¿”	å›	SCA_NoErrorï¼šæ“ä½œæˆåŠŸ
+  *			å…¶ä»–é€šä¿¡é”™è¯¯å‚è§ SCA_Error é”™è¯¯åˆ—è¡¨
   */
 uint8_t getProfileVelocityAcceleration(uint8_t id,uint8_t isBlock)
 {
@@ -2520,25 +2520,25 @@ uint8_t getProfileVelocityAcceleration(uint8_t id,uint8_t isBlock)
     uint32_t waitime = 0;
     SCA_Handler_t* pSCA = NULL;
 
-    /* »ñÈ¡¸ÃIDµÄĞÅÏ¢¾ä±ú */
+    /* è·å–è¯¥IDçš„ä¿¡æ¯å¥æŸ„ */
     pSCA = getInstance(id);
     if(pSCA == NULL)	return SCA_UnknownID;
 
-    /* Çå¿Õ×´Ì¬Î» */
+    /* æ¸…ç©ºçŠ¶æ€ä½ */
     pSCA->paraCache.R_PV_Max_Acceleration = Actr_Disable;
 
     Error = SCA_Read(pSCA, R3_PVMaxAcceleration);
     if(Error)	return Error;
 
-    /* ·Ç×èÈû */
+    /* éé˜»å¡ */
     if(isBlock == Unblock)
     {
-        /* ·Ç×èÈû·¢ËÍºóÑÓÊ±´¦Àí£¬·ÀÖ¹×ÜÏß¹ıÔØ */
+        /* éé˜»å¡å‘é€åå»¶æ—¶å¤„ç†ï¼Œé˜²æ­¢æ€»çº¿è¿‡è½½ */
         SCA_Delay(SendInterval);
         return Error;
     }
 
-    /* µÈ´ıÖ´ĞĞ½á¹û */
+    /* ç­‰å¾…æ‰§è¡Œç»“æœ */
     while((pSCA->paraCache.R_PV_Max_Acceleration != Actr_Enable) && (waitime++ < CanOvertime));
     if(waitime >= CanOvertime)	return SCA_OperationFailed;
 
@@ -2546,12 +2546,12 @@ uint8_t getProfileVelocityAcceleration(uint8_t id,uint8_t isBlock)
 }
 
 /**
-  * @¹¦	ÄÜ	ÉèÖÃÖ´ĞĞÆ÷ÌİĞÎËÙ¶È»·¼õËÙ¶È
-  * @²Î	Êı	id£ºÒª²Ù×÷µÄÖ´ĞĞÆ÷id
-  *			deceleration£º¼õËÙ¶È£¬Êµ¼ÊÖµ
-  *			isBlock£ºBlockÎª×èÈûÊ½£¬UnblockÎª·Ç×èÈûÊ½
-  * @·µ	»Ø	SCA_NoError£º²Ù×÷³É¹¦
-  *			ÆäËûÍ¨ĞÅ´íÎó²Î¼û SCA_Error ´íÎóÁĞ±í
+  * @åŠŸ	èƒ½	è®¾ç½®æ‰§è¡Œå™¨æ¢¯å½¢é€Ÿåº¦ç¯å‡é€Ÿåº¦
+  * @å‚	æ•°	idï¼šè¦æ“ä½œçš„æ‰§è¡Œå™¨id
+  *			decelerationï¼šå‡é€Ÿåº¦ï¼Œå®é™…å€¼
+  *			isBlockï¼šBlockä¸ºé˜»å¡å¼ï¼ŒUnblockä¸ºéé˜»å¡å¼
+  * @è¿”	å›	SCA_NoErrorï¼šæ“ä½œæˆåŠŸ
+  *			å…¶ä»–é€šä¿¡é”™è¯¯å‚è§ SCA_Error é”™è¯¯åˆ—è¡¨
   */
 uint8_t setProfileVelocityDeceleration(uint8_t id,float deceleration,uint8_t isBlock)
 {
@@ -2559,11 +2559,11 @@ uint8_t setProfileVelocityDeceleration(uint8_t id,float deceleration,uint8_t isB
     uint32_t waitime = 0;
     SCA_Handler_t* pSCA = NULL;
 
-    /* »ñÈ¡¸ÃIDµÄĞÅÏ¢¾ä±ú */
+    /* è·å–è¯¥IDçš„ä¿¡æ¯å¥æŸ„ */
     pSCA = getInstance(id);
     if(pSCA == NULL)	return SCA_UnknownID;
 
-    /* Ä¿±ê²ÎÊıĞ´Èë»º´æ£¬µÈ´ı¸üĞÂ */
+    /* ç›®æ ‡å‚æ•°å†™å…¥ç¼“å­˜ï¼Œç­‰å¾…æ›´æ–° */
     pSCA->paraCache.PV_Max_Deceleration = deceleration;
 
     deceleration /= Profile_Scal;
@@ -2571,15 +2571,15 @@ uint8_t setProfileVelocityDeceleration(uint8_t id,float deceleration,uint8_t isB
     Error = SCA_Write_3(pSCA, W3_PVMaxDeceleration, deceleration);
     if(Error)	return Error;
 
-    /* ·Ç×èÈû */
+    /* éé˜»å¡ */
     if(isBlock == Unblock)
     {
-        /* ·Ç×èÈû·¢ËÍºóÑÓÊ±´¦Àí£¬·ÀÖ¹×ÜÏß¹ıÔØ */
+        /* éé˜»å¡å‘é€åå»¶æ—¶å¤„ç†ï¼Œé˜²æ­¢æ€»çº¿è¿‡è½½ */
         SCA_Delay(SendInterval);
         return Error;
     }
 
-    /* µÈ´ıÖ´ĞĞ½á¹û */
+    /* ç­‰å¾…æ‰§è¡Œç»“æœ */
     while((pSCA->PV_Max_Deceleration != deceleration) && (waitime++ < CanOvertime));
     if(waitime >= CanOvertime)	return SCA_OperationFailed;
 
@@ -2587,11 +2587,11 @@ uint8_t setProfileVelocityDeceleration(uint8_t id,float deceleration,uint8_t isB
 }
 
 /**
-  * @¹¦	ÄÜ	»ñÈ¡Ö´ĞĞÆ÷ÌİĞÎËÙ¶È»·¼õËÙ¶È£¬¸üĞÂÖÁ¾ä±úÖĞ
-  * @²Î	Êı	id£ºÒª²Ù×÷µÄÖ´ĞĞÆ÷id
-  *			isBlock£ºBlockÎª×èÈûÊ½£¬UnblockÎª·Ç×èÈûÊ½
-  * @·µ	»Ø	SCA_NoError£º²Ù×÷³É¹¦
-  *			ÆäËûÍ¨ĞÅ´íÎó²Î¼û SCA_Error ´íÎóÁĞ±í
+  * @åŠŸ	èƒ½	è·å–æ‰§è¡Œå™¨æ¢¯å½¢é€Ÿåº¦ç¯å‡é€Ÿåº¦ï¼Œæ›´æ–°è‡³å¥æŸ„ä¸­
+  * @å‚	æ•°	idï¼šè¦æ“ä½œçš„æ‰§è¡Œå™¨id
+  *			isBlockï¼šBlockä¸ºé˜»å¡å¼ï¼ŒUnblockä¸ºéé˜»å¡å¼
+  * @è¿”	å›	SCA_NoErrorï¼šæ“ä½œæˆåŠŸ
+  *			å…¶ä»–é€šä¿¡é”™è¯¯å‚è§ SCA_Error é”™è¯¯åˆ—è¡¨
   */
 uint8_t getProfileVelocityDeceleration(uint8_t id,uint8_t isBlock)
 {
@@ -2599,25 +2599,25 @@ uint8_t getProfileVelocityDeceleration(uint8_t id,uint8_t isBlock)
     uint32_t waitime = 0;
     SCA_Handler_t* pSCA = NULL;
 
-    /* »ñÈ¡¸ÃIDµÄĞÅÏ¢¾ä±ú */
+    /* è·å–è¯¥IDçš„ä¿¡æ¯å¥æŸ„ */
     pSCA = getInstance(id);
     if(pSCA == NULL)	return SCA_UnknownID;
 
-    /* Çå¿Õ×´Ì¬Î» */
+    /* æ¸…ç©ºçŠ¶æ€ä½ */
     pSCA->paraCache.R_PV_Max_Deceleration = Actr_Disable;
 
     Error = SCA_Read(pSCA, R3_PVMaxDeceleration);
     if(Error)	return Error;
 
-    /* ·Ç×èÈû */
+    /* éé˜»å¡ */
     if(isBlock == Unblock)
     {
-        /* ·Ç×èÈû·¢ËÍºóÑÓÊ±´¦Àí£¬·ÀÖ¹×ÜÏß¹ıÔØ */
+        /* éé˜»å¡å‘é€åå»¶æ—¶å¤„ç†ï¼Œé˜²æ­¢æ€»çº¿è¿‡è½½ */
         SCA_Delay(SendInterval);
         return Error;
     }
 
-    /* µÈ´ıÖ´ĞĞ½á¹û */
+    /* ç­‰å¾…æ‰§è¡Œç»“æœ */
     while((pSCA->paraCache.R_PV_Max_Deceleration != Actr_Enable) && (waitime++ < CanOvertime));
     if(waitime >= CanOvertime)	return SCA_OperationFailed;
 
@@ -2625,12 +2625,12 @@ uint8_t getProfileVelocityDeceleration(uint8_t id,uint8_t isBlock)
 }
 
 /**
-  * @¹¦	ÄÜ	ÉèÖÃÖ´ĞĞÆ÷ÌİĞÎËÙ¶È»·×î´óËÙ¶È
-  * @²Î	Êı	id£ºÒª²Ù×÷µÄÖ´ĞĞÆ÷id
-  *			maxVelocity£º×î´óËÙ¶È£¬Êµ¼ÊÖµ£¬µ¥Î» RPM
-  *			isBlock£ºBlockÎª×èÈûÊ½£¬UnblockÎª·Ç×èÈûÊ½
-  * @·µ	»Ø	SCA_NoError£º²Ù×÷³É¹¦
-  *			ÆäËûÍ¨ĞÅ´íÎó²Î¼û SCA_Error ´íÎóÁĞ±í
+  * @åŠŸ	èƒ½	è®¾ç½®æ‰§è¡Œå™¨æ¢¯å½¢é€Ÿåº¦ç¯æœ€å¤§é€Ÿåº¦
+  * @å‚	æ•°	idï¼šè¦æ“ä½œçš„æ‰§è¡Œå™¨id
+  *			maxVelocityï¼šæœ€å¤§é€Ÿåº¦ï¼Œå®é™…å€¼ï¼Œå•ä½ RPM
+  *			isBlockï¼šBlockä¸ºé˜»å¡å¼ï¼ŒUnblockä¸ºéé˜»å¡å¼
+  * @è¿”	å›	SCA_NoErrorï¼šæ“ä½œæˆåŠŸ
+  *			å…¶ä»–é€šä¿¡é”™è¯¯å‚è§ SCA_Error é”™è¯¯åˆ—è¡¨
   */
 uint8_t setProfileVelocityMaxVelocity(uint8_t id, float maxVelocity,uint8_t isBlock)
 {
@@ -2638,11 +2638,11 @@ uint8_t setProfileVelocityMaxVelocity(uint8_t id, float maxVelocity,uint8_t isBl
     uint32_t waitime = 0;
     SCA_Handler_t* pSCA = NULL;
 
-    /* »ñÈ¡¸ÃIDµÄĞÅÏ¢¾ä±ú */
+    /* è·å–è¯¥IDçš„ä¿¡æ¯å¥æŸ„ */
     pSCA = getInstance(id);
     if(pSCA == NULL)	return SCA_UnknownID;
 
-    /* Ä¿±ê²ÎÊıĞ´Èë»º´æ£¬µÈ´ı¸üĞÂ */
+    /* ç›®æ ‡å‚æ•°å†™å…¥ç¼“å­˜ï¼Œç­‰å¾…æ›´æ–° */
     pSCA->paraCache.PV_Max_Velocity = maxVelocity;
 
     maxVelocity /= Profile_Scal;
@@ -2650,15 +2650,15 @@ uint8_t setProfileVelocityMaxVelocity(uint8_t id, float maxVelocity,uint8_t isBl
     Error = SCA_Write_3(pSCA, W3_PVMaxVelocity, maxVelocity);
     if(Error)	return Error;
 
-    /* ·Ç×èÈû */
+    /* éé˜»å¡ */
     if(isBlock == Unblock)
     {
-        /* ·Ç×èÈû·¢ËÍºóÑÓÊ±´¦Àí£¬·ÀÖ¹×ÜÏß¹ıÔØ */
+        /* éé˜»å¡å‘é€åå»¶æ—¶å¤„ç†ï¼Œé˜²æ­¢æ€»çº¿è¿‡è½½ */
         SCA_Delay(SendInterval);
         return Error;
     }
 
-    /* µÈ´ıÖ´ĞĞ½á¹û */
+    /* ç­‰å¾…æ‰§è¡Œç»“æœ */
     while((pSCA->PV_Max_Velocity != maxVelocity) && (waitime++ < CanOvertime));
     if(waitime >= CanOvertime)	return SCA_OperationFailed;
 
@@ -2666,11 +2666,11 @@ uint8_t setProfileVelocityMaxVelocity(uint8_t id, float maxVelocity,uint8_t isBl
 }
 
 /**
-  * @¹¦	ÄÜ	»ñÈ¡Ö´ĞĞÆ÷ÌİĞÎËÙ¶È»·×î´óËÙ¶È£¬¸üĞÂÖÁ¾ä±úÖĞ
-  * @²Î	Êı	id£ºÒª²Ù×÷µÄÖ´ĞĞÆ÷id
-  *			isBlock£ºBlockÎª×èÈûÊ½£¬UnblockÎª·Ç×èÈûÊ½
-  * @·µ	»Ø	SCA_NoError£º²Ù×÷³É¹¦
-  *			ÆäËûÍ¨ĞÅ´íÎó²Î¼û SCA_Error ´íÎóÁĞ±í
+  * @åŠŸ	èƒ½	è·å–æ‰§è¡Œå™¨æ¢¯å½¢é€Ÿåº¦ç¯æœ€å¤§é€Ÿåº¦ï¼Œæ›´æ–°è‡³å¥æŸ„ä¸­
+  * @å‚	æ•°	idï¼šè¦æ“ä½œçš„æ‰§è¡Œå™¨id
+  *			isBlockï¼šBlockä¸ºé˜»å¡å¼ï¼ŒUnblockä¸ºéé˜»å¡å¼
+  * @è¿”	å›	SCA_NoErrorï¼šæ“ä½œæˆåŠŸ
+  *			å…¶ä»–é€šä¿¡é”™è¯¯å‚è§ SCA_Error é”™è¯¯åˆ—è¡¨
   */
 uint8_t getProfileVelocityMaxVelocity(uint8_t id,uint8_t isBlock)
 {
@@ -2678,25 +2678,25 @@ uint8_t getProfileVelocityMaxVelocity(uint8_t id,uint8_t isBlock)
     uint32_t waitime = 0;
     SCA_Handler_t* pSCA = NULL;
 
-    /* »ñÈ¡¸ÃIDµÄĞÅÏ¢¾ä±ú */
+    /* è·å–è¯¥IDçš„ä¿¡æ¯å¥æŸ„ */
     pSCA = getInstance(id);
     if(pSCA == NULL)	return SCA_UnknownID;
 
-    /* Çå¿Õ×´Ì¬Î» */
+    /* æ¸…ç©ºçŠ¶æ€ä½ */
     pSCA->paraCache.R_PV_Max_Velocity = Actr_Disable;
 
     Error = SCA_Read(pSCA, R3_PVMaxVelocity);
     if(Error)	return Error;
 
-    /* ·Ç×èÈû */
+    /* éé˜»å¡ */
     if(isBlock == Unblock)
     {
-        /* ·Ç×èÈû·¢ËÍºóÑÓÊ±´¦Àí£¬·ÀÖ¹×ÜÏß¹ıÔØ */
+        /* éé˜»å¡å‘é€åå»¶æ—¶å¤„ç†ï¼Œé˜²æ­¢æ€»çº¿è¿‡è½½ */
         SCA_Delay(SendInterval);
         return Error;
     }
 
-    /* µÈ´ıÖ´ĞĞ½á¹û */
+    /* ç­‰å¾…æ‰§è¡Œç»“æœ */
     while((pSCA->paraCache.R_PV_Max_Velocity != Actr_Enable) && (waitime++ < CanOvertime));
     if(waitime >= CanOvertime)	return SCA_OperationFailed;
 
@@ -2704,20 +2704,20 @@ uint8_t getProfileVelocityMaxVelocity(uint8_t id,uint8_t isBlock)
 }
 
 
-/****************************µçÁ÷Ïà¹Ø*******************************/
+/****************************ç”µæµç›¸å…³*******************************/
 
 /**
-  * @¹¦	ÄÜ	ÉèÖÃÖ´ĞĞÆ÷µ±Ç°µçÁ÷Öµ
-  * @²Î	Êı	id£ºÒª²Ù×÷µÄÖ´ĞĞÆ÷id
-  *			current£ºµ±Ç°µçÁ÷Öµ£¬Êµ¼ÊÖµ£¬µ¥Î» A
-  * @·µ	»Ø	SCA_NoError£º²Ù×÷³É¹¦
-  *			ÆäËûÍ¨ĞÅ´íÎó²Î¼û SCA_Error ´íÎóÁĞ±í
+  * @åŠŸ	èƒ½	è®¾ç½®æ‰§è¡Œå™¨å½“å‰ç”µæµå€¼
+  * @å‚	æ•°	idï¼šè¦æ“ä½œçš„æ‰§è¡Œå™¨id
+  *			currentï¼šå½“å‰ç”µæµå€¼ï¼Œå®é™…å€¼ï¼Œå•ä½ A
+  * @è¿”	å›	SCA_NoErrorï¼šæ“ä½œæˆåŠŸ
+  *			å…¶ä»–é€šä¿¡é”™è¯¯å‚è§ SCA_Error é”™è¯¯åˆ—è¡¨
   */
 uint8_t setCurrent(uint8_t id,float current)
 {
     SCA_Handler_t* pSCA = NULL;
 
-    /* »ñÈ¡¸ÃIDµÄĞÅÏ¢¾ä±ú */
+    /* è·å–è¯¥IDçš„ä¿¡æ¯å¥æŸ„ */
     pSCA = getInstance(id);
     if(pSCA == NULL)	return SCA_UnknownID;
 
@@ -2725,11 +2725,11 @@ uint8_t setCurrent(uint8_t id,float current)
 }
 
 /**
-  * @¹¦	ÄÜ	ÉèÖÃÖ´ĞĞÆ÷µ±Ç°µçÁ÷Öµ£¬¿ìËÙ
-  * @²Î	Êı	pSCA£ºÒª²Ù×÷µÄÖ´ĞĞÆ÷¾ä±úÖ¸Õë»òµØÖ·
-  *			current£ºµ±Ç°µçÁ÷Öµ£¬Êµ¼ÊÖµ£¬µ¥Î» A
-  * @·µ	»Ø	SCA_NoError£º²Ù×÷³É¹¦
-  *			ÆäËûÍ¨ĞÅ´íÎó²Î¼û SCA_Error ´íÎóÁĞ±í
+  * @åŠŸ	èƒ½	è®¾ç½®æ‰§è¡Œå™¨å½“å‰ç”µæµå€¼ï¼Œå¿«é€Ÿ
+  * @å‚	æ•°	pSCAï¼šè¦æ“ä½œçš„æ‰§è¡Œå™¨å¥æŸ„æŒ‡é’ˆæˆ–åœ°å€
+  *			currentï¼šå½“å‰ç”µæµå€¼ï¼Œå®é™…å€¼ï¼Œå•ä½ A
+  * @è¿”	å›	SCA_NoErrorï¼šæ“ä½œæˆåŠŸ
+  *			å…¶ä»–é€šä¿¡é”™è¯¯å‚è§ SCA_Error é”™è¯¯åˆ—è¡¨
   */
 uint8_t setCurrentFast(SCA_Handler_t* pSCA,float current)
 {
@@ -2737,11 +2737,11 @@ uint8_t setCurrentFast(SCA_Handler_t* pSCA,float current)
 }
 
 /**
-  * @¹¦	ÄÜ	»ñÈ¡Ö´ĞĞÆ÷µ±Ç°µçÁ÷Öµ£¬¸üĞÂÖÁ¾ä±úÖĞ
-  * @²Î	Êı	id£ºÒª²Ù×÷µÄÖ´ĞĞÆ÷id
-  *			isBlock£ºBlockÎª×èÈûÊ½£¬UnblockÎª·Ç×èÈûÊ½
-  * @·µ	»Ø	SCA_NoError£º²Ù×÷³É¹¦
-  *			ÆäËûÍ¨ĞÅ´íÎó²Î¼û SCA_Error ´íÎóÁĞ±í
+  * @åŠŸ	èƒ½	è·å–æ‰§è¡Œå™¨å½“å‰ç”µæµå€¼ï¼Œæ›´æ–°è‡³å¥æŸ„ä¸­
+  * @å‚	æ•°	idï¼šè¦æ“ä½œçš„æ‰§è¡Œå™¨id
+  *			isBlockï¼šBlockä¸ºé˜»å¡å¼ï¼ŒUnblockä¸ºéé˜»å¡å¼
+  * @è¿”	å›	SCA_NoErrorï¼šæ“ä½œæˆåŠŸ
+  *			å…¶ä»–é€šä¿¡é”™è¯¯å‚è§ SCA_Error é”™è¯¯åˆ—è¡¨
   */
 uint8_t getCurrent(uint8_t id,uint8_t isBlock)
 {
@@ -2749,25 +2749,25 @@ uint8_t getCurrent(uint8_t id,uint8_t isBlock)
     uint32_t waitime = 0;
     SCA_Handler_t* pSCA = NULL;
 
-    /* »ñÈ¡¸ÃIDµÄĞÅÏ¢¾ä±ú */
+    /* è·å–è¯¥IDçš„ä¿¡æ¯å¥æŸ„ */
     pSCA = getInstance(id);
     if(pSCA == NULL)	return SCA_UnknownID;
 
-    /* Çå¿Õ×´Ì¬Î» */
+    /* æ¸…ç©ºçŠ¶æ€ä½ */
     pSCA->paraCache.R_Current_Real = Actr_Disable;
 
     Error = SCA_Read(pSCA, R3_Current);
     if(Error)	return Error;
 
-    /* ·Ç×èÈû */
+    /* éé˜»å¡ */
     if(isBlock == Unblock)
     {
-        /* ·Ç×èÈû·¢ËÍºóÑÓÊ±´¦Àí£¬·ÀÖ¹×ÜÏß¹ıÔØ */
+        /* éé˜»å¡å‘é€åå»¶æ—¶å¤„ç†ï¼Œé˜²æ­¢æ€»çº¿è¿‡è½½ */
         SCA_Delay(SendInterval);
         return Error;
     }
 
-    /* µÈ´ıÖ´ĞĞ½á¹û */
+    /* ç­‰å¾…æ‰§è¡Œç»“æœ */
     while((pSCA->paraCache.R_Current_Real != Actr_Enable) && (waitime++ < CanOvertime));
     if(waitime >= CanOvertime)	return SCA_OperationFailed;
 
@@ -2775,32 +2775,32 @@ uint8_t getCurrent(uint8_t id,uint8_t isBlock)
 }
 
 /**
-  * @¹¦	ÄÜ	»ñÈ¡Ö´ĞĞÆ÷µ±Ç°µçÁ÷Öµ£¬¸üĞÂÖÁ¾ä±úÖĞ,¿ìËÙ
-  * @²Î	Êı	id£ºÒª²Ù×÷µÄÖ´ĞĞÆ÷id
-  *			isBlock£ºBlockÎª×èÈûÊ½£¬UnblockÎª·Ç×èÈûÊ½
-  * @·µ	»Ø	SCA_NoError£º²Ù×÷³É¹¦
-  *			ÆäËûÍ¨ĞÅ´íÎó²Î¼û SCA_Error ´íÎóÁĞ±í
+  * @åŠŸ	èƒ½	è·å–æ‰§è¡Œå™¨å½“å‰ç”µæµå€¼ï¼Œæ›´æ–°è‡³å¥æŸ„ä¸­,å¿«é€Ÿ
+  * @å‚	æ•°	idï¼šè¦æ“ä½œçš„æ‰§è¡Œå™¨id
+  *			isBlockï¼šBlockä¸ºé˜»å¡å¼ï¼ŒUnblockä¸ºéé˜»å¡å¼
+  * @è¿”	å›	SCA_NoErrorï¼šæ“ä½œæˆåŠŸ
+  *			å…¶ä»–é€šä¿¡é”™è¯¯å‚è§ SCA_Error é”™è¯¯åˆ—è¡¨
   */
 uint8_t getCurrentFast(SCA_Handler_t* pSCA,uint8_t isBlock)
 {
     uint8_t Error;
     uint32_t waitime = 0;
 
-    /* Çå¿Õ×´Ì¬Î» */
+    /* æ¸…ç©ºçŠ¶æ€ä½ */
     pSCA->paraCache.R_Current_Real = Actr_Disable;
 
     Error = SCA_Read(pSCA, R3_Current);
     if(Error)	return Error;
 
-    /* ·Ç×èÈû */
+    /* éé˜»å¡ */
     if(isBlock == Unblock)
     {
-        /* ·Ç×èÈû·¢ËÍºóÑÓÊ±´¦Àí£¬·ÀÖ¹×ÜÏß¹ıÔØ */
+        /* éé˜»å¡å‘é€åå»¶æ—¶å¤„ç†ï¼Œé˜²æ­¢æ€»çº¿è¿‡è½½ */
         SCA_Delay(SendInterval);
         return Error;
     }
 
-    /* µÈ´ıÖ´ĞĞ½á¹û */
+    /* ç­‰å¾…æ‰§è¡Œç»“æœ */
     while((pSCA->paraCache.R_Current_Real != Actr_Enable) && (waitime++ < CanOvertime));
     if(waitime >= CanOvertime)	return SCA_OperationFailed;
 
@@ -2808,11 +2808,11 @@ uint8_t getCurrentFast(SCA_Handler_t* pSCA,uint8_t isBlock)
 }
 
 /**
-  * @¹¦	ÄÜ	»ñÈ¡Ö´ĞĞÆ÷µçÁ÷»·±ÈÀıÖµ£¬¸üĞÂÖÁ¾ä±úÖĞ
-  * @²Î	Êı	id£ºÒª²Ù×÷µÄÖ´ĞĞÆ÷id
-  *			isBlock£ºBlockÎª×èÈûÊ½£¬UnblockÎª·Ç×èÈûÊ½
-  * @·µ	»Ø	SCA_NoError£º²Ù×÷³É¹¦
-  *			ÆäËûÍ¨ĞÅ´íÎó²Î¼û SCA_Error ´íÎóÁĞ±í
+  * @åŠŸ	èƒ½	è·å–æ‰§è¡Œå™¨ç”µæµç¯æ¯”ä¾‹å€¼ï¼Œæ›´æ–°è‡³å¥æŸ„ä¸­
+  * @å‚	æ•°	idï¼šè¦æ“ä½œçš„æ‰§è¡Œå™¨id
+  *			isBlockï¼šBlockä¸ºé˜»å¡å¼ï¼ŒUnblockä¸ºéé˜»å¡å¼
+  * @è¿”	å›	SCA_NoErrorï¼šæ“ä½œæˆåŠŸ
+  *			å…¶ä»–é€šä¿¡é”™è¯¯å‚è§ SCA_Error é”™è¯¯åˆ—è¡¨
   */
 uint8_t getCurrentKp(uint8_t id,uint8_t isBlock)
 {
@@ -2820,25 +2820,25 @@ uint8_t getCurrentKp(uint8_t id,uint8_t isBlock)
     uint32_t waitime = 0;
     SCA_Handler_t* pSCA = NULL;
 
-    /* Çå¿Õ×´Ì¬Î» */
+    /* æ¸…ç©ºçŠ¶æ€ä½ */
     pSCA->paraCache.R_Current_Filter_P = Actr_Disable;
 
-    /* »ñÈ¡¸ÃIDµÄĞÅÏ¢¾ä±ú */
+    /* è·å–è¯¥IDçš„ä¿¡æ¯å¥æŸ„ */
     pSCA = getInstance(id);
     if(pSCA == NULL)	return SCA_UnknownID;
 
     Error = SCA_Read(pSCA, R3_CurrentFilterP);
     if(Error)	return Error;
 
-    /* ·Ç×èÈû */
+    /* éé˜»å¡ */
     if(isBlock == Unblock)
     {
-        /* ·Ç×èÈû·¢ËÍºóÑÓÊ±´¦Àí£¬·ÀÖ¹×ÜÏß¹ıÔØ */
+        /* éé˜»å¡å‘é€åå»¶æ—¶å¤„ç†ï¼Œé˜²æ­¢æ€»çº¿è¿‡è½½ */
         SCA_Delay(SendInterval);
         return Error;
     }
 
-    /* µÈ´ıÖ´ĞĞ½á¹û */
+    /* ç­‰å¾…æ‰§è¡Œç»“æœ */
     while((pSCA->paraCache.R_Current_Filter_P != Actr_Enable) && (waitime++ < CanOvertime));
     if(waitime >= CanOvertime)	return SCA_OperationFailed;
 
@@ -2846,11 +2846,11 @@ uint8_t getCurrentKp(uint8_t id,uint8_t isBlock)
 }
 
 /**
-  * @¹¦	ÄÜ	»ñÈ¡Ö´ĞĞÆ÷µçÁ÷»·»ı·Ö£¬¸üĞÂÖÁ¾ä±úÖĞ
-  * @²Î	Êı	id£ºÒª²Ù×÷µÄÖ´ĞĞÆ÷id
-  *			isBlock£ºBlockÎª×èÈûÊ½£¬UnblockÎª·Ç×èÈûÊ½
-  * @·µ	»Ø	SCA_NoError£º²Ù×÷³É¹¦
-  *			ÆäËûÍ¨ĞÅ´íÎó²Î¼û SCA_Error ´íÎóÁĞ±í
+  * @åŠŸ	èƒ½	è·å–æ‰§è¡Œå™¨ç”µæµç¯ç§¯åˆ†ï¼Œæ›´æ–°è‡³å¥æŸ„ä¸­
+  * @å‚	æ•°	idï¼šè¦æ“ä½œçš„æ‰§è¡Œå™¨id
+  *			isBlockï¼šBlockä¸ºé˜»å¡å¼ï¼ŒUnblockä¸ºéé˜»å¡å¼
+  * @è¿”	å›	SCA_NoErrorï¼šæ“ä½œæˆåŠŸ
+  *			å…¶ä»–é€šä¿¡é”™è¯¯å‚è§ SCA_Error é”™è¯¯åˆ—è¡¨
   */
 uint8_t getCurrentKi(uint8_t id,uint8_t isBlock)
 {
@@ -2858,25 +2858,25 @@ uint8_t getCurrentKi(uint8_t id,uint8_t isBlock)
     uint32_t waitime = 0;
     SCA_Handler_t* pSCA = NULL;
 
-    /* »ñÈ¡¸ÃIDµÄĞÅÏ¢¾ä±ú */
+    /* è·å–è¯¥IDçš„ä¿¡æ¯å¥æŸ„ */
     pSCA = getInstance(id);
     if(pSCA == NULL)	return SCA_UnknownID;
 
-    /* Çå¿Õ×´Ì¬Î» */
+    /* æ¸…ç©ºçŠ¶æ€ä½ */
     pSCA->paraCache.R_Current_Filter_I = Actr_Disable;
 
     Error = SCA_Read(pSCA, R3_CurrentFilterI);
     if(Error)	return Error;
 
-    /* ·Ç×èÈû */
+    /* éé˜»å¡ */
     if(isBlock == Unblock)
     {
-        /* ·Ç×èÈû·¢ËÍºóÑÓÊ±´¦Àí£¬·ÀÖ¹×ÜÏß¹ıÔØ */
+        /* éé˜»å¡å‘é€åå»¶æ—¶å¤„ç†ï¼Œé˜²æ­¢æ€»çº¿è¿‡è½½ */
         SCA_Delay(SendInterval);
         return Error;
     }
 
-    /* µÈ´ıÖ´ĞĞ½á¹û */
+    /* ç­‰å¾…æ‰§è¡Œç»“æœ */
     while((pSCA->paraCache.R_Current_Filter_I != Actr_Enable) && (waitime++ < CanOvertime));
     if(waitime >= CanOvertime)	return SCA_OperationFailed;
 
@@ -2885,11 +2885,11 @@ uint8_t getCurrentKi(uint8_t id,uint8_t isBlock)
 }
 
 /**
-  * @¹¦	ÄÜ	»ñÈ¡Ö´ĞĞÆ÷µçÁ÷Á¿³Ì£¬¸üĞÂÖÁ¾ä±úÖĞ
-  * @²Î	Êı	id£ºÒª²Ù×÷µÄÖ´ĞĞÆ÷id
-  *			isBlock£ºBlockÎª×èÈûÊ½£¬UnblockÎª·Ç×èÈûÊ½
-  * @·µ	»Ø	SCA_NoError£º²Ù×÷³É¹¦
-  *			ÆäËûÍ¨ĞÅ´íÎó²Î¼û SCA_Error ´íÎóÁĞ±í
+  * @åŠŸ	èƒ½	è·å–æ‰§è¡Œå™¨ç”µæµé‡ç¨‹ï¼Œæ›´æ–°è‡³å¥æŸ„ä¸­
+  * @å‚	æ•°	idï¼šè¦æ“ä½œçš„æ‰§è¡Œå™¨id
+  *			isBlockï¼šBlockä¸ºé˜»å¡å¼ï¼ŒUnblockä¸ºéé˜»å¡å¼
+  * @è¿”	å›	SCA_NoErrorï¼šæ“ä½œæˆåŠŸ
+  *			å…¶ä»–é€šä¿¡é”™è¯¯å‚è§ SCA_Error é”™è¯¯åˆ—è¡¨
   */
 uint8_t getCurrentRange(uint8_t id,uint8_t isBlock)
 {
@@ -2897,25 +2897,25 @@ uint8_t getCurrentRange(uint8_t id,uint8_t isBlock)
     uint32_t waitime = 0;
     SCA_Handler_t* pSCA = NULL;
 
-    /* »ñÈ¡¸ÃIDµÄĞÅÏ¢¾ä±ú */
+    /* è·å–è¯¥IDçš„ä¿¡æ¯å¥æŸ„ */
     pSCA = getInstance(id);
     if(pSCA == NULL)	return SCA_UnknownID;
 
-    /* Çå¿Õ×´Ì¬Î» */
+    /* æ¸…ç©ºçŠ¶æ€ä½ */
     pSCA->paraCache.R_Current_Max = Actr_Disable;
 
     Error = SCA_Read(pSCA, R2_Current_Max);
     if(Error)	return Error;
 
-    /* ·Ç×èÈû */
+    /* éé˜»å¡ */
     if(isBlock == Unblock)
     {
-        /* ·Ç×èÈû·¢ËÍºóÑÓÊ±´¦Àí£¬·ÀÖ¹×ÜÏß¹ıÔØ */
+        /* éé˜»å¡å‘é€åå»¶æ—¶å¤„ç†ï¼Œé˜²æ­¢æ€»çº¿è¿‡è½½ */
         SCA_Delay(SendInterval);
         return Error;
     }
 
-    /* µÈ´ıÖ´ĞĞ½á¹û */
+    /* ç­‰å¾…æ‰§è¡Œç»“æœ */
     while((pSCA->paraCache.R_Current_Max != Actr_Enable) && (waitime++ < CanOvertime));
     if(waitime >= CanOvertime)	return SCA_OperationFailed;
 
@@ -2924,12 +2924,12 @@ uint8_t getCurrentRange(uint8_t id,uint8_t isBlock)
 }
 
 /**
-  * @¹¦	ÄÜ	Ê¹ÄÜÖ´ĞĞÆ÷µçÁ÷»·ÂË²¨Æ÷
-  * @²Î	Êı	id£ºÒª²Ù×÷µÄÖ´ĞĞÆ÷id
-  *			enable£ºÊ¹ÄÜ×´Ì¬£¬Actr_EnableÊ¹ÄÜ£¬Actr_DisableÊ§ÄÜ
-  *			isBlock£ºBlockÎª×èÈûÊ½£¬UnblockÎª·Ç×èÈûÊ½
-  * @·µ	»Ø	SCA_NoError£º²Ù×÷³É¹¦
-  *			ÆäËûÍ¨ĞÅ´íÎó²Î¼û SCA_Error ´íÎóÁĞ±í
+  * @åŠŸ	èƒ½	ä½¿èƒ½æ‰§è¡Œå™¨ç”µæµç¯æ»¤æ³¢å™¨
+  * @å‚	æ•°	idï¼šè¦æ“ä½œçš„æ‰§è¡Œå™¨id
+  *			enableï¼šä½¿èƒ½çŠ¶æ€ï¼ŒActr_Enableä½¿èƒ½ï¼ŒActr_Disableå¤±èƒ½
+  *			isBlockï¼šBlockä¸ºé˜»å¡å¼ï¼ŒUnblockä¸ºéé˜»å¡å¼
+  * @è¿”	å›	SCA_NoErrorï¼šæ“ä½œæˆåŠŸ
+  *			å…¶ä»–é€šä¿¡é”™è¯¯å‚è§ SCA_Error é”™è¯¯åˆ—è¡¨
   */
 uint8_t enableCurrentFilter(uint8_t id,uint8_t enable,uint8_t isBlock)
 {
@@ -2937,25 +2937,25 @@ uint8_t enableCurrentFilter(uint8_t id,uint8_t enable,uint8_t isBlock)
     uint32_t waitime = 0;
     SCA_Handler_t* pSCA = NULL;
 
-    /* »ñÈ¡¸ÃIDµÄĞÅÏ¢¾ä±ú */
+    /* è·å–è¯¥IDçš„ä¿¡æ¯å¥æŸ„ */
     pSCA = getInstance(id);
     if(pSCA == NULL)	return SCA_UnknownID;
 
-    /* Ä¿±ê²ÎÊıĞ´Èë»º´æ£¬µÈ´ı¸üĞÂ */
+    /* ç›®æ ‡å‚æ•°å†™å…¥ç¼“å­˜ï¼Œç­‰å¾…æ›´æ–° */
     pSCA->paraCache.Current_Filter_State = enable;
 
     Error = SCA_Write_1(pSCA, W1_CurrentFilterState, enable);
     if(Error)	return Error;
 
-    /* ·Ç×èÈû */
+    /* éé˜»å¡ */
     if(isBlock == Unblock)
     {
-        /* ·Ç×èÈû·¢ËÍºóÑÓÊ±´¦Àí£¬·ÀÖ¹×ÜÏß¹ıÔØ */
+        /* éé˜»å¡å‘é€åå»¶æ—¶å¤„ç†ï¼Œé˜²æ­¢æ€»çº¿è¿‡è½½ */
         SCA_Delay(SendInterval);
         return Error;
     }
 
-    /* µÈ´ıÖ´ĞĞ½á¹û */
+    /* ç­‰å¾…æ‰§è¡Œç»“æœ */
     while((pSCA->Current_Filter_State != enable) && (waitime++ < CanOvertime));
     if(waitime >= CanOvertime)	return SCA_OperationFailed;
 
@@ -2963,11 +2963,11 @@ uint8_t enableCurrentFilter(uint8_t id,uint8_t enable,uint8_t isBlock)
 }
 
 /**
-  * @¹¦	ÄÜ	»ñÈ¡Ö´ĞĞÆ÷µçÁ÷»·ÂË²¨Æ÷Ê¹ÄÜ×´Ì¬£¬¸üĞÂÖÁ¾ä±úÖĞ
-  * @²Î	Êı	id£ºÒª²Ù×÷µÄÖ´ĞĞÆ÷id
-  *			isBlock£ºBlockÎª×èÈûÊ½£¬UnblockÎª·Ç×èÈûÊ½
-  * @·µ	»Ø	SCA_NoError£º²Ù×÷³É¹¦
-  *			ÆäËûÍ¨ĞÅ´íÎó²Î¼û SCA_Error ´íÎóÁĞ±í
+  * @åŠŸ	èƒ½	è·å–æ‰§è¡Œå™¨ç”µæµç¯æ»¤æ³¢å™¨ä½¿èƒ½çŠ¶æ€ï¼Œæ›´æ–°è‡³å¥æŸ„ä¸­
+  * @å‚	æ•°	idï¼šè¦æ“ä½œçš„æ‰§è¡Œå™¨id
+  *			isBlockï¼šBlockä¸ºé˜»å¡å¼ï¼ŒUnblockä¸ºéé˜»å¡å¼
+  * @è¿”	å›	SCA_NoErrorï¼šæ“ä½œæˆåŠŸ
+  *			å…¶ä»–é€šä¿¡é”™è¯¯å‚è§ SCA_Error é”™è¯¯åˆ—è¡¨
   */
 uint8_t isCurrentFilterEnable(uint8_t id,uint8_t isBlock)
 {
@@ -2975,25 +2975,25 @@ uint8_t isCurrentFilterEnable(uint8_t id,uint8_t isBlock)
     uint32_t waitime = 0;
     SCA_Handler_t* pSCA = NULL;
 
-    /* »ñÈ¡¸ÃIDµÄĞÅÏ¢¾ä±ú */
+    /* è·å–è¯¥IDçš„ä¿¡æ¯å¥æŸ„ */
     pSCA = getInstance(id);
     if(pSCA == NULL)	return SCA_UnknownID;
 
-    /* Çå¿Õ×´Ì¬Î» */
+    /* æ¸…ç©ºçŠ¶æ€ä½ */
     pSCA->paraCache.R_Current_Filter_State = Actr_Disable;
 
     Error = SCA_Read(pSCA, R1_CurrentFilterState);
     if(Error)	return Error;
 
-    /* ·Ç×èÈû */
+    /* éé˜»å¡ */
     if(isBlock == Unblock)
     {
-        /* ·Ç×èÈû·¢ËÍºóÑÓÊ±´¦Àí£¬·ÀÖ¹×ÜÏß¹ıÔØ */
+        /* éé˜»å¡å‘é€åå»¶æ—¶å¤„ç†ï¼Œé˜²æ­¢æ€»çº¿è¿‡è½½ */
         SCA_Delay(SendInterval);
         return Error;
     }
 
-    /* µÈ´ıÖ´ĞĞ½á¹û */
+    /* ç­‰å¾…æ‰§è¡Œç»“æœ */
     while((pSCA->paraCache.R_Current_Filter_State != Actr_Enable) && (waitime++ < CanOvertime));
     if(waitime >= CanOvertime)	return SCA_OperationFailed;
 
@@ -3002,11 +3002,11 @@ uint8_t isCurrentFilterEnable(uint8_t id,uint8_t isBlock)
 }
 
 /**
-  * @¹¦	ÄÜ	»ñÈ¡Ö´ĞĞÆ÷µçÁ÷»·ÂË²¨Æ÷´ø¿í£¬¸üĞÂÖÁ¾ä±úÖĞ
-  * @²Î	Êı	id£ºÒª²Ù×÷µÄÖ´ĞĞÆ÷id
-  *			isBlock£ºBlockÎª×èÈûÊ½£¬UnblockÎª·Ç×èÈûÊ½
-  * @·µ	»Ø	SCA_NoError£º²Ù×÷³É¹¦
-  *			ÆäËûÍ¨ĞÅ´íÎó²Î¼û SCA_Error ´íÎóÁĞ±í
+  * @åŠŸ	èƒ½	è·å–æ‰§è¡Œå™¨ç”µæµç¯æ»¤æ³¢å™¨å¸¦å®½ï¼Œæ›´æ–°è‡³å¥æŸ„ä¸­
+  * @å‚	æ•°	idï¼šè¦æ“ä½œçš„æ‰§è¡Œå™¨id
+  *			isBlockï¼šBlockä¸ºé˜»å¡å¼ï¼ŒUnblockä¸ºéé˜»å¡å¼
+  * @è¿”	å›	SCA_NoErrorï¼šæ“ä½œæˆåŠŸ
+  *			å…¶ä»–é€šä¿¡é”™è¯¯å‚è§ SCA_Error é”™è¯¯åˆ—è¡¨
   */
 uint8_t getCurrentCutoffFrequency(uint8_t id,uint8_t isBlock)
 {
@@ -3014,25 +3014,25 @@ uint8_t getCurrentCutoffFrequency(uint8_t id,uint8_t isBlock)
     uint32_t waitime = 0;
     SCA_Handler_t* pSCA = NULL;
 
-    /* »ñÈ¡¸ÃIDµÄĞÅÏ¢¾ä±ú */
+    /* è·å–è¯¥IDçš„ä¿¡æ¯å¥æŸ„ */
     pSCA = getInstance(id);
     if(pSCA == NULL)	return SCA_UnknownID;
 
-    /* Çå¿Õ×´Ì¬Î» */
+    /* æ¸…ç©ºçŠ¶æ€ä½ */
     pSCA->paraCache.R_Current_Filter_Value = Actr_Disable;
 
     Error = SCA_Read(pSCA, R2_CurrentFilterValue);
     if(Error)	return Error;
 
-    /* ·Ç×èÈû */
+    /* éé˜»å¡ */
     if(isBlock == Unblock)
     {
-        /* ·Ç×èÈû·¢ËÍºóÑÓÊ±´¦Àí£¬·ÀÖ¹×ÜÏß¹ıÔØ */
+        /* éé˜»å¡å‘é€åå»¶æ—¶å¤„ç†ï¼Œé˜²æ­¢æ€»çº¿è¿‡è½½ */
         SCA_Delay(SendInterval);
         return Error;
     }
 
-    /* µÈ´ıÖ´ĞĞ½á¹û */
+    /* ç­‰å¾…æ‰§è¡Œç»“æœ */
     while((pSCA->paraCache.R_Current_Filter_Value != Actr_Enable) && (waitime++ < CanOvertime));
     if(waitime >= CanOvertime)	return SCA_OperationFailed;
 
@@ -3041,12 +3041,12 @@ uint8_t getCurrentCutoffFrequency(uint8_t id,uint8_t isBlock)
 }
 
 /**
-  * @¹¦	ÄÜ	ÉèÖÃÖ´ĞĞÆ÷µçÁ÷»·ÂË²¨Æ÷´ø¿í
-  * @²Î	Êı	id£ºÒª²Ù×÷µÄÖ´ĞĞÆ÷id
-  *			frequency£ºÄ¿±ê½ØÖ¹ÆµÂÊ£¬µ¥Î» hz
-  *			isBlock£ºBlockÎª×èÈûÊ½£¬UnblockÎª·Ç×èÈûÊ½
-  * @·µ	»Ø	SCA_NoError£º²Ù×÷³É¹¦
-  *			ÆäËûÍ¨ĞÅ´íÎó²Î¼û SCA_Error ´íÎóÁĞ±í
+  * @åŠŸ	èƒ½	è®¾ç½®æ‰§è¡Œå™¨ç”µæµç¯æ»¤æ³¢å™¨å¸¦å®½
+  * @å‚	æ•°	idï¼šè¦æ“ä½œçš„æ‰§è¡Œå™¨id
+  *			frequencyï¼šç›®æ ‡æˆªæ­¢é¢‘ç‡ï¼Œå•ä½ hz
+  *			isBlockï¼šBlockä¸ºé˜»å¡å¼ï¼ŒUnblockä¸ºéé˜»å¡å¼
+  * @è¿”	å›	SCA_NoErrorï¼šæ“ä½œæˆåŠŸ
+  *			å…¶ä»–é€šä¿¡é”™è¯¯å‚è§ SCA_Error é”™è¯¯åˆ—è¡¨
   */
 uint8_t setCurrentCutoffFrequency(uint8_t id, float frequency,uint8_t isBlock)
 {
@@ -3054,25 +3054,25 @@ uint8_t setCurrentCutoffFrequency(uint8_t id, float frequency,uint8_t isBlock)
     uint32_t waitime = 0;
     SCA_Handler_t* pSCA = NULL;
 
-    /* »ñÈ¡¸ÃIDµÄĞÅÏ¢¾ä±ú */
+    /* è·å–è¯¥IDçš„ä¿¡æ¯å¥æŸ„ */
     pSCA = getInstance(id);
     if(pSCA == NULL)	return SCA_UnknownID;
 
-    /* Ä¿±ê²ÎÊıĞ´Èë»º´æ£¬µÈ´ı¸üĞÂ */
+    /* ç›®æ ‡å‚æ•°å†™å…¥ç¼“å­˜ï¼Œç­‰å¾…æ›´æ–° */
     pSCA->paraCache.Current_Filter_Value = frequency;
 
     Error = SCA_Write_2(pSCA, W2_CurrentFilterValue, frequency);
     if(Error)	return Error;
 
-    /* ·Ç×èÈû */
+    /* éé˜»å¡ */
     if(isBlock == Unblock)
     {
-        /* ·Ç×èÈû·¢ËÍºóÑÓÊ±´¦Àí£¬·ÀÖ¹×ÜÏß¹ıÔØ */
+        /* éé˜»å¡å‘é€åå»¶æ—¶å¤„ç†ï¼Œé˜²æ­¢æ€»çº¿è¿‡è½½ */
         SCA_Delay(SendInterval);
         return Error;
     }
 
-    /* µÈ´ıÖ´ĞĞ½á¹û */
+    /* ç­‰å¾…æ‰§è¡Œç»“æœ */
     while((pSCA->Current_Filter_Value != frequency) && (waitime++ < CanOvertime));
     if(waitime >= CanOvertime)	return SCA_OperationFailed;
 
@@ -3080,12 +3080,12 @@ uint8_t setCurrentCutoffFrequency(uint8_t id, float frequency,uint8_t isBlock)
 }
 
 /**
-  * @¹¦	ÄÜ	ÉèÖÃÖ´ĞĞÆ÷µçÁ÷»·ÊäÈëÏŞ·ù
-  * @²Î	Êı	id£ºÒª²Ù×÷µÄÖ´ĞĞÆ÷id
-  *			limit£ºÊäÈëÏŞ·ù
-  *			isBlock£ºBlockÎª×èÈûÊ½£¬UnblockÎª·Ç×èÈûÊ½
-  * @·µ	»Ø	SCA_NoError£º²Ù×÷³É¹¦
-  *			ÆäËûÍ¨ĞÅ´íÎó²Î¼û SCA_Error ´íÎóÁĞ±í
+  * @åŠŸ	èƒ½	è®¾ç½®æ‰§è¡Œå™¨ç”µæµç¯è¾“å…¥é™å¹…
+  * @å‚	æ•°	idï¼šè¦æ“ä½œçš„æ‰§è¡Œå™¨id
+  *			limitï¼šè¾“å…¥é™å¹…
+  *			isBlockï¼šBlockä¸ºé˜»å¡å¼ï¼ŒUnblockä¸ºéé˜»å¡å¼
+  * @è¿”	å›	SCA_NoErrorï¼šæ“ä½œæˆåŠŸ
+  *			å…¶ä»–é€šä¿¡é”™è¯¯å‚è§ SCA_Error é”™è¯¯åˆ—è¡¨
   */
 uint8_t setCurrentLimit(uint8_t id,float limit,uint8_t isBlock)
 {
@@ -3093,25 +3093,25 @@ uint8_t setCurrentLimit(uint8_t id,float limit,uint8_t isBlock)
     uint32_t waitime = 0;
     SCA_Handler_t* pSCA = NULL;
 
-    /* »ñÈ¡¸ÃIDµÄĞÅÏ¢¾ä±ú */
+    /* è·å–è¯¥IDçš„ä¿¡æ¯å¥æŸ„ */
     pSCA = getInstance(id);
     if(pSCA == NULL)	return SCA_UnknownID;
 
-    /* Ä¿±ê²ÎÊıĞ´Èë»º´æ£¬µÈ´ı¸üĞÂ */
+    /* ç›®æ ‡å‚æ•°å†™å…¥ç¼“å­˜ï¼Œç­‰å¾…æ›´æ–° */
     pSCA->paraCache.Current_Limit = limit;
 
     Error = SCA_Write_3(pSCA, W3_CurrentLimit, limit);
     if(Error)	return Error;
 
-    /* ·Ç×èÈû */
+    /* éé˜»å¡ */
     if(isBlock == Unblock)
     {
-        /* ·Ç×èÈû·¢ËÍºóÑÓÊ±´¦Àí£¬·ÀÖ¹×ÜÏß¹ıÔØ */
+        /* éé˜»å¡å‘é€åå»¶æ—¶å¤„ç†ï¼Œé˜²æ­¢æ€»çº¿è¿‡è½½ */
         SCA_Delay(SendInterval);
         return Error;
     }
 
-    /* µÈ´ıÖ´ĞĞ½á¹û */
+    /* ç­‰å¾…æ‰§è¡Œç»“æœ */
     while((pSCA->Current_Limit != limit) && (waitime++ < CanOvertime));
     if(waitime >= CanOvertime)	return SCA_OperationFailed;
 
@@ -3119,11 +3119,11 @@ uint8_t setCurrentLimit(uint8_t id,float limit,uint8_t isBlock)
 }
 
 /**
-  * @¹¦	ÄÜ	»ñÈ¡Ö´ĞĞÆ÷µçÁ÷»·ÊäÈëÏŞ·ù£¬¸üĞÂÖÁ¾ä±úÖĞ
-  * @²Î	Êı	id£ºÒª²Ù×÷µÄÖ´ĞĞÆ÷id
-  *			isBlock£ºBlockÎª×èÈûÊ½£¬UnblockÎª·Ç×èÈûÊ½
-  * @·µ	»Ø	SCA_NoError£º²Ù×÷³É¹¦
-  *			ÆäËûÍ¨ĞÅ´íÎó²Î¼û SCA_Error ´íÎóÁĞ±í
+  * @åŠŸ	èƒ½	è·å–æ‰§è¡Œå™¨ç”µæµç¯è¾“å…¥é™å¹…ï¼Œæ›´æ–°è‡³å¥æŸ„ä¸­
+  * @å‚	æ•°	idï¼šè¦æ“ä½œçš„æ‰§è¡Œå™¨id
+  *			isBlockï¼šBlockä¸ºé˜»å¡å¼ï¼ŒUnblockä¸ºéé˜»å¡å¼
+  * @è¿”	å›	SCA_NoErrorï¼šæ“ä½œæˆåŠŸ
+  *			å…¶ä»–é€šä¿¡é”™è¯¯å‚è§ SCA_Error é”™è¯¯åˆ—è¡¨
   */
 uint8_t getCurrentLimit(uint8_t id,uint8_t isBlock)
 {
@@ -3131,25 +3131,25 @@ uint8_t getCurrentLimit(uint8_t id,uint8_t isBlock)
     uint32_t waitime = 0;
     SCA_Handler_t* pSCA = NULL;
 
-    /* »ñÈ¡¸ÃIDµÄĞÅÏ¢¾ä±ú */
+    /* è·å–è¯¥IDçš„ä¿¡æ¯å¥æŸ„ */
     pSCA = getInstance(id);
     if(pSCA == NULL)	return SCA_UnknownID;
 
-    /* Çå¿Õ×´Ì¬Î» */
+    /* æ¸…ç©ºçŠ¶æ€ä½ */
     pSCA->paraCache.R_Current_Limit = Actr_Disable;
 
     Error = SCA_Read(pSCA, R3_CurrentLimit);
     if(Error)	return Error;
 
-    /* ·Ç×èÈû */
+    /* éé˜»å¡ */
     if(isBlock == Unblock)
     {
-        /* ·Ç×èÈû·¢ËÍºóÑÓÊ±´¦Àí£¬·ÀÖ¹×ÜÏß¹ıÔØ */
+        /* éé˜»å¡å‘é€åå»¶æ—¶å¤„ç†ï¼Œé˜²æ­¢æ€»çº¿è¿‡è½½ */
         SCA_Delay(SendInterval);
         return Error;
     }
 
-    /* µÈ´ıÖ´ĞĞ½á¹û */
+    /* ç­‰å¾…æ‰§è¡Œç»“æœ */
     while((pSCA->paraCache.R_Current_Limit != Actr_Enable) && (waitime++ < CanOvertime));
     if(waitime >= CanOvertime)	return SCA_OperationFailed;
 
@@ -3157,14 +3157,14 @@ uint8_t getCurrentLimit(uint8_t id,uint8_t isBlock)
 
 }
 
-/****************************ÆäËû²ÎÊı*******************************/
+/****************************å…¶ä»–å‚æ•°*******************************/
 
 /**
-  * @¹¦	ÄÜ	»ñÈ¡Ö´ĞĞÆ÷µçÑ¹£¬¸üĞÂÖÁ¾ä±úÖĞ
-  * @²Î	Êı	id£ºÒª²Ù×÷µÄÖ´ĞĞÆ÷id
-  *			isBlock£ºBlockÎª×èÈûÊ½£¬UnblockÎª·Ç×èÈûÊ½
-  * @·µ	»Ø	SCA_NoError£º²Ù×÷³É¹¦
-  *			ÆäËûÍ¨ĞÅ´íÎó²Î¼û SCA_Error ´íÎóÁĞ±í
+  * @åŠŸ	èƒ½	è·å–æ‰§è¡Œå™¨ç”µå‹ï¼Œæ›´æ–°è‡³å¥æŸ„ä¸­
+  * @å‚	æ•°	idï¼šè¦æ“ä½œçš„æ‰§è¡Œå™¨id
+  *			isBlockï¼šBlockä¸ºé˜»å¡å¼ï¼ŒUnblockä¸ºéé˜»å¡å¼
+  * @è¿”	å›	SCA_NoErrorï¼šæ“ä½œæˆåŠŸ
+  *			å…¶ä»–é€šä¿¡é”™è¯¯å‚è§ SCA_Error é”™è¯¯åˆ—è¡¨
   */
 uint8_t getVoltage(uint8_t id,uint8_t isBlock)
 {
@@ -3172,25 +3172,25 @@ uint8_t getVoltage(uint8_t id,uint8_t isBlock)
     uint32_t waitime = 0;
     SCA_Handler_t* pSCA = NULL;
 
-    /* »ñÈ¡¸ÃIDµÄĞÅÏ¢¾ä±ú */
+    /* è·å–è¯¥IDçš„ä¿¡æ¯å¥æŸ„ */
     pSCA = getInstance(id);
     if(pSCA == NULL)	return SCA_UnknownID;
 
-    /* Çå¿Õ×´Ì¬Î» */
+    /* æ¸…ç©ºçŠ¶æ€ä½ */
     pSCA->paraCache.R_Voltage = Actr_Disable;
 
     Error = SCA_Read(pSCA, R2_Voltage);
     if(Error)	return Error;
 
-    /* ·Ç×èÈû */
+    /* éé˜»å¡ */
     if(isBlock == Unblock)
     {
-        /* ·Ç×èÈû·¢ËÍºóÑÓÊ±´¦Àí£¬·ÀÖ¹×ÜÏß¹ıÔØ */
+        /* éé˜»å¡å‘é€åå»¶æ—¶å¤„ç†ï¼Œé˜²æ­¢æ€»çº¿è¿‡è½½ */
         SCA_Delay(SendInterval);
         return Error;
     }
 
-    /* µÈ´ıÖ´ĞĞ½á¹û */
+    /* ç­‰å¾…æ‰§è¡Œç»“æœ */
     while((pSCA->paraCache.R_Voltage != Actr_Enable) && (waitime++ < CanOvertime));
     if(waitime >= CanOvertime)	return SCA_OperationFailed;
 
@@ -3198,11 +3198,11 @@ uint8_t getVoltage(uint8_t id,uint8_t isBlock)
 }
 
 /**
-  * @¹¦	ÄÜ	»ñÈ¡Ö´ĞĞÆ÷¶Â×ªÄÜÁ¿£¬¸üĞÂÖÁ¾ä±úÖĞ
-  * @²Î	Êı	id£ºÒª²Ù×÷µÄÖ´ĞĞÆ÷id
-  *			isBlock£ºBlockÎª×èÈûÊ½£¬UnblockÎª·Ç×èÈûÊ½
-  * @·µ	»Ø	SCA_NoError£º²Ù×÷³É¹¦
-  *			ÆäËûÍ¨ĞÅ´íÎó²Î¼û SCA_Error ´íÎóÁĞ±í
+  * @åŠŸ	èƒ½	è·å–æ‰§è¡Œå™¨å µè½¬èƒ½é‡ï¼Œæ›´æ–°è‡³å¥æŸ„ä¸­
+  * @å‚	æ•°	idï¼šè¦æ“ä½œçš„æ‰§è¡Œå™¨id
+  *			isBlockï¼šBlockä¸ºé˜»å¡å¼ï¼ŒUnblockä¸ºéé˜»å¡å¼
+  * @è¿”	å›	SCA_NoErrorï¼šæ“ä½œæˆåŠŸ
+  *			å…¶ä»–é€šä¿¡é”™è¯¯å‚è§ SCA_Error é”™è¯¯åˆ—è¡¨
   */
 uint8_t getLockEnergy(uint8_t id,uint8_t isBlock)
 {
@@ -3210,25 +3210,25 @@ uint8_t getLockEnergy(uint8_t id,uint8_t isBlock)
     uint32_t waitime = 0;
     SCA_Handler_t* pSCA = NULL;
 
-    /* »ñÈ¡¸ÃIDµÄĞÅÏ¢¾ä±ú */
+    /* è·å–è¯¥IDçš„ä¿¡æ¯å¥æŸ„ */
     pSCA = getInstance(id);
     if(pSCA == NULL)	return SCA_UnknownID;
 
-    /* Çå¿Õ×´Ì¬Î» */
+    /* æ¸…ç©ºçŠ¶æ€ä½ */
     pSCA->paraCache.R_Blocked_Energy = Actr_Disable;
 
     Error = SCA_Read(pSCA, R3_BlockEngy);
     if(Error)	return Error;
 
-    /* ·Ç×èÈû */
+    /* éé˜»å¡ */
     if(isBlock == Unblock)
     {
-        /* ·Ç×èÈû·¢ËÍºóÑÓÊ±´¦Àí£¬·ÀÖ¹×ÜÏß¹ıÔØ */
+        /* éé˜»å¡å‘é€åå»¶æ—¶å¤„ç†ï¼Œé˜²æ­¢æ€»çº¿è¿‡è½½ */
         SCA_Delay(SendInterval);
         return Error;
     }
 
-    /* µÈ´ıÖ´ĞĞ½á¹û */
+    /* ç­‰å¾…æ‰§è¡Œç»“æœ */
     while((pSCA->paraCache.R_Blocked_Energy != Actr_Enable) && (waitime++ < CanOvertime));
     if(waitime >= CanOvertime)	return SCA_OperationFailed;
 
@@ -3237,12 +3237,12 @@ uint8_t getLockEnergy(uint8_t id,uint8_t isBlock)
 }
 
 /**
-  * @¹¦	ÄÜ	ÉèÖÃÖ´ĞĞÆ÷¶Â×ªÄÜÁ¿Öµ
-  * @²Î	Êı	id£ºÒª²Ù×÷µÄÖ´ĞĞÆ÷id
-  *			energy£º¶Â×ªÄÜÁ¿Öµ£¬Êµ¼ÊÖµ£¬µ¥Î» J
-  *			isBlock£ºBlockÎª×èÈûÊ½£¬UnblockÎª·Ç×èÈûÊ½
-  * @·µ	»Ø	SCA_NoError£º²Ù×÷³É¹¦
-  *			ÆäËûÍ¨ĞÅ´íÎó²Î¼û SCA_Error ´íÎóÁĞ±í
+  * @åŠŸ	èƒ½	è®¾ç½®æ‰§è¡Œå™¨å µè½¬èƒ½é‡å€¼
+  * @å‚	æ•°	idï¼šè¦æ“ä½œçš„æ‰§è¡Œå™¨id
+  *			energyï¼šå µè½¬èƒ½é‡å€¼ï¼Œå®é™…å€¼ï¼Œå•ä½ J
+  *			isBlockï¼šBlockä¸ºé˜»å¡å¼ï¼ŒUnblockä¸ºéé˜»å¡å¼
+  * @è¿”	å›	SCA_NoErrorï¼šæ“ä½œæˆåŠŸ
+  *			å…¶ä»–é€šä¿¡é”™è¯¯å‚è§ SCA_Error é”™è¯¯åˆ—è¡¨
   */
 uint8_t setLockEnergy(uint8_t id,float energy,uint8_t isBlock)
 {
@@ -3250,25 +3250,25 @@ uint8_t setLockEnergy(uint8_t id,float energy,uint8_t isBlock)
     uint32_t waitime = 0;
     SCA_Handler_t* pSCA = NULL;
 
-    /* »ñÈ¡¸ÃIDµÄĞÅÏ¢¾ä±ú */
+    /* è·å–è¯¥IDçš„ä¿¡æ¯å¥æŸ„ */
     pSCA = getInstance(id);
     if(pSCA == NULL)	return SCA_UnknownID;
 
-    /* Ä¿±ê²ÎÊıĞ´Èë»º´æ£¬µÈ´ı¸üĞÂ */
+    /* ç›®æ ‡å‚æ•°å†™å…¥ç¼“å­˜ï¼Œç­‰å¾…æ›´æ–° */
     pSCA->paraCache.Blocked_Energy = energy;
 
     Error = SCA_Write_3(pSCA, W3_BlockEngy, energy);
     if(Error)	return Error;
 
-    /* ·Ç×èÈû */
+    /* éé˜»å¡ */
     if(isBlock == Unblock)
     {
-        /* ·Ç×èÈû·¢ËÍºóÑÓÊ±´¦Àí£¬·ÀÖ¹×ÜÏß¹ıÔØ */
+        /* éé˜»å¡å‘é€åå»¶æ—¶å¤„ç†ï¼Œé˜²æ­¢æ€»çº¿è¿‡è½½ */
         SCA_Delay(SendInterval);
         return Error;
     }
 
-    /* µÈ´ıÖ´ĞĞ½á¹û */
+    /* ç­‰å¾…æ‰§è¡Œç»“æœ */
     while((pSCA->Blocked_Energy != energy) && (waitime++ < CanOvertime));
     if(waitime >= CanOvertime)	return SCA_OperationFailed;
 
@@ -3276,11 +3276,11 @@ uint8_t setLockEnergy(uint8_t id,float energy,uint8_t isBlock)
 }
 
 /**
-  * @¹¦	ÄÜ	»ñÈ¡Ö´ĞĞÆ÷µç»úÎÂ¶ÈÖµ£¬¸üĞÂÖÁ¾ä±úÖĞ
-  * @²Î	Êı	id£ºÒª²Ù×÷µÄÖ´ĞĞÆ÷id
-  *			isBlock£ºBlockÎª×èÈûÊ½£¬UnblockÎª·Ç×èÈûÊ½
-  * @·µ	»Ø	SCA_NoError£º²Ù×÷³É¹¦
-  *			ÆäËûÍ¨ĞÅ´íÎó²Î¼û SCA_Error ´íÎóÁĞ±í
+  * @åŠŸ	èƒ½	è·å–æ‰§è¡Œå™¨ç”µæœºæ¸©åº¦å€¼ï¼Œæ›´æ–°è‡³å¥æŸ„ä¸­
+  * @å‚	æ•°	idï¼šè¦æ“ä½œçš„æ‰§è¡Œå™¨id
+  *			isBlockï¼šBlockä¸ºé˜»å¡å¼ï¼ŒUnblockä¸ºéé˜»å¡å¼
+  * @è¿”	å›	SCA_NoErrorï¼šæ“ä½œæˆåŠŸ
+  *			å…¶ä»–é€šä¿¡é”™è¯¯å‚è§ SCA_Error é”™è¯¯åˆ—è¡¨
   */
 uint8_t getMotorTemperature(uint8_t id,uint8_t isBlock)
 {
@@ -3288,25 +3288,25 @@ uint8_t getMotorTemperature(uint8_t id,uint8_t isBlock)
     uint32_t waitime = 0;
     SCA_Handler_t* pSCA = NULL;
 
-    /* »ñÈ¡¸ÃIDµÄĞÅÏ¢¾ä±ú */
+    /* è·å–è¯¥IDçš„ä¿¡æ¯å¥æŸ„ */
     pSCA = getInstance(id);
     if(pSCA == NULL)	return SCA_UnknownID;
 
-    /* Çå¿Õ×´Ì¬Î» */
+    /* æ¸…ç©ºçŠ¶æ€ä½ */
     pSCA->paraCache.R_Motor_Temp = Actr_Disable;
 
     Error = SCA_Read(pSCA, R2_MotorTemp);
     if(Error)	return Error;
 
-    /* ·Ç×èÈû */
+    /* éé˜»å¡ */
     if(isBlock == Unblock)
     {
-        /* ·Ç×èÈû·¢ËÍºóÑÓÊ±´¦Àí£¬·ÀÖ¹×ÜÏß¹ıÔØ */
+        /* éé˜»å¡å‘é€åå»¶æ—¶å¤„ç†ï¼Œé˜²æ­¢æ€»çº¿è¿‡è½½ */
         SCA_Delay(SendInterval);
         return Error;
     }
 
-    /* µÈ´ıÖ´ĞĞ½á¹û */
+    /* ç­‰å¾…æ‰§è¡Œç»“æœ */
     while((pSCA->paraCache.R_Motor_Temp != Actr_Enable) && (waitime++ < CanOvertime));
     if(waitime >= CanOvertime)	return SCA_OperationFailed;
 
@@ -3315,11 +3315,11 @@ uint8_t getMotorTemperature(uint8_t id,uint8_t isBlock)
 }
 
 /**
-  * @¹¦	ÄÜ	»ñÈ¡Ö´ĞĞÆ÷Äæ±äÆ÷ÎÂ¶ÈÖµ£¬¸üĞÂÖÁ¾ä±úÖĞ
-  * @²Î	Êı	id£ºÒª²Ù×÷µÄÖ´ĞĞÆ÷id
-  *			isBlock£ºBlockÎª×èÈûÊ½£¬UnblockÎª·Ç×èÈûÊ½
-  * @·µ	»Ø	SCA_NoError£º²Ù×÷³É¹¦
-  *			ÆäËûÍ¨ĞÅ´íÎó²Î¼û SCA_Error ´íÎóÁĞ±í
+  * @åŠŸ	èƒ½	è·å–æ‰§è¡Œå™¨é€†å˜å™¨æ¸©åº¦å€¼ï¼Œæ›´æ–°è‡³å¥æŸ„ä¸­
+  * @å‚	æ•°	idï¼šè¦æ“ä½œçš„æ‰§è¡Œå™¨id
+  *			isBlockï¼šBlockä¸ºé˜»å¡å¼ï¼ŒUnblockä¸ºéé˜»å¡å¼
+  * @è¿”	å›	SCA_NoErrorï¼šæ“ä½œæˆåŠŸ
+  *			å…¶ä»–é€šä¿¡é”™è¯¯å‚è§ SCA_Error é”™è¯¯åˆ—è¡¨
   */
 uint8_t getInverterTemperature(uint8_t id,uint8_t isBlock)
 {
@@ -3327,25 +3327,25 @@ uint8_t getInverterTemperature(uint8_t id,uint8_t isBlock)
     uint32_t waitime = 0;
     SCA_Handler_t* pSCA = NULL;
 
-    /* »ñÈ¡¸ÃIDµÄĞÅÏ¢¾ä±ú */
+    /* è·å–è¯¥IDçš„ä¿¡æ¯å¥æŸ„ */
     pSCA = getInstance(id);
     if(pSCA == NULL)	return SCA_UnknownID;
 
-    /* Çå¿Õ×´Ì¬Î» */
+    /* æ¸…ç©ºçŠ¶æ€ä½ */
     pSCA->paraCache.R_Inverter_Temp = Actr_Disable;
 
     Error = SCA_Read(pSCA, R2_InverterTemp);
     if(Error)	return Error;
 
-    /* ·Ç×èÈû */
+    /* éé˜»å¡ */
     if(isBlock == Unblock)
     {
-        /* ·Ç×èÈû·¢ËÍºóÑÓÊ±´¦Àí£¬·ÀÖ¹×ÜÏß¹ıÔØ */
+        /* éé˜»å¡å‘é€åå»¶æ—¶å¤„ç†ï¼Œé˜²æ­¢æ€»çº¿è¿‡è½½ */
         SCA_Delay(SendInterval);
         return Error;
     }
 
-    /* µÈ´ıÖ´ĞĞ½á¹û */
+    /* ç­‰å¾…æ‰§è¡Œç»“æœ */
     while((pSCA->paraCache.R_Inverter_Temp != Actr_Enable) && (waitime++ < CanOvertime));
     if(waitime >= CanOvertime)	return SCA_OperationFailed;
 
@@ -3354,11 +3354,11 @@ uint8_t getInverterTemperature(uint8_t id,uint8_t isBlock)
 }
 
 /**
-  * @¹¦	ÄÜ	»ñÈ¡Ö´ĞĞÆ÷µç»ú±£»¤ÎÂ¶ÈÖµ£¬¸üĞÂÖÁ¾ä±úÖĞ
-  * @²Î	Êı	id£ºÒª²Ù×÷µÄÖ´ĞĞÆ÷id
-  *			isBlock£ºBlockÎª×èÈûÊ½£¬UnblockÎª·Ç×èÈûÊ½
-  * @·µ	»Ø	SCA_NoError£º²Ù×÷³É¹¦
-  *			ÆäËûÍ¨ĞÅ´íÎó²Î¼û SCA_Error ´íÎóÁĞ±í
+  * @åŠŸ	èƒ½	è·å–æ‰§è¡Œå™¨ç”µæœºä¿æŠ¤æ¸©åº¦å€¼ï¼Œæ›´æ–°è‡³å¥æŸ„ä¸­
+  * @å‚	æ•°	idï¼šè¦æ“ä½œçš„æ‰§è¡Œå™¨id
+  *			isBlockï¼šBlockä¸ºé˜»å¡å¼ï¼ŒUnblockä¸ºéé˜»å¡å¼
+  * @è¿”	å›	SCA_NoErrorï¼šæ“ä½œæˆåŠŸ
+  *			å…¶ä»–é€šä¿¡é”™è¯¯å‚è§ SCA_Error é”™è¯¯åˆ—è¡¨
   */
 uint8_t getMotorProtectedTemperature(uint8_t id,uint8_t isBlock)
 {
@@ -3366,25 +3366,25 @@ uint8_t getMotorProtectedTemperature(uint8_t id,uint8_t isBlock)
     uint32_t waitime = 0;
     SCA_Handler_t* pSCA = NULL;
 
-    /* »ñÈ¡¸ÃIDµÄĞÅÏ¢¾ä±ú */
+    /* è·å–è¯¥IDçš„ä¿¡æ¯å¥æŸ„ */
     pSCA = getInstance(id);
     if(pSCA == NULL)	return SCA_UnknownID;
 
-    /* Çå¿Õ×´Ì¬Î» */
+    /* æ¸…ç©ºçŠ¶æ€ä½ */
     pSCA->paraCache.R_Inverter_Protect_Temp = Actr_Disable;
 
     Error = SCA_Read(pSCA, R2_MotorProtectTemp);
     if(Error)	return Error;
 
-    /* ·Ç×èÈû */
+    /* éé˜»å¡ */
     if(isBlock == Unblock)
     {
-        /* ·Ç×èÈû·¢ËÍºóÑÓÊ±´¦Àí£¬·ÀÖ¹×ÜÏß¹ıÔØ */
+        /* éé˜»å¡å‘é€åå»¶æ—¶å¤„ç†ï¼Œé˜²æ­¢æ€»çº¿è¿‡è½½ */
         SCA_Delay(SendInterval);
         return Error;
     }
 
-    /* µÈ´ıÖ´ĞĞ½á¹û */
+    /* ç­‰å¾…æ‰§è¡Œç»“æœ */
     while((pSCA->paraCache.R_Inverter_Protect_Temp != Actr_Enable) && (waitime++ < CanOvertime));
     if(waitime >= CanOvertime)	return SCA_OperationFailed;
 
@@ -3393,12 +3393,12 @@ uint8_t getMotorProtectedTemperature(uint8_t id,uint8_t isBlock)
 }
 
 /**
-  * @¹¦	ÄÜ	ÉèÖÃÖ´ĞĞÆ÷µç»ú±£»¤ÎÂ¶ÈÖµ
-  * @²Î	Êı	id£ºÒª²Ù×÷µÄÖ´ĞĞÆ÷id
-  *			temp£ºµç»ú±£»¤ÎÂ¶ÈÖµ£¬Êµ¼ÊÖµ£¬µ¥Î» ÉãÊÏ¶È
-  *			isBlock£ºBlockÎª×èÈûÊ½£¬UnblockÎª·Ç×èÈûÊ½
-  * @·µ	»Ø	SCA_NoError£º²Ù×÷³É¹¦
-  *			ÆäËûÍ¨ĞÅ´íÎó²Î¼û SCA_Error ´íÎóÁĞ±í
+  * @åŠŸ	èƒ½	è®¾ç½®æ‰§è¡Œå™¨ç”µæœºä¿æŠ¤æ¸©åº¦å€¼
+  * @å‚	æ•°	idï¼šè¦æ“ä½œçš„æ‰§è¡Œå™¨id
+  *			tempï¼šç”µæœºä¿æŠ¤æ¸©åº¦å€¼ï¼Œå®é™…å€¼ï¼Œå•ä½ æ‘„æ°åº¦
+  *			isBlockï¼šBlockä¸ºé˜»å¡å¼ï¼ŒUnblockä¸ºéé˜»å¡å¼
+  * @è¿”	å›	SCA_NoErrorï¼šæ“ä½œæˆåŠŸ
+  *			å…¶ä»–é€šä¿¡é”™è¯¯å‚è§ SCA_Error é”™è¯¯åˆ—è¡¨
   */
 uint8_t setMotorProtectedTemperature(uint8_t id,float temp,uint8_t isBlock)
 {
@@ -3406,25 +3406,25 @@ uint8_t setMotorProtectedTemperature(uint8_t id,float temp,uint8_t isBlock)
     uint32_t waitime = 0;
     SCA_Handler_t* pSCA = NULL;
 
-    /* »ñÈ¡¸ÃIDµÄĞÅÏ¢¾ä±ú */
+    /* è·å–è¯¥IDçš„ä¿¡æ¯å¥æŸ„ */
     pSCA = getInstance(id);
     if(pSCA == NULL)	return SCA_UnknownID;
 
-    /* Ä¿±ê²ÎÊıĞ´Èë»º´æ£¬µÈ´ı¸üĞÂ */
+    /* ç›®æ ‡å‚æ•°å†™å…¥ç¼“å­˜ï¼Œç­‰å¾…æ›´æ–° */
     pSCA->paraCache.Motor_Protect_Temp = temp;
 
     Error = SCA_Write_2(pSCA, W2_MotorProtectTemp, temp);
     if(Error)	return Error;
 
-    /* ·Ç×èÈû */
+    /* éé˜»å¡ */
     if(isBlock == Unblock)
     {
-        /* ·Ç×èÈû·¢ËÍºóÑÓÊ±´¦Àí£¬·ÀÖ¹×ÜÏß¹ıÔØ */
+        /* éé˜»å¡å‘é€åå»¶æ—¶å¤„ç†ï¼Œé˜²æ­¢æ€»çº¿è¿‡è½½ */
         SCA_Delay(SendInterval);
         return Error;
     }
 
-    /* µÈ´ıÖ´ĞĞ½á¹û */
+    /* ç­‰å¾…æ‰§è¡Œç»“æœ */
     while((pSCA->Motor_Protect_Temp != temp) && (waitime++ < CanOvertime));
     if(waitime >= CanOvertime)	return SCA_OperationFailed;
 
@@ -3432,11 +3432,11 @@ uint8_t setMotorProtectedTemperature(uint8_t id,float temp,uint8_t isBlock)
 }
 
 /**
-  * @¹¦	ÄÜ	»ñÈ¡Ö´ĞĞÆ÷µç»ú»Ö¸´ÎÂ¶ÈÖµ£¬¸üĞÂÖÁ¾ä±úÖĞ
-  * @²Î	Êı	id£ºÒª²Ù×÷µÄÖ´ĞĞÆ÷id
-  *			isBlock£ºBlockÎª×èÈûÊ½£¬UnblockÎª·Ç×èÈûÊ½
-  * @·µ	»Ø	SCA_NoError£º²Ù×÷³É¹¦
-  *			ÆäËûÍ¨ĞÅ´íÎó²Î¼û SCA_Error ´íÎóÁĞ±í
+  * @åŠŸ	èƒ½	è·å–æ‰§è¡Œå™¨ç”µæœºæ¢å¤æ¸©åº¦å€¼ï¼Œæ›´æ–°è‡³å¥æŸ„ä¸­
+  * @å‚	æ•°	idï¼šè¦æ“ä½œçš„æ‰§è¡Œå™¨id
+  *			isBlockï¼šBlockä¸ºé˜»å¡å¼ï¼ŒUnblockä¸ºéé˜»å¡å¼
+  * @è¿”	å›	SCA_NoErrorï¼šæ“ä½œæˆåŠŸ
+  *			å…¶ä»–é€šä¿¡é”™è¯¯å‚è§ SCA_Error é”™è¯¯åˆ—è¡¨
   */
 uint8_t getMotorRecoveryTemperature(uint8_t id,uint8_t isBlock)
 {
@@ -3444,25 +3444,25 @@ uint8_t getMotorRecoveryTemperature(uint8_t id,uint8_t isBlock)
     uint32_t waitime = 0;
     SCA_Handler_t* pSCA = NULL;
 
-    /* »ñÈ¡¸ÃIDµÄĞÅÏ¢¾ä±ú */
+    /* è·å–è¯¥IDçš„ä¿¡æ¯å¥æŸ„ */
     pSCA = getInstance(id);
     if(pSCA == NULL)	return SCA_UnknownID;
 
-    /* Çå¿Õ×´Ì¬Î» */
+    /* æ¸…ç©ºçŠ¶æ€ä½ */
     pSCA->paraCache.R_Motor_Recover_Temp = Actr_Disable;
 
     Error = SCA_Read(pSCA, R2_MotorRecoverTemp);
     if(Error)	return Error;
 
-    /* ·Ç×èÈû */
+    /* éé˜»å¡ */
     if(isBlock == Unblock)
     {
-        /* ·Ç×èÈû·¢ËÍºóÑÓÊ±´¦Àí£¬·ÀÖ¹×ÜÏß¹ıÔØ */
+        /* éé˜»å¡å‘é€åå»¶æ—¶å¤„ç†ï¼Œé˜²æ­¢æ€»çº¿è¿‡è½½ */
         SCA_Delay(SendInterval);
         return Error;
     }
 
-    /* µÈ´ıÖ´ĞĞ½á¹û */
+    /* ç­‰å¾…æ‰§è¡Œç»“æœ */
     while((pSCA->paraCache.R_Motor_Recover_Temp != Actr_Enable) && (waitime++ < CanOvertime));
     if(waitime >= CanOvertime)	return SCA_OperationFailed;
 
@@ -3470,12 +3470,12 @@ uint8_t getMotorRecoveryTemperature(uint8_t id,uint8_t isBlock)
 }
 
 /**
-  * @¹¦	ÄÜ	ÉèÖÃÖ´ĞĞÆ÷µç»ú»Ö¸´ÎÂ¶ÈÖµ
-  * @²Î	Êı	id£ºÒª²Ù×÷µÄÖ´ĞĞÆ÷id
-  *			temp£ºµç»ú»Ö¸´ÎÂ¶ÈÖµ£¬Êµ¼ÊÖµ£¬µ¥Î» ÉãÊÏ¶È
-  *			isBlock£ºBlockÎª×èÈûÊ½£¬UnblockÎª·Ç×èÈûÊ½
-  * @·µ	»Ø	SCA_NoError£º²Ù×÷³É¹¦
-  *			ÆäËûÍ¨ĞÅ´íÎó²Î¼û SCA_Error ´íÎóÁĞ±í
+  * @åŠŸ	èƒ½	è®¾ç½®æ‰§è¡Œå™¨ç”µæœºæ¢å¤æ¸©åº¦å€¼
+  * @å‚	æ•°	idï¼šè¦æ“ä½œçš„æ‰§è¡Œå™¨id
+  *			tempï¼šç”µæœºæ¢å¤æ¸©åº¦å€¼ï¼Œå®é™…å€¼ï¼Œå•ä½ æ‘„æ°åº¦
+  *			isBlockï¼šBlockä¸ºé˜»å¡å¼ï¼ŒUnblockä¸ºéé˜»å¡å¼
+  * @è¿”	å›	SCA_NoErrorï¼šæ“ä½œæˆåŠŸ
+  *			å…¶ä»–é€šä¿¡é”™è¯¯å‚è§ SCA_Error é”™è¯¯åˆ—è¡¨
   */
 uint8_t setMotorRecoveryTemperature(uint8_t id,float temp,uint8_t isBlock)
 {
@@ -3483,25 +3483,25 @@ uint8_t setMotorRecoveryTemperature(uint8_t id,float temp,uint8_t isBlock)
     uint32_t waitime = 0;
     SCA_Handler_t* pSCA = NULL;
 
-    /* »ñÈ¡¸ÃIDµÄĞÅÏ¢¾ä±ú */
+    /* è·å–è¯¥IDçš„ä¿¡æ¯å¥æŸ„ */
     pSCA = getInstance(id);
     if(pSCA == NULL)	return SCA_UnknownID;
 
-    /* Ä¿±ê²ÎÊıĞ´Èë»º´æ£¬µÈ´ı¸üĞÂ */
+    /* ç›®æ ‡å‚æ•°å†™å…¥ç¼“å­˜ï¼Œç­‰å¾…æ›´æ–° */
     pSCA->paraCache.Motor_Recover_Temp = temp;
 
     Error = SCA_Write_2(pSCA, W2_MotorRecoverTemp, temp);
     if(Error)	return Error;
 
-    /* ·Ç×èÈû */
+    /* éé˜»å¡ */
     if(isBlock == Unblock)
     {
-        /* ·Ç×èÈû·¢ËÍºóÑÓÊ±´¦Àí£¬·ÀÖ¹×ÜÏß¹ıÔØ */
+        /* éé˜»å¡å‘é€åå»¶æ—¶å¤„ç†ï¼Œé˜²æ­¢æ€»çº¿è¿‡è½½ */
         SCA_Delay(SendInterval);
         return Error;
     }
 
-    /* µÈ´ıÖ´ĞĞ½á¹û */
+    /* ç­‰å¾…æ‰§è¡Œç»“æœ */
     while((pSCA->Motor_Recover_Temp != temp) && (waitime++ < CanOvertime));
     if(waitime >= CanOvertime)	return SCA_OperationFailed;
 
@@ -3509,11 +3509,11 @@ uint8_t setMotorRecoveryTemperature(uint8_t id,float temp,uint8_t isBlock)
 }
 
 /**
-  * @¹¦	ÄÜ	»ñÈ¡Ö´ĞĞÆ÷Äæ±äÆ÷±£»¤ÎÂ¶ÈÖµ£¬¸üĞÂÖÁ¾ä±úÖĞ
-  * @²Î	Êı	id£ºÒª²Ù×÷µÄÖ´ĞĞÆ÷id
-  *			isBlock£ºBlockÎª×èÈûÊ½£¬UnblockÎª·Ç×èÈûÊ½
-  * @·µ	»Ø	SCA_NoError£º²Ù×÷³É¹¦
-  *			ÆäËûÍ¨ĞÅ´íÎó²Î¼û SCA_Error ´íÎóÁĞ±í
+  * @åŠŸ	èƒ½	è·å–æ‰§è¡Œå™¨é€†å˜å™¨ä¿æŠ¤æ¸©åº¦å€¼ï¼Œæ›´æ–°è‡³å¥æŸ„ä¸­
+  * @å‚	æ•°	idï¼šè¦æ“ä½œçš„æ‰§è¡Œå™¨id
+  *			isBlockï¼šBlockä¸ºé˜»å¡å¼ï¼ŒUnblockä¸ºéé˜»å¡å¼
+  * @è¿”	å›	SCA_NoErrorï¼šæ“ä½œæˆåŠŸ
+  *			å…¶ä»–é€šä¿¡é”™è¯¯å‚è§ SCA_Error é”™è¯¯åˆ—è¡¨
   */
 uint8_t getInverterProtectedTemperature(uint8_t id,uint8_t isBlock)
 {
@@ -3521,25 +3521,25 @@ uint8_t getInverterProtectedTemperature(uint8_t id,uint8_t isBlock)
     uint32_t waitime = 0;
     SCA_Handler_t* pSCA = NULL;
 
-    /* »ñÈ¡¸ÃIDµÄĞÅÏ¢¾ä±ú */
+    /* è·å–è¯¥IDçš„ä¿¡æ¯å¥æŸ„ */
     pSCA = getInstance(id);
     if(pSCA == NULL)	return SCA_UnknownID;
 
-    /* Çå¿Õ×´Ì¬Î» */
+    /* æ¸…ç©ºçŠ¶æ€ä½ */
     pSCA->paraCache.R_Inverter_Protect_Temp = Actr_Disable;
 
     Error = SCA_Read(pSCA, R2_InverterProtectTemp);
     if(Error)	return Error;
 
-    /* ·Ç×èÈû */
+    /* éé˜»å¡ */
     if(isBlock == Unblock)
     {
-        /* ·Ç×èÈû·¢ËÍºóÑÓÊ±´¦Àí£¬·ÀÖ¹×ÜÏß¹ıÔØ */
+        /* éé˜»å¡å‘é€åå»¶æ—¶å¤„ç†ï¼Œé˜²æ­¢æ€»çº¿è¿‡è½½ */
         SCA_Delay(SendInterval);
         return Error;
     }
 
-    /* µÈ´ıÖ´ĞĞ½á¹û */
+    /* ç­‰å¾…æ‰§è¡Œç»“æœ */
     while((pSCA->paraCache.R_Inverter_Protect_Temp != Actr_Enable) && (waitime++ < CanOvertime));
     if(waitime >= CanOvertime)	return SCA_OperationFailed;
 
@@ -3548,12 +3548,12 @@ uint8_t getInverterProtectedTemperature(uint8_t id,uint8_t isBlock)
 }
 
 /**
-  * @¹¦	ÄÜ	ÉèÖÃÖ´ĞĞÆ÷Äæ±äÆ÷±£»¤ÎÂ¶ÈÖµ
-  * @²Î	Êı	id£ºÒª²Ù×÷µÄÖ´ĞĞÆ÷id
-  *			temp£ºÄæ±äÆ÷±£»¤ÎÂ¶ÈÖµ£¬Êµ¼ÊÖµ£¬µ¥Î» ÉãÊÏ¶È
-  *			isBlock£ºBlockÎª×èÈûÊ½£¬UnblockÎª·Ç×èÈûÊ½
-  * @·µ	»Ø	SCA_NoError£º²Ù×÷³É¹¦
-  *			ÆäËûÍ¨ĞÅ´íÎó²Î¼û SCA_Error ´íÎóÁĞ±í
+  * @åŠŸ	èƒ½	è®¾ç½®æ‰§è¡Œå™¨é€†å˜å™¨ä¿æŠ¤æ¸©åº¦å€¼
+  * @å‚	æ•°	idï¼šè¦æ“ä½œçš„æ‰§è¡Œå™¨id
+  *			tempï¼šé€†å˜å™¨ä¿æŠ¤æ¸©åº¦å€¼ï¼Œå®é™…å€¼ï¼Œå•ä½ æ‘„æ°åº¦
+  *			isBlockï¼šBlockä¸ºé˜»å¡å¼ï¼ŒUnblockä¸ºéé˜»å¡å¼
+  * @è¿”	å›	SCA_NoErrorï¼šæ“ä½œæˆåŠŸ
+  *			å…¶ä»–é€šä¿¡é”™è¯¯å‚è§ SCA_Error é”™è¯¯åˆ—è¡¨
   */
 uint8_t setInverterProtectedTemperature(uint8_t id,float temp,uint8_t isBlock)
 {
@@ -3561,25 +3561,25 @@ uint8_t setInverterProtectedTemperature(uint8_t id,float temp,uint8_t isBlock)
     uint32_t waitime = 0;
     SCA_Handler_t* pSCA = NULL;
 
-    /* »ñÈ¡¸ÃIDµÄĞÅÏ¢¾ä±ú */
+    /* è·å–è¯¥IDçš„ä¿¡æ¯å¥æŸ„ */
     pSCA = getInstance(id);
     if(pSCA == NULL)	return SCA_UnknownID;
 
-    /* Ä¿±ê²ÎÊıĞ´Èë»º´æ£¬µÈ´ı¸üĞÂ */
+    /* ç›®æ ‡å‚æ•°å†™å…¥ç¼“å­˜ï¼Œç­‰å¾…æ›´æ–° */
     pSCA->paraCache.Inverter_Protect_Temp = temp;
 
     Error = SCA_Write_2(pSCA, W2_InverterProtectTemp, temp);
     if(Error)	return Error;
 
-    /* ·Ç×èÈû */
+    /* éé˜»å¡ */
     if(isBlock == Unblock)
     {
-        /* ·Ç×èÈû·¢ËÍºóÑÓÊ±´¦Àí£¬·ÀÖ¹×ÜÏß¹ıÔØ */
+        /* éé˜»å¡å‘é€åå»¶æ—¶å¤„ç†ï¼Œé˜²æ­¢æ€»çº¿è¿‡è½½ */
         SCA_Delay(SendInterval);
         return Error;
     }
 
-    /* µÈ´ıÖ´ĞĞ½á¹û */
+    /* ç­‰å¾…æ‰§è¡Œç»“æœ */
     while((pSCA->Inverter_Protect_Temp != temp) && (waitime++ < CanOvertime));
     if(waitime >= CanOvertime)	return SCA_OperationFailed;
 
@@ -3587,11 +3587,11 @@ uint8_t setInverterProtectedTemperature(uint8_t id,float temp,uint8_t isBlock)
 }
 
 /**
-  * @¹¦	ÄÜ	»ñÈ¡Ö´ĞĞÆ÷Äæ±äÆ÷»Ö¸´ÎÂ¶ÈÖµ£¬¸üĞÂÖÁ¾ä±úÖĞ
-  * @²Î	Êı	id£ºÒª²Ù×÷µÄÖ´ĞĞÆ÷id
-  *			isBlock£ºBlockÎª×èÈûÊ½£¬UnblockÎª·Ç×èÈûÊ½
-  * @·µ	»Ø	SCA_NoError£º²Ù×÷³É¹¦
-  *			ÆäËûÍ¨ĞÅ´íÎó²Î¼û SCA_Error ´íÎóÁĞ±í
+  * @åŠŸ	èƒ½	è·å–æ‰§è¡Œå™¨é€†å˜å™¨æ¢å¤æ¸©åº¦å€¼ï¼Œæ›´æ–°è‡³å¥æŸ„ä¸­
+  * @å‚	æ•°	idï¼šè¦æ“ä½œçš„æ‰§è¡Œå™¨id
+  *			isBlockï¼šBlockä¸ºé˜»å¡å¼ï¼ŒUnblockä¸ºéé˜»å¡å¼
+  * @è¿”	å›	SCA_NoErrorï¼šæ“ä½œæˆåŠŸ
+  *			å…¶ä»–é€šä¿¡é”™è¯¯å‚è§ SCA_Error é”™è¯¯åˆ—è¡¨
   */
 uint8_t getInverterRecoveryTemperature(uint8_t id,uint8_t isBlock)
 {
@@ -3599,25 +3599,25 @@ uint8_t getInverterRecoveryTemperature(uint8_t id,uint8_t isBlock)
     uint32_t waitime = 0;
     SCA_Handler_t* pSCA = NULL;
 
-    /* »ñÈ¡¸ÃIDµÄĞÅÏ¢¾ä±ú */
+    /* è·å–è¯¥IDçš„ä¿¡æ¯å¥æŸ„ */
     pSCA = getInstance(id);
     if(pSCA == NULL)	return SCA_UnknownID;
 
-    /* Çå¿Õ×´Ì¬Î» */
+    /* æ¸…ç©ºçŠ¶æ€ä½ */
     pSCA->paraCache.R_Inverter_Recover_Temp = Actr_Disable;
 
     Error = SCA_Read(pSCA, R2_InverterRecoverTemp);
     if(Error)	return Error;
 
-    /* ·Ç×èÈû */
+    /* éé˜»å¡ */
     if(isBlock == Unblock)
     {
-        /* ·Ç×èÈû·¢ËÍºóÑÓÊ±´¦Àí£¬·ÀÖ¹×ÜÏß¹ıÔØ */
+        /* éé˜»å¡å‘é€åå»¶æ—¶å¤„ç†ï¼Œé˜²æ­¢æ€»çº¿è¿‡è½½ */
         SCA_Delay(SendInterval);
         return Error;
     }
 
-    /* µÈ´ıÖ´ĞĞ½á¹û */
+    /* ç­‰å¾…æ‰§è¡Œç»“æœ */
     while((pSCA->paraCache.R_Inverter_Recover_Temp != Actr_Enable) && (waitime++ < CanOvertime));
     if(waitime >= CanOvertime)	return SCA_OperationFailed;
 
@@ -3626,12 +3626,12 @@ uint8_t getInverterRecoveryTemperature(uint8_t id,uint8_t isBlock)
 }
 
 /**
-  * @¹¦	ÄÜ	ÉèÖÃÖ´ĞĞÆ÷Äæ±äÆ÷»Ö¸´ÎÂ¶ÈÖµ
-  * @²Î	Êı	id£ºÒª²Ù×÷µÄÖ´ĞĞÆ÷id
-  *			temp£ºÄæ±äÆ÷»Ö¸´ÎÂ¶ÈÖµ£¬Êµ¼ÊÖµ£¬µ¥Î» ÉãÊÏ¶È
-  *			isBlock£ºBlockÎª×èÈûÊ½£¬UnblockÎª·Ç×èÈûÊ½
-  * @·µ	»Ø	SCA_NoError£º²Ù×÷³É¹¦
-  *			ÆäËûÍ¨ĞÅ´íÎó²Î¼û SCA_Error ´íÎóÁĞ±í
+  * @åŠŸ	èƒ½	è®¾ç½®æ‰§è¡Œå™¨é€†å˜å™¨æ¢å¤æ¸©åº¦å€¼
+  * @å‚	æ•°	idï¼šè¦æ“ä½œçš„æ‰§è¡Œå™¨id
+  *			tempï¼šé€†å˜å™¨æ¢å¤æ¸©åº¦å€¼ï¼Œå®é™…å€¼ï¼Œå•ä½ æ‘„æ°åº¦
+  *			isBlockï¼šBlockä¸ºé˜»å¡å¼ï¼ŒUnblockä¸ºéé˜»å¡å¼
+  * @è¿”	å›	SCA_NoErrorï¼šæ“ä½œæˆåŠŸ
+  *			å…¶ä»–é€šä¿¡é”™è¯¯å‚è§ SCA_Error é”™è¯¯åˆ—è¡¨
   */
 uint8_t setInverterRecoveryTemperature(uint8_t id,float temp,uint8_t isBlock)
 {
@@ -3639,25 +3639,25 @@ uint8_t setInverterRecoveryTemperature(uint8_t id,float temp,uint8_t isBlock)
     uint32_t waitime = 0;
     SCA_Handler_t* pSCA = NULL;
 
-    /* »ñÈ¡¸ÃIDµÄĞÅÏ¢¾ä±ú */
+    /* è·å–è¯¥IDçš„ä¿¡æ¯å¥æŸ„ */
     pSCA = getInstance(id);
     if(pSCA == NULL)	return SCA_UnknownID;
 
-    /* Ä¿±ê²ÎÊıĞ´Èë»º´æ£¬µÈ´ı¸üĞÂ */
+    /* ç›®æ ‡å‚æ•°å†™å…¥ç¼“å­˜ï¼Œç­‰å¾…æ›´æ–° */
     pSCA->paraCache.Inverter_Recover_Temp = temp;
 
     Error = SCA_Write_2(pSCA, W2_InverterRecoverTemp, temp);
     if(Error)	return Error;
 
-    /* ·Ç×èÈû */
+    /* éé˜»å¡ */
     if(isBlock == Unblock)
     {
-        /* ·Ç×èÈû·¢ËÍºóÑÓÊ±´¦Àí£¬·ÀÖ¹×ÜÏß¹ıÔØ */
+        /* éé˜»å¡å‘é€åå»¶æ—¶å¤„ç†ï¼Œé˜²æ­¢æ€»çº¿è¿‡è½½ */
         SCA_Delay(SendInterval);
         return Error;
     }
 
-    /* µÈ´ıÖ´ĞĞ½á¹û */
+    /* ç­‰å¾…æ‰§è¡Œç»“æœ */
     while((pSCA->Inverter_Recover_Temp != temp) && (waitime++ < CanOvertime));
     if(waitime >= CanOvertime)	return SCA_OperationFailed;
 
@@ -3665,12 +3665,12 @@ uint8_t setInverterRecoveryTemperature(uint8_t id,float temp,uint8_t isBlock)
 }
 
 /**
-  * @¹¦	ÄÜ	ÉèÖÃÖ´ĞĞÆ÷µÄid
-  * @²Î	Êı	newID£ºĞÂid
-  *			currentID£ºµ±Ç°id
-  *			isBlock£ºBlockÎª×èÈûÊ½£¬UnblockÎª·Ç×èÈûÊ½
-  * @·µ	»Ø	SCA_NoError£º²Ù×÷³É¹¦
-  *			ÆäËûÍ¨ĞÅ´íÎó²Î¼û SCA_Error ´íÎóÁĞ±í
+  * @åŠŸ	èƒ½	è®¾ç½®æ‰§è¡Œå™¨çš„id
+  * @å‚	æ•°	newIDï¼šæ–°id
+  *			currentIDï¼šå½“å‰id
+  *			isBlockï¼šBlockä¸ºé˜»å¡å¼ï¼ŒUnblockä¸ºéé˜»å¡å¼
+  * @è¿”	å›	SCA_NoErrorï¼šæ“ä½œæˆåŠŸ
+  *			å…¶ä»–é€šä¿¡é”™è¯¯å‚è§ SCA_Error é”™è¯¯åˆ—è¡¨
   */
 uint8_t setActuatorID(uint8_t currentID, uint8_t newID,uint8_t isBlock)
 {
@@ -3678,29 +3678,29 @@ uint8_t setActuatorID(uint8_t currentID, uint8_t newID,uint8_t isBlock)
     uint32_t waitime = 0;
     SCA_Handler_t* pSCA = NULL;
 
-    /* ¼ì²éÄ¿±êIDÊÇ·ñÒÑ´æÔÚ */
+    /* æ£€æŸ¥ç›®æ ‡IDæ˜¯å¦å·²å­˜åœ¨ */
     pSCA = getInstance(newID);
     if(pSCA != NULL)	return SCA_OperationFailed;
 
-    /* »ñÈ¡¸ÃIDµÄĞÅÏ¢¾ä±ú */
+    /* è·å–è¯¥IDçš„ä¿¡æ¯å¥æŸ„ */
     pSCA = getInstance(currentID);
     if(pSCA == NULL)	return SCA_UnknownID;
 
-    /* Ä¿±ê²ÎÊıĞ´Èë»º´æ£¬µÈ´ı¸üĞÂ */
+    /* ç›®æ ‡å‚æ•°å†™å…¥ç¼“å­˜ï¼Œç­‰å¾…æ›´æ–° */
     pSCA->paraCache.ID = newID;
 
     Error = SCA_Write_5(pSCA, W5_ChangeID, newID);
     if(Error)	return Error;
 
-    /* ·Ç×èÈû */
+    /* éé˜»å¡ */
     if(isBlock == Unblock)
     {
-        /* ·Ç×èÈû·¢ËÍºóÑÓÊ±´¦Àí£¬·ÀÖ¹×ÜÏß¹ıÔØ */
+        /* éé˜»å¡å‘é€åå»¶æ—¶å¤„ç†ï¼Œé˜²æ­¢æ€»çº¿è¿‡è½½ */
         SCA_Delay(SendInterval);
         return Error;
     }
 
-    /* µÈ´ıÖ´ĞĞ½á¹û */
+    /* ç­‰å¾…æ‰§è¡Œç»“æœ */
     while((pSCA->ID != newID) && (waitime++ < CanOvertime));
     if(waitime >= CanOvertime)	return SCA_OperationFailed;
 
@@ -3708,11 +3708,11 @@ uint8_t setActuatorID(uint8_t currentID, uint8_t newID,uint8_t isBlock)
 }
 
 /**
-  * @¹¦	ÄÜ	»ñÈ¡Ö´ĞĞÆ÷µÄĞòÁĞºÅ£¬±£´æµ½¾ä±úÖĞ
-  * @²Î	Êı	id£ºÒª²Ù×÷µÄÖ´ĞĞÆ÷id
-  *			isBlock£ºBlockÎª×èÈûÊ½£¬UnblockÎª·Ç×èÈûÊ½
-  * @·µ	»Ø	SCA_NoError£º²Ù×÷³É¹¦
-  *			ÆäËûÍ¨ĞÅ´íÎó²Î¼û SCA_Error ´íÎóÁĞ±í
+  * @åŠŸ	èƒ½	è·å–æ‰§è¡Œå™¨çš„åºåˆ—å·ï¼Œä¿å­˜åˆ°å¥æŸ„ä¸­
+  * @å‚	æ•°	idï¼šè¦æ“ä½œçš„æ‰§è¡Œå™¨id
+  *			isBlockï¼šBlockä¸ºé˜»å¡å¼ï¼ŒUnblockä¸ºéé˜»å¡å¼
+  * @è¿”	å›	SCA_NoErrorï¼šæ“ä½œæˆåŠŸ
+  *			å…¶ä»–é€šä¿¡é”™è¯¯å‚è§ SCA_Error é”™è¯¯åˆ—è¡¨
   */
 uint8_t getActuatorSerialNumber(uint8_t id,uint8_t isBlock)
 {
@@ -3720,25 +3720,25 @@ uint8_t getActuatorSerialNumber(uint8_t id,uint8_t isBlock)
     uint32_t waitime = 0;
     SCA_Handler_t* pSCA = NULL;
 
-    /* »ñÈ¡¸ÃIDµÄĞÅÏ¢¾ä±ú */
+    /* è·å–è¯¥IDçš„ä¿¡æ¯å¥æŸ„ */
     pSCA = getInstance(id);
     if(pSCA == NULL)	return SCA_UnknownID;
 
-    /* Çå¿Õ×´Ì¬Î» */
+    /* æ¸…ç©ºçŠ¶æ€ä½ */
     pSCA->paraCache.R_Serial_Num = Actr_Disable;
 
     Error = SCA_Read(pSCA, R5_ShakeHands);
     if(Error)	return Error;
 
-    /* ·Ç×èÈû */
+    /* éé˜»å¡ */
     if(isBlock == Unblock)
     {
-        /* ·Ç×èÈû·¢ËÍºóÑÓÊ±´¦Àí£¬·ÀÖ¹×ÜÏß¹ıÔØ */
+        /* éé˜»å¡å‘é€åå»¶æ—¶å¤„ç†ï¼Œé˜²æ­¢æ€»çº¿è¿‡è½½ */
         SCA_Delay(SendInterval);
         return Error;
     }
 
-    /* µÈ´ıÖ´ĞĞ½á¹û */
+    /* ç­‰å¾…æ‰§è¡Œç»“æœ */
     while((pSCA->paraCache.R_Serial_Num != Actr_Enable) && (waitime++ < CanOvertime));
     if(waitime >= CanOvertime)	return SCA_OperationFailed;
 
@@ -3747,11 +3747,11 @@ uint8_t getActuatorSerialNumber(uint8_t id,uint8_t isBlock)
 }
 
 /**
-  * @¹¦	ÄÜ	»ñÈ¡Ö´ĞĞÆ÷ÉÏ´ÎµÄ¹Ø»ú×´Ì¬£¬±£´æµ½¾ä±úÖĞ
-  * @²Î	Êı	id£ºÒª²Ù×÷µÄÖ´ĞĞÆ÷id
-  *			isBlock£ºBlockÎª×èÈûÊ½£¬UnblockÎª·Ç×èÈûÊ½
-  * @·µ	»Ø	SCA_NoError£º²Ù×÷³É¹¦
-  *			ÆäËûÍ¨ĞÅ´íÎó²Î¼û SCA_Error ´íÎóÁĞ±í
+  * @åŠŸ	èƒ½	è·å–æ‰§è¡Œå™¨ä¸Šæ¬¡çš„å…³æœºçŠ¶æ€ï¼Œä¿å­˜åˆ°å¥æŸ„ä¸­
+  * @å‚	æ•°	idï¼šè¦æ“ä½œçš„æ‰§è¡Œå™¨id
+  *			isBlockï¼šBlockä¸ºé˜»å¡å¼ï¼ŒUnblockä¸ºéé˜»å¡å¼
+  * @è¿”	å›	SCA_NoErrorï¼šæ“ä½œæˆåŠŸ
+  *			å…¶ä»–é€šä¿¡é”™è¯¯å‚è§ SCA_Error é”™è¯¯åˆ—è¡¨
   */
 uint8_t getActuatorLastState(uint8_t id,uint8_t isBlock)
 {
@@ -3759,25 +3759,25 @@ uint8_t getActuatorLastState(uint8_t id,uint8_t isBlock)
     uint32_t waitime = 0;
     SCA_Handler_t* pSCA = NULL;
 
-    /* »ñÈ¡¸ÃIDµÄĞÅÏ¢¾ä±ú */
+    /* è·å–è¯¥IDçš„ä¿¡æ¯å¥æŸ„ */
     pSCA = getInstance(id);
     if(pSCA == NULL)	return SCA_UnknownID;
 
-    /* Çå¿Õ×´Ì¬Î» */
+    /* æ¸…ç©ºçŠ¶æ€ä½ */
     pSCA->paraCache.R_Last_State = Actr_Disable;
 
     Error = SCA_Read(pSCA, R1_LastState);
     if(Error)	return Error;
 
-    /* ·Ç×èÈû */
+    /* éé˜»å¡ */
     if(isBlock == Unblock)
     {
-        /* ·Ç×èÈû·¢ËÍºóÑÓÊ±´¦Àí£¬·ÀÖ¹×ÜÏß¹ıÔØ */
+        /* éé˜»å¡å‘é€åå»¶æ—¶å¤„ç†ï¼Œé˜²æ­¢æ€»çº¿è¿‡è½½ */
         SCA_Delay(SendInterval);
         return Error;
     }
 
-    /* µÈ´ıÖ´ĞĞ½á¹û */
+    /* ç­‰å¾…æ‰§è¡Œç»“æœ */
     while((pSCA->paraCache.R_Last_State != Actr_Enable) && (waitime++ < CanOvertime));
     if(waitime >= CanOvertime)	return SCA_OperationFailed;
 
@@ -3786,11 +3786,11 @@ uint8_t getActuatorLastState(uint8_t id,uint8_t isBlock)
 }
 
 /**
- * @¹¦	ÄÜ	»ñÈ¡µçÁ÷ËÙ¶ÈÎ»ÖÃµÄÖµ£¬¸üĞÂÖÁ¾ä±úÖĞ£¬Ğ§ÂÊ¸ß
- * @²Î	Êı	id£ºÒª²Ù×÷µÄÖ´ĞĞÆ÷id
- *			isBlock£ºBlockÎª×èÈûÊ½£¬UnblockÎª·Ç×èÈûÊ½
- * @·µ	»Ø	SCA_NoError£º²Ù×÷³É¹¦
- *			ÆäËûÍ¨ĞÅ´íÎó²Î¼û SCA_Error ´íÎóÁĞ±í
+ * @åŠŸ	èƒ½	è·å–ç”µæµé€Ÿåº¦ä½ç½®çš„å€¼ï¼Œæ›´æ–°è‡³å¥æŸ„ä¸­ï¼Œæ•ˆç‡é«˜
+ * @å‚	æ•°	idï¼šè¦æ“ä½œçš„æ‰§è¡Œå™¨id
+ *			isBlockï¼šBlockä¸ºé˜»å¡å¼ï¼ŒUnblockä¸ºéé˜»å¡å¼
+ * @è¿”	å›	SCA_NoErrorï¼šæ“ä½œæˆåŠŸ
+ *			å…¶ä»–é€šä¿¡é”™è¯¯å‚è§ SCA_Error é”™è¯¯åˆ—è¡¨
  */
 uint8_t requestCVPValue(uint8_t id,uint8_t isBlock)
 {
@@ -3798,25 +3798,25 @@ uint8_t requestCVPValue(uint8_t id,uint8_t isBlock)
     uint32_t waitime = 0;
     SCA_Handler_t* pSCA = NULL;
 
-    /* »ñÈ¡¸ÃIDµÄĞÅÏ¢¾ä±ú */
+    /* è·å–è¯¥IDçš„ä¿¡æ¯å¥æŸ„ */
     pSCA = getInstance(id);
     if(pSCA == NULL)	return SCA_UnknownID;
 
-    /* Çå¿Õ×´Ì¬Î» */
+    /* æ¸…ç©ºçŠ¶æ€ä½ */
     pSCA->paraCache.R_CVP = Actr_Disable;
 
     Error = SCA_Read(pSCA, R4_CVP);
     if(Error)	return Error;
 
-    /* ·Ç×èÈû */
+    /* éé˜»å¡ */
     if(isBlock == Unblock)
     {
-        /* ·Ç×èÈû·¢ËÍºóÑÓÊ±´¦Àí£¬·ÀÖ¹×ÜÏß¹ıÔØ */
+        /* éé˜»å¡å‘é€åå»¶æ—¶å¤„ç†ï¼Œé˜²æ­¢æ€»çº¿è¿‡è½½ */
         SCA_Delay(SendInterval);
         return Error;
     }
 
-    /* µÈ´ıÖ´ĞĞ½á¹û */
+    /* ç­‰å¾…æ‰§è¡Œç»“æœ */
     while((pSCA->paraCache.R_CVP != Actr_Enable) && (waitime++ < CanOvertime));
     if(waitime >= CanOvertime)	return SCA_OperationFailed;
 
@@ -3824,32 +3824,32 @@ uint8_t requestCVPValue(uint8_t id,uint8_t isBlock)
 }
 
 /**
- * @¹¦	ÄÜ	»ñÈ¡µçÁ÷ËÙ¶ÈÎ»ÖÃµÄÖµ£¬¸üĞÂÖÁ¾ä±úÖĞ£¬Ğ§ÂÊ¸ß£¬¿ìËÙ
- * @²Î	Êı	pSCA£ºÒª²Ù×÷µÄÖ´ĞĞÆ÷¾ä±úÖ¸Õë»òµØÖ·
- *			isBlock£ºBlockÎª×èÈûÊ½£¬UnblockÎª·Ç×èÈûÊ½
- * @·µ	»Ø	SCA_NoError£º²Ù×÷³É¹¦
- *			ÆäËûÍ¨ĞÅ´íÎó²Î¼û SCA_Error ´íÎóÁĞ±í
+ * @åŠŸ	èƒ½	è·å–ç”µæµé€Ÿåº¦ä½ç½®çš„å€¼ï¼Œæ›´æ–°è‡³å¥æŸ„ä¸­ï¼Œæ•ˆç‡é«˜ï¼Œå¿«é€Ÿ
+ * @å‚	æ•°	pSCAï¼šè¦æ“ä½œçš„æ‰§è¡Œå™¨å¥æŸ„æŒ‡é’ˆæˆ–åœ°å€
+ *			isBlockï¼šBlockä¸ºé˜»å¡å¼ï¼ŒUnblockä¸ºéé˜»å¡å¼
+ * @è¿”	å›	SCA_NoErrorï¼šæ“ä½œæˆåŠŸ
+ *			å…¶ä»–é€šä¿¡é”™è¯¯å‚è§ SCA_Error é”™è¯¯åˆ—è¡¨
  */
 uint8_t requestCVPValueFast(SCA_Handler_t* pSCA,uint8_t isBlock)
 {
     uint8_t Error;
     uint32_t waitime = 0;
 
-    /* Çå¿Õ×´Ì¬Î» */
+    /* æ¸…ç©ºçŠ¶æ€ä½ */
     pSCA->paraCache.R_CVP = Actr_Disable;
 
     Error = SCA_Read(pSCA, R4_CVP);
     if(Error)	return Error;
 
-    /* ·Ç×èÈû */
+    /* éé˜»å¡ */
     if(isBlock == Unblock)
     {
-        /* ·Ç×èÈû·¢ËÍºóÑÓÊ±´¦Àí£¬·ÀÖ¹×ÜÏß¹ıÔØ */
+        /* éé˜»å¡å‘é€åå»¶æ—¶å¤„ç†ï¼Œé˜²æ­¢æ€»çº¿è¿‡è½½ */
         SCA_Delay(SendInterval);
         return Error;
     }
 
-    /* µÈ´ıÖ´ĞĞ½á¹û */
+    /* ç­‰å¾…æ‰§è¡Œç»“æœ */
     while((pSCA->paraCache.R_CVP != Actr_Enable) && (waitime++ < CanOvertime));
     if(waitime >= CanOvertime)	return SCA_OperationFailed;
 

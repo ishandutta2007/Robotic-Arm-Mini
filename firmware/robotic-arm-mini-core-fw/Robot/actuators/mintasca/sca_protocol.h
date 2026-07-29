@@ -1,10 +1,10 @@
-/**
+ï»¿/**
   ******************************************************************************
-  * @ÎÄ	¼ş £º SCA_Protocol.h
-  * @×÷	Õß £º INNFOS Software Team
-  * @°æ	±¾ £º V1.5.2
-  * @ÈÕ	ÆÚ £º 2019.08.20
-  * @Õª	Òª £º INNFOS CAN Í¨ĞÅĞ­Òé²ã
+  * @æ–‡	ä»¶ ï¼š SCA_Protocol.h
+  * @ä½œ	è€… ï¼š INNFOS Software Team
+  * @ç‰ˆ	æœ¬ ï¼š V1.5.2
+  * @æ—¥	æœŸ ï¼š 2019.08.20
+  * @æ‘˜	è¦ ï¼š INNFOS CAN é€šä¿¡åè®®å±‚
   ******************************************************************************/
 
 #ifndef __SCA_PROTOCOL_H
@@ -17,10 +17,10 @@ extern "C" {
 
 #include "main.h"
 
-/* £¡£¡£¡ÒÔÏÂºê¶¨ÒåĞÅÏ¢²ÎÊıÇëÎğĞŞ¸Ä£¡£¡£¡ */
+/* ï¼ï¼ï¼ä»¥ä¸‹å®å®šä¹‰ä¿¡æ¯å‚æ•°è¯·å‹¿ä¿®æ”¹ï¼ï¼ï¼ */
 
-//INNFOS CAN Í¨ĞÅĞ­ÒéÖ¸Áî
-//µÚÒ»Àà¶ÁÈ¡Ö¸Áî
+//INNFOS CAN é€šä¿¡åè®®æŒ‡ä»¤
+//ç¬¬ä¸€ç±»è¯»å–æŒ‡ä»¤
 #define R1_Heartbeat            0x00
 #define R1_Mode                    0x55
 #define R1_LastState            0xB0
@@ -30,7 +30,7 @@ extern "C" {
 #define R1_PositionLimitState    0x8B
 #define R1_PowerState            0x2B
 
-//µÚ¶şÀà¶ÁÈ¡Ö¸Áî
+//ç¬¬äºŒç±»è¯»å–æŒ‡ä»¤
 #define R2_Voltage                0x45
 #define R2_Current_Max            0x53
 #define R2_CurrentFilterValue    0x73
@@ -44,7 +44,7 @@ extern "C" {
 #define R2_MotorRecoverTemp        0x6E
 #define R2_Error                0xFF
 
-//µÚÈıÀà¶ÁÈ¡Ö¸Áî
+//ç¬¬ä¸‰ç±»è¯»å–æŒ‡ä»¤
 #define R3_Current                0x04
 #define R3_Velocity                0x05
 #define R3_Position                0x06
@@ -77,13 +77,13 @@ extern "C" {
 #define R3_HomingCurrentLimitH    0x93
 #define R3_BlockEngy            0x7F
 
-//µÚËÄÀà¶ÁÈ¡Ö¸Áî
+//ç¬¬å››ç±»è¯»å–æŒ‡ä»¤
 #define R4_CVP                    0x94
 
-//µÚÎåÀà¶ÁÈ¡Ö¸Áî
+//ç¬¬äº”ç±»è¯»å–æŒ‡ä»¤
 #define R5_ShakeHands            0x02
 
-//µÚÒ»ÀàĞ´ÈëÃüÁî
+//ç¬¬ä¸€ç±»å†™å…¥å‘½ä»¤
 #define W1_Mode                    0x07
 #define W1_CurrentFilterState    0X70
 #define W1_VelocityFilterState    0x74
@@ -91,7 +91,7 @@ extern "C" {
 #define W1_PositionLimitState    0x8C
 #define W1_PowerState            0x2A
 
-//µÚ¶şÀàĞ´ÈëÃüÁî
+//ç¬¬äºŒç±»å†™å…¥å‘½ä»¤
 #define W2_CurrentFilterValue    0x72
 #define W2_VelocityFilterValue    0x76
 #define W2_PositionFilterValue    0x7A
@@ -100,7 +100,7 @@ extern "C" {
 #define W2_MotorProtectTemp        0x6B
 #define W2_MotorRecoverTemp        0x6D
 
-//µÚÈıÀàĞ´ÈëÃüÁî
+//ç¬¬ä¸‰ç±»å†™å…¥å‘½ä»¤
 #define W3_Current                0x08
 #define W3_Velocity                0x09
 #define W3_Position                0x0A
@@ -133,73 +133,73 @@ extern "C" {
 #define W3_HomingCurrentLimitH    0x91
 #define W3_BlockEngy            0x7E
 
-//µÚËÄÀàĞ´ÈëÃüÁî
+//ç¬¬å››ç±»å†™å…¥å‘½ä»¤
 #define W4_ClearError            0xFE
 #define W4_ClearHome            0x88
 #define W4_Save                    0x0D
 
-//µÚÎåÀàĞ´ÈëÃüÁî
+//ç¬¬äº”ç±»å†™å…¥å‘½ä»¤
 #define W5_ChangeID                0x3D
 
-//±äÁ¿Ëõ·ÅÖµ¶¨Òå
-#define Velocity_Max    6000.0f            //ËÙ¶È×î´óÖµ£¬¹Ì¶¨Îª6000RPM£¨½ö×÷Îª»»ËãÓÃ£©
-#define BlkEngy_Scal    75.225f            //¶Â×ªÄÜÁ¿Ëõ·ÅÖµ
-#define Profile_Scal    960.0f            //ÌİĞÎ²ÎÊıËõ·ÅÖµ
+//å˜é‡ç¼©æ”¾å€¼å®šä¹‰
+#define Velocity_Max    6000.0f            //é€Ÿåº¦æœ€å¤§å€¼ï¼Œå›ºå®šä¸º6000RPMï¼ˆä»…ä½œä¸ºæ¢ç®—ç”¨ï¼‰
+#define BlkEngy_Scal    75.225f            //å µè½¬èƒ½é‡ç¼©æ”¾å€¼
+#define Profile_Scal    960.0f            //æ¢¯å½¢å‚æ•°ç¼©æ”¾å€¼
 #define IQ8                256.0f            //2^8
 #define IQ10            1024.0f            //2^10
 #define IQ24            16777216.0f        //2^24
 #define IQ30            1073741824.0f    //2^30
 
-/* IDÎªCAN·¢ËÍÖ¡ID£¬msgÎªÒª·¢ËÍµÄÊı¾İ£¨µØÖ·£©
-   lenÎª·¢ËÍÊı¾İµÄ³¤¶È£¬·µ»Ø0³É¹¦£¬·µ»ØÆäËûÊ§°Ü */
+/* IDä¸ºCANå‘é€å¸§IDï¼Œmsgä¸ºè¦å‘é€çš„æ•°æ®ï¼ˆåœ°å€ï¼‰
+   lenä¸ºå‘é€æ•°æ®çš„é•¿åº¦ï¼Œè¿”å›0æˆåŠŸï¼Œè¿”å›å…¶ä»–å¤±è´¥ */
 typedef uint8_t (*Send_t)(uint8_t ID, uint8_t *msg, uint8_t len);
 
-typedef struct                //CAN¶Ë¿Ú¾ä±ú
+typedef struct                //CANç«¯å£å¥æŸ„
 {
-    //SCA ×´Ì¬ĞÅÏ¢
-    uint8_t CanPort;        //Ê¹ÓÃµÄCAN¶Ë¿ÚºÅ
-    uint8_t Retry;            //·¢ËÍÊ§°ÜÊ±ÖØ·¢´ÎÊı
-    Send_t Send;            //·¢ËÍº¯Êı£¬¸ñÊ½²Î¼ûSend_t
+    //SCA çŠ¶æ€ä¿¡æ¯
+    uint8_t CanPort;        //ä½¿ç”¨çš„CANç«¯å£å·
+    uint8_t Retry;            //å‘é€å¤±è´¥æ—¶é‡å‘æ¬¡æ•°
+    Send_t Send;            //å‘é€å‡½æ•°ï¼Œæ ¼å¼å‚è§Send_t
 } CAN_Handler_t;
 
-typedef struct                        //SCA±¨¾¯ĞÅÏ¢
+typedef struct                        //SCAæŠ¥è­¦ä¿¡æ¯
 {
-    uint16_t Error_Code;            //´íÎó´úÂë
+    uint16_t Error_Code;            //é”™è¯¯ä»£ç 
 
-    /* ¾ßÌå±¨¾¯ĞÅÏ¢£¬0£ºÕı³££¬1£º³ö´í */
-    uint8_t WARN_OVER_VOLT;        //¹ıÑ¹Òì³£
-    uint8_t WARN_UNDER_VOLT;        //Ç·Ñ¹Òì³£
-    uint8_t WARN_LOCK_ROTOR;        //¶Â×ªÒì³£
-    uint8_t WARN_OVER_TEMP;        //¹ıÈÈÒì³£
-    uint8_t WARN_RW_PARA;            //¶ÁĞ´²ÎÊıÒì³£
-    uint8_t WARN_MUL_CIRCLE;        //¶àÈ¦¼ÆÊıÒì³£
-    uint8_t WARN_TEMP_SENSOR_INV;    //Äæ±äÆ÷ÎÂ¶È´«¸ĞÆ÷Òì³£
-    uint8_t WARN_CAN_BUS;            //CANÍ¨Ñ¶Òì³£
-    uint8_t WARN_TEMP_SENSOR_MTR;    //µç»úÎÂ¶È´«¸ĞÆ÷Òì³£
-    uint8_t WARN_OVER_STEP;            //Î»ÖÃÄ£Ê½½×Ô¾´óÓÚ1
-    uint8_t WARN_DRV_PROTEC;        //DRV±£»¤
-    uint8_t WARN_DVICE;            //Éè±¸Òì³£
+    /* å…·ä½“æŠ¥è­¦ä¿¡æ¯ï¼Œ0ï¼šæ­£å¸¸ï¼Œ1ï¼šå‡ºé”™ */
+    uint8_t WARN_OVER_VOLT;        //è¿‡å‹å¼‚å¸¸
+    uint8_t WARN_UNDER_VOLT;        //æ¬ å‹å¼‚å¸¸
+    uint8_t WARN_LOCK_ROTOR;        //å µè½¬å¼‚å¸¸
+    uint8_t WARN_OVER_TEMP;        //è¿‡çƒ­å¼‚å¸¸
+    uint8_t WARN_RW_PARA;            //è¯»å†™å‚æ•°å¼‚å¸¸
+    uint8_t WARN_MUL_CIRCLE;        //å¤šåœˆè®¡æ•°å¼‚å¸¸
+    uint8_t WARN_TEMP_SENSOR_INV;    //é€†å˜å™¨æ¸©åº¦ä¼ æ„Ÿå™¨å¼‚å¸¸
+    uint8_t WARN_CAN_BUS;            //CANé€šè®¯å¼‚å¸¸
+    uint8_t WARN_TEMP_SENSOR_MTR;    //ç”µæœºæ¸©åº¦ä¼ æ„Ÿå™¨å¼‚å¸¸
+    uint8_t WARN_OVER_STEP;            //ä½ç½®æ¨¡å¼é˜¶è·ƒå¤§äº1
+    uint8_t WARN_DRV_PROTEC;        //DRVä¿æŠ¤
+    uint8_t WARN_DVICE;            //è®¾å¤‡å¼‚å¸¸
 
 } SCA_Warn_t;
 
 /* 
-	SCA±äÁ¿»º´æ£¬ÓÃÓÚĞ´Èë²ÎÊıÊ±±£´æÄ¿±ê²ÎÊı£¬´ı³É¹¦ºóÔÙĞ´Èë¾ä±úÖĞ
-	¶ÁÈ¡±êÖ¾Î»ÔÚ×èÈûÊ±Ê¹ÓÃ£¬±äÁ¿ÄÚÈİ¿É¸ù¾İÏîÄ¿ĞèÒª½øĞĞ²Ã¼ô»òÌí¼Ó
+	SCAå˜é‡ç¼“å­˜ï¼Œç”¨äºå†™å…¥å‚æ•°æ—¶ä¿å­˜ç›®æ ‡å‚æ•°ï¼Œå¾…æˆåŠŸåå†å†™å…¥å¥æŸ„ä¸­
+	è¯»å–æ ‡å¿—ä½åœ¨é˜»å¡æ—¶ä½¿ç”¨ï¼Œå˜é‡å†…å®¹å¯æ ¹æ®é¡¹ç›®éœ€è¦è¿›è¡Œè£å‰ªæˆ–æ·»åŠ 
  */
 typedef struct
 {
-    /* »ù´¡ĞÅÏ¢ */
-    uint8_t ID;                        //SCA µÄIDºÅ
+    /* åŸºç¡€ä¿¡æ¯ */
+    uint8_t ID;                        //SCA çš„IDå·
 
-    /* µÚÒ»ÀàÊı¾İ±äÁ¿ */
-    uint8_t Mode;                    //µ±Ç°²Ù×÷Ä£Ê½
-    uint8_t Current_Filter_State;    //µçÁ÷»·ÂË²¨Æ÷×´Ì¬
-    uint8_t Velocity_Filter_State;    //ËÙ¶È»·ÂË²¨Æ÷×´Ì¬
-    uint8_t Position_Filter_State;    //ËÙ¶È»·ÂË²¨Æ÷×´Ì¬
-    uint8_t Position_Limit_State;    //Î»ÖÃÏŞÎ»×´Ì¬
-    uint8_t Power_State;            //¿ª¹Ø»ú×´Ì¬
-    /* ¶ÁÈ¡±êÖ¾Î» */
-    uint8_t R_Mode;                    //¶ÁÈ¡Êı¾İ·µ»Ø±êÖ¾Î» 1ÎªÓĞÊı¾İ·µ»Ø
+    /* ç¬¬ä¸€ç±»æ•°æ®å˜é‡ */
+    uint8_t Mode;                    //å½“å‰æ“ä½œæ¨¡å¼
+    uint8_t Current_Filter_State;    //ç”µæµç¯æ»¤æ³¢å™¨çŠ¶æ€
+    uint8_t Velocity_Filter_State;    //é€Ÿåº¦ç¯æ»¤æ³¢å™¨çŠ¶æ€
+    uint8_t Position_Filter_State;    //é€Ÿåº¦ç¯æ»¤æ³¢å™¨çŠ¶æ€
+    uint8_t Position_Limit_State;    //ä½ç½®é™ä½çŠ¶æ€
+    uint8_t Power_State;            //å¼€å…³æœºçŠ¶æ€
+    /* è¯»å–æ ‡å¿—ä½ */
+    uint8_t R_Mode;                    //è¯»å–æ•°æ®è¿”å›æ ‡å¿—ä½ 1ä¸ºæœ‰æ•°æ®è¿”å›
     uint8_t R_Last_State;
     uint8_t R_Current_Filter_State;
     uint8_t R_Velocity_Filter_State;
@@ -207,15 +207,15 @@ typedef struct
     uint8_t R_Position_Limit_State;
     uint8_t R_Power_State;
 
-    /* µÚ¶şÀàÊı¾İ±äÁ¿ */
-    float Current_Filter_Value;        //µçÁ÷»·ÂË²¨Æ÷´ø¿í
-    float Velocity_Filter_Value;    //ËÙ¶È»·ÂË²¨Æ÷´ø¿í
-    float Position_Filter_Value;    //Î»ÖÃ»·ÂË²¨Æ÷´ø¿í
-    float Inverter_Protect_Temp;    //Äæ±äÆ÷±£»¤ÎÂ¶È
-    float Inverter_Recover_Temp;    //Äæ±äÆ÷»Ö¸´ÎÂ¶È
-    float Motor_Protect_Temp;        //µç»ú±£»¤ÎÂ¶È
-    float Motor_Recover_Temp;        //µç»ú»Ö¸´ÎÂ¶È
-    /* ¶ÁÈ¡±êÖ¾Î» */
+    /* ç¬¬äºŒç±»æ•°æ®å˜é‡ */
+    float Current_Filter_Value;        //ç”µæµç¯æ»¤æ³¢å™¨å¸¦å®½
+    float Velocity_Filter_Value;    //é€Ÿåº¦ç¯æ»¤æ³¢å™¨å¸¦å®½
+    float Position_Filter_Value;    //ä½ç½®ç¯æ»¤æ³¢å™¨å¸¦å®½
+    float Inverter_Protect_Temp;    //é€†å˜å™¨ä¿æŠ¤æ¸©åº¦
+    float Inverter_Recover_Temp;    //é€†å˜å™¨æ¢å¤æ¸©åº¦
+    float Motor_Protect_Temp;        //ç”µæœºä¿æŠ¤æ¸©åº¦
+    float Motor_Recover_Temp;        //ç”µæœºæ¢å¤æ¸©åº¦
+    /* è¯»å–æ ‡å¿—ä½ */
     uint8_t R_Current_Filter_Value;
     uint8_t R_Velocity_Filter_Value;
     uint8_t R_Position_Filter_Value;
@@ -229,39 +229,39 @@ typedef struct
     uint8_t R_Inverter_Temp;
     uint8_t R_Error_Code;
 
-    /* µÚÈıÀàÊı¾İ±äÁ¿ */
-    float Current_Real;                //µ±Ç°µçÁ÷£¨µ¥Î»£ºA£©
-    float Velocity_Real;            //µ±Ç°ËÙ¶È£¨µ¥Î»£ºRPM£©
-    float Position_Real;            //µ±Ç°Î»ÖÃ£¬ÕæÊµÖµ£¨µ¥Î»£ºR£©
-    float Current_Filter_P;            //µçÁ÷»·µÄPÖµ
-    float Current_Filter_I;            //µçÁ÷»·µÄIÖµ
-    float Velocity_Filter_P;        //ËÙ¶È»·µÄPÖµ
-    float Velocity_Filter_I;        //ËÙ¶È»·µÄIÖµ
-    float Position_Filter_P;        //Î»ÖÃ»·µÄPÖµ
-    float Position_Filter_I;        //Î»ÖÃ»·µÄIÖµ
-    //float Position_Filter_D;		//Î»ÖÃ»·µÄDÖµ
-    float PP_Max_Velocity;            //Î»ÖÃÌİĞÎËÙ¶È×î´óÖµ
-    float PP_Max_Acceleration;        //Î»ÖÃÌİĞÎ¼ÓËÙ¶È×î´óÖµ
-    float PP_Max_Deceleration;        //Î»ÖÃÌİĞÎ¼õËÙ¶È×î´óÖµ
-    float PV_Max_Velocity;            //ËÙ¶ÈÌİĞÎËÙ¶È×î´óÖµ
-    float PV_Max_Acceleration;        //ËÙ¶ÈÌİĞÎ¼ÓËÙ¶È×î´óÖµ
-    float PV_Max_Deceleration;        //ËÙ¶ÈÌİĞÎ¼õËÙ¶È×î´óÖµ
-    //float Current_Filter_Limit_L;	//µçÁ÷»·Êä³öÏÂÏŞ
-    //float Current_Filter_Limit_H;	//µçÁ÷»·Êä³öÉÏÏŞ
-    float Velocity_Filter_Limit_L;    //ËÙ¶È»·Êä³öÏÂÏŞ
-    float Velocity_Filter_Limit_H;    //ËÙ¶È»·Êä³öÉÏÏŞ
-    float Position_Filter_Limit_L;    //Î»ÖÃ»·Êä³öÏÂÏŞ
-    float Position_Filter_Limit_H;    //Î»ÖÃ»·Êä³öÉÏÏŞ
-    float Position_Limit_H;            //Ö´ĞĞÆ÷µÄÎ»ÖÃÉÏÏŞ
-    float Position_Limit_L;            //Ö´ĞĞÆ÷µÄÎ»ÖÃÏÂÏŞ
-    float Current_Limit;            //µçÁ÷ÊäÈëÏŞ·ù
-    float Velocity_Limit;            //ËÙ¶ÈÊäÈëÏŞ·ù
-    float Homing_Value;                //Ö´ĞĞÆ÷µÄHomingÖµ
-    float Position_Offset;            //Ö´ĞĞÆ÷µÄÎ»ÖÃÆ«ÖÃ
-    float Homing_Current_Limit_L;    //×Ô¶¯¹éÁãµçÁ÷ÏÂÏŞ
-    float Homing_Current_Limit_H;    //×Ô¶¯¹éÁãµçÁ÷ÉÏÏŞ
-    float Blocked_Energy;            //¶Â×ªËø¶¨ÄÜÁ¿
-    /* ¶ÁÈ¡±êÖ¾Î» */
+    /* ç¬¬ä¸‰ç±»æ•°æ®å˜é‡ */
+    float Current_Real;                //å½“å‰ç”µæµï¼ˆå•ä½ï¼šAï¼‰
+    float Velocity_Real;            //å½“å‰é€Ÿåº¦ï¼ˆå•ä½ï¼šRPMï¼‰
+    float Position_Real;            //å½“å‰ä½ç½®ï¼ŒçœŸå®å€¼ï¼ˆå•ä½ï¼šRï¼‰
+    float Current_Filter_P;            //ç”µæµç¯çš„På€¼
+    float Current_Filter_I;            //ç”µæµç¯çš„Iå€¼
+    float Velocity_Filter_P;        //é€Ÿåº¦ç¯çš„På€¼
+    float Velocity_Filter_I;        //é€Ÿåº¦ç¯çš„Iå€¼
+    float Position_Filter_P;        //ä½ç½®ç¯çš„På€¼
+    float Position_Filter_I;        //ä½ç½®ç¯çš„Iå€¼
+    //float Position_Filter_D;		//ä½ç½®ç¯çš„Då€¼
+    float PP_Max_Velocity;            //ä½ç½®æ¢¯å½¢é€Ÿåº¦æœ€å¤§å€¼
+    float PP_Max_Acceleration;        //ä½ç½®æ¢¯å½¢åŠ é€Ÿåº¦æœ€å¤§å€¼
+    float PP_Max_Deceleration;        //ä½ç½®æ¢¯å½¢å‡é€Ÿåº¦æœ€å¤§å€¼
+    float PV_Max_Velocity;            //é€Ÿåº¦æ¢¯å½¢é€Ÿåº¦æœ€å¤§å€¼
+    float PV_Max_Acceleration;        //é€Ÿåº¦æ¢¯å½¢åŠ é€Ÿåº¦æœ€å¤§å€¼
+    float PV_Max_Deceleration;        //é€Ÿåº¦æ¢¯å½¢å‡é€Ÿåº¦æœ€å¤§å€¼
+    //float Current_Filter_Limit_L;	//ç”µæµç¯è¾“å‡ºä¸‹é™
+    //float Current_Filter_Limit_H;	//ç”µæµç¯è¾“å‡ºä¸Šé™
+    float Velocity_Filter_Limit_L;    //é€Ÿåº¦ç¯è¾“å‡ºä¸‹é™
+    float Velocity_Filter_Limit_H;    //é€Ÿåº¦ç¯è¾“å‡ºä¸Šé™
+    float Position_Filter_Limit_L;    //ä½ç½®ç¯è¾“å‡ºä¸‹é™
+    float Position_Filter_Limit_H;    //ä½ç½®ç¯è¾“å‡ºä¸Šé™
+    float Position_Limit_H;            //æ‰§è¡Œå™¨çš„ä½ç½®ä¸Šé™
+    float Position_Limit_L;            //æ‰§è¡Œå™¨çš„ä½ç½®ä¸‹é™
+    float Current_Limit;            //ç”µæµè¾“å…¥é™å¹…
+    float Velocity_Limit;            //é€Ÿåº¦è¾“å…¥é™å¹…
+    float Homing_Value;                //æ‰§è¡Œå™¨çš„Homingå€¼
+    float Position_Offset;            //æ‰§è¡Œå™¨çš„ä½ç½®åç½®
+    float Homing_Current_Limit_L;    //è‡ªåŠ¨å½’é›¶ç”µæµä¸‹é™
+    float Homing_Current_Limit_H;    //è‡ªåŠ¨å½’é›¶ç”µæµä¸Šé™
+    float Blocked_Energy;            //å µè½¬é”å®šèƒ½é‡
+    /* è¯»å–æ ‡å¿—ä½ */
     uint8_t R_Current_Real;
     uint8_t R_Velocity_Real;
     uint8_t R_Position_Real;
@@ -300,93 +300,93 @@ typedef struct
 } Para_Cache_t;
 
 /* 
-	SCAĞÅÏ¢¾ä±ú£¬ÇëÎğËæÒâ¸ü¸ÄÆäÖĞÊıÖµ£¬
-	±äÁ¿ÄÚÈİ¿É¸ù¾İÏîÄ¿ĞèÒª½øĞĞ²Ã¼ô»òÌí¼Ó
+	SCAä¿¡æ¯å¥æŸ„ï¼Œè¯·å‹¿éšæ„æ›´æ”¹å…¶ä¸­æ•°å€¼ï¼Œ
+	å˜é‡å†…å®¹å¯æ ¹æ®é¡¹ç›®éœ€è¦è¿›è¡Œè£å‰ªæˆ–æ·»åŠ 
  */
 typedef struct
 {
-    /* Ğ­ÒéÊı¾İ±äÁ¿Çø */
-    uint8_t ID;                        //SCAµÄIDºÅ
-    uint8_t Serial_Num[4];            //ĞòÁĞºÅ
-    uint8_t Save_State;                //²ÎÊı±£´æ×´Ì¬£¬1ÎªÒÑ±£´æ
-    uint8_t Online_State;            //µ±Ç°ÔÚÏß×´Ì¬£¬1ÎªÔÚÏß
-    uint8_t Update_State;            //ÊÇ·ñÓĞ²ÎÊıË¢ĞÂ£¬1ÎªÓĞ²ÎÊıË¢ĞÂ
-    CAN_Handler_t *Can;                //ËùÊ¹ÓÃµÄCAN¶Ë¿Ú
-    Para_Cache_t paraCache;            //²ÎÊı»º´æ
+    /* åè®®æ•°æ®å˜é‡åŒº */
+    uint8_t ID;                        //SCAçš„IDå·
+    uint8_t Serial_Num[4];            //åºåˆ—å·
+    uint8_t Save_State;                //å‚æ•°ä¿å­˜çŠ¶æ€ï¼Œ1ä¸ºå·²ä¿å­˜
+    uint8_t Online_State;            //å½“å‰åœ¨çº¿çŠ¶æ€ï¼Œ1ä¸ºåœ¨çº¿
+    uint8_t Update_State;            //æ˜¯å¦æœ‰å‚æ•°åˆ·æ–°ï¼Œ1ä¸ºæœ‰å‚æ•°åˆ·æ–°
+    CAN_Handler_t *Can;                //æ‰€ä½¿ç”¨çš„CANç«¯å£
+    Para_Cache_t paraCache;            //å‚æ•°ç¼“å­˜
 
-    /* ÓÃ»§Êı¾İ±äÁ¿Çø */
+    /* ç”¨æˆ·æ•°æ®å˜é‡åŒº */
 
-    /* µÚÒ»ÀàÊı¾İ±äÁ¿ */
-    uint8_t Mode;                    //µ±Ç°²Ù×÷Ä£Ê½
-    uint8_t Last_State;                //ÉÏ´Î¹Ø»úµÄÒì³£×´Ì¬£¬1ÎªÕı³£
-    uint8_t Current_Filter_State;    //µçÁ÷»·ÂË²¨Æ÷×´Ì¬
-    uint8_t Velocity_Filter_State;    //ËÙ¶È»·ÂË²¨Æ÷×´Ì¬
-    uint8_t Position_Filter_State;    //ËÙ¶È»·ÂË²¨Æ÷×´Ì¬
-    uint8_t Position_Limit_State;    //Î»ÖÃÏŞÎ»×´Ì¬
-    uint8_t Power_State;            //¿ª¹Ø»ú×´Ì¬
+    /* ç¬¬ä¸€ç±»æ•°æ®å˜é‡ */
+    uint8_t Mode;                    //å½“å‰æ“ä½œæ¨¡å¼
+    uint8_t Last_State;                //ä¸Šæ¬¡å…³æœºçš„å¼‚å¸¸çŠ¶æ€ï¼Œ1ä¸ºæ­£å¸¸
+    uint8_t Current_Filter_State;    //ç”µæµç¯æ»¤æ³¢å™¨çŠ¶æ€
+    uint8_t Velocity_Filter_State;    //é€Ÿåº¦ç¯æ»¤æ³¢å™¨çŠ¶æ€
+    uint8_t Position_Filter_State;    //é€Ÿåº¦ç¯æ»¤æ³¢å™¨çŠ¶æ€
+    uint8_t Position_Limit_State;    //ä½ç½®é™ä½çŠ¶æ€
+    uint8_t Power_State;            //å¼€å…³æœºçŠ¶æ€
 
-    /* µÚ¶şÀàÊı¾İ±äÁ¿ */
-    float Voltage;                    //µ±Ç°µçÑ¹£¨µ¥Î»£ºV£©
-    float Current_Max;                //×î´óµçÁ÷Á¿³Ì
-    float Current_Filter_Value;        //µçÁ÷»·ÂË²¨Æ÷´ø¿í
-    float Velocity_Filter_Value;    //ËÙ¶È»·ÂË²¨Æ÷´ø¿í
-    float Position_Filter_Value;    //Î»ÖÃ»·ÂË²¨Æ÷´ø¿í
-    float Motor_Temp;                //µç»úÎÂ¶È
-    float Inverter_Temp;            //Äæ±äÆ÷ÎÂ¶È
-    float Inverter_Protect_Temp;    //Äæ±äÆ÷±£»¤ÎÂ¶È
-    float Inverter_Recover_Temp;    //Äæ±äÆ÷»Ö¸´ÎÂ¶È
-    float Motor_Protect_Temp;        //µç»ú±£»¤ÎÂ¶È
-    float Motor_Recover_Temp;        //µç»ú»Ö¸´ÎÂ¶È
-    SCA_Warn_t SCA_Warn;            //µç»ú±¨¾¯ĞÅÏ¢
+    /* ç¬¬äºŒç±»æ•°æ®å˜é‡ */
+    float Voltage;                    //å½“å‰ç”µå‹ï¼ˆå•ä½ï¼šVï¼‰
+    float Current_Max;                //æœ€å¤§ç”µæµé‡ç¨‹
+    float Current_Filter_Value;        //ç”µæµç¯æ»¤æ³¢å™¨å¸¦å®½
+    float Velocity_Filter_Value;    //é€Ÿåº¦ç¯æ»¤æ³¢å™¨å¸¦å®½
+    float Position_Filter_Value;    //ä½ç½®ç¯æ»¤æ³¢å™¨å¸¦å®½
+    float Motor_Temp;                //ç”µæœºæ¸©åº¦
+    float Inverter_Temp;            //é€†å˜å™¨æ¸©åº¦
+    float Inverter_Protect_Temp;    //é€†å˜å™¨ä¿æŠ¤æ¸©åº¦
+    float Inverter_Recover_Temp;    //é€†å˜å™¨æ¢å¤æ¸©åº¦
+    float Motor_Protect_Temp;        //ç”µæœºä¿æŠ¤æ¸©åº¦
+    float Motor_Recover_Temp;        //ç”µæœºæ¢å¤æ¸©åº¦
+    SCA_Warn_t SCA_Warn;            //ç”µæœºæŠ¥è­¦ä¿¡æ¯
 
-    /* µÚÈıÀàÊı¾İ±äÁ¿ */
-    float Current_Real;                //µ±Ç°µçÁ÷£¨µ¥Î»£ºA£©
-    float Velocity_Real;            //µ±Ç°ËÙ¶È£¨µ¥Î»£ºRPM£©
-    float Position_Real;            //µ±Ç°Î»ÖÃ£¬ÕæÊµÖµ£¨µ¥Î»£ºR£©
-    float Current_Filter_P;            //µçÁ÷»·µÄPÖµ
-    float Current_Filter_I;            //µçÁ÷»·µÄIÖµ
-    float Velocity_Filter_P;        //ËÙ¶È»·µÄPÖµ
-    float Velocity_Filter_I;        //ËÙ¶È»·µÄIÖµ
-    float Position_Filter_P;        //Î»ÖÃ»·µÄPÖµ
-    float Position_Filter_I;        //Î»ÖÃ»·µÄIÖµ
-    //float Position_Filter_D;		//Î»ÖÃ»·µÄDÖµ
-    float PP_Max_Velocity;            //Î»ÖÃÌİĞÎËÙ¶È×î´óÖµ
-    float PP_Max_Acceleration;        //Î»ÖÃÌİĞÎ¼ÓËÙ¶È×î´óÖµ
-    float PP_Max_Deceleration;        //Î»ÖÃÌİĞÎ¼õËÙ¶È×î´óÖµ
-    float PV_Max_Velocity;            //ËÙ¶ÈÌİĞÎËÙ¶È×î´óÖµ
-    float PV_Max_Acceleration;        //ËÙ¶ÈÌİĞÎ¼ÓËÙ¶È×î´óÖµ
-    float PV_Max_Deceleration;        //ËÙ¶ÈÌİĞÎ¼õËÙ¶È×î´óÖµ
-    //float Current_Filter_Limit_L;	//µçÁ÷»·Êä³öÏÂÏŞ
-    //float Current_Filter_Limit_H;	//µçÁ÷»·Êä³öÉÏÏŞ
-    float Velocity_Filter_Limit_L;    //ËÙ¶È»·Êä³öÏÂÏŞ
-    float Velocity_Filter_Limit_H;    //ËÙ¶È»·Êä³öÉÏÏŞ
-    float Position_Filter_Limit_L;    //Î»ÖÃ»·Êä³öÏÂÏŞ
-    float Position_Filter_Limit_H;    //Î»ÖÃ»·Êä³öÉÏÏŞ
-    float Position_Limit_H;            //Ö´ĞĞÆ÷µÄÎ»ÖÃÉÏÏŞ
-    float Position_Limit_L;            //Ö´ĞĞÆ÷µÄÎ»ÖÃÏÂÏŞ
-    float Current_Limit;            //µçÁ÷ÊäÈëÏŞ·ù
-    float Velocity_Limit;            //ËÙ¶ÈÊäÈëÏŞ·ù
-    float Homing_Value;                //Ö´ĞĞÆ÷µÄHomingÖµ
-    float Position_Offset;            //Ö´ĞĞÆ÷µÄÎ»ÖÃÆ«ÖÃ
-    float Homing_Current_Limit_L;    //×Ô¶¯¹éÁãµçÁ÷ÏÂÏŞ
-    float Homing_Current_Limit_H;    //×Ô¶¯¹éÁãµçÁ÷ÉÏÏŞ
-    float Blocked_Energy;            //¶Â×ªËø¶¨ÄÜÁ¿
+    /* ç¬¬ä¸‰ç±»æ•°æ®å˜é‡ */
+    float Current_Real;                //å½“å‰ç”µæµï¼ˆå•ä½ï¼šAï¼‰
+    float Velocity_Real;            //å½“å‰é€Ÿåº¦ï¼ˆå•ä½ï¼šRPMï¼‰
+    float Position_Real;            //å½“å‰ä½ç½®ï¼ŒçœŸå®å€¼ï¼ˆå•ä½ï¼šRï¼‰
+    float Current_Filter_P;            //ç”µæµç¯çš„På€¼
+    float Current_Filter_I;            //ç”µæµç¯çš„Iå€¼
+    float Velocity_Filter_P;        //é€Ÿåº¦ç¯çš„På€¼
+    float Velocity_Filter_I;        //é€Ÿåº¦ç¯çš„Iå€¼
+    float Position_Filter_P;        //ä½ç½®ç¯çš„På€¼
+    float Position_Filter_I;        //ä½ç½®ç¯çš„Iå€¼
+    //float Position_Filter_D;		//ä½ç½®ç¯çš„Då€¼
+    float PP_Max_Velocity;            //ä½ç½®æ¢¯å½¢é€Ÿåº¦æœ€å¤§å€¼
+    float PP_Max_Acceleration;        //ä½ç½®æ¢¯å½¢åŠ é€Ÿåº¦æœ€å¤§å€¼
+    float PP_Max_Deceleration;        //ä½ç½®æ¢¯å½¢å‡é€Ÿåº¦æœ€å¤§å€¼
+    float PV_Max_Velocity;            //é€Ÿåº¦æ¢¯å½¢é€Ÿåº¦æœ€å¤§å€¼
+    float PV_Max_Acceleration;        //é€Ÿåº¦æ¢¯å½¢åŠ é€Ÿåº¦æœ€å¤§å€¼
+    float PV_Max_Deceleration;        //é€Ÿåº¦æ¢¯å½¢å‡é€Ÿåº¦æœ€å¤§å€¼
+    //float Current_Filter_Limit_L;	//ç”µæµç¯è¾“å‡ºä¸‹é™
+    //float Current_Filter_Limit_H;	//ç”µæµç¯è¾“å‡ºä¸Šé™
+    float Velocity_Filter_Limit_L;    //é€Ÿåº¦ç¯è¾“å‡ºä¸‹é™
+    float Velocity_Filter_Limit_H;    //é€Ÿåº¦ç¯è¾“å‡ºä¸Šé™
+    float Position_Filter_Limit_L;    //ä½ç½®ç¯è¾“å‡ºä¸‹é™
+    float Position_Filter_Limit_H;    //ä½ç½®ç¯è¾“å‡ºä¸Šé™
+    float Position_Limit_H;            //æ‰§è¡Œå™¨çš„ä½ç½®ä¸Šé™
+    float Position_Limit_L;            //æ‰§è¡Œå™¨çš„ä½ç½®ä¸‹é™
+    float Current_Limit;            //ç”µæµè¾“å…¥é™å¹…
+    float Velocity_Limit;            //é€Ÿåº¦è¾“å…¥é™å¹…
+    float Homing_Value;                //æ‰§è¡Œå™¨çš„Homingå€¼
+    float Position_Offset;            //æ‰§è¡Œå™¨çš„ä½ç½®åç½®
+    float Homing_Current_Limit_L;    //è‡ªåŠ¨å½’é›¶ç”µæµä¸‹é™
+    float Homing_Current_Limit_H;    //è‡ªåŠ¨å½’é›¶ç”µæµä¸Šé™
+    float Blocked_Energy;            //å µè½¬é”å®šèƒ½é‡
 
 } SCA_Handler_t;
 
-enum SCA_Error                //SCAÍ¨ĞÅ´íÎóÀàĞÍÃ¶¾Ù
+enum SCA_Error                //SCAé€šä¿¡é”™è¯¯ç±»å‹æšä¸¾
 {
-    SCA_NoError = 0,        //ÎŞ´íÎó
-    SCA_OverTime,            //Í¨ĞÅµÈ´ı³¬Ê±
-    SCA_SendError,            //Êı¾İ·¢ËÍÊ§°Ü
-    SCA_OperationFailed,    //²Ù×÷Ê§°Ü
-    SCA_UnknownID,            //Î´ÕÒµ½¸ÃIDµÄÖ´ĞĞÆ÷¾ä±ú
+    SCA_NoError = 0,        //æ— é”™è¯¯
+    SCA_OverTime,            //é€šä¿¡ç­‰å¾…è¶…æ—¶
+    SCA_SendError,            //æ•°æ®å‘é€å¤±è´¥
+    SCA_OperationFailed,    //æ“ä½œå¤±è´¥
+    SCA_UnknownID,            //æœªæ‰¾åˆ°è¯¥IDçš„æ‰§è¡Œå™¨å¥æŸ„
 };
 
-/* Êı¾İ½ÓÊÕ½Ó¿Ú£¬ÓĞĞÂµÄCANÊı¾İ°ü´«ÈëÊ±µ÷ÓÃ
-  CanRxMsg ÎªCANÊı¾İ°üµÄ½ÓÊÕÀàĞÍ½á¹¹ÌåÒÆÖ²Ê±Çë×ÔĞĞ
-  ¸ù¾İÆ½Ì¨¶¨ÒåCanRxMsg½á¹¹ÀàĞÍ£¬´Ë´¦Ä¬ÈÏÊ¹ÓÃSTM32
-  ±ê×¼¿âº¯ÊıÖĞµÄ½ÓÊÕ½á¹¹	*/
+/* æ•°æ®æ¥æ”¶æ¥å£ï¼Œæœ‰æ–°çš„CANæ•°æ®åŒ…ä¼ å…¥æ—¶è°ƒç”¨
+  CanRxMsg ä¸ºCANæ•°æ®åŒ…çš„æ¥æ”¶ç±»å‹ç»“æ„ä½“ç§»æ¤æ—¶è¯·è‡ªè¡Œ
+  æ ¹æ®å¹³å°å®šä¹‰CanRxMsgç»“æ„ç±»å‹ï¼Œæ­¤å¤„é»˜è®¤ä½¿ç”¨STM32
+  æ ‡å‡†åº“å‡½æ•°ä¸­çš„æ¥æ”¶ç»“æ„	*/
 typedef struct
 {
     uint32_t StdId;  /*!< Specifies the standard identifier.
@@ -416,12 +416,12 @@ typedef struct
 
 void canDispatch(CanRxMsg *RxMsg);
 
-/* ÒÔÏÂº¯ÊıÎªAPI²ãµ÷ÓÃ */
+/* ä»¥ä¸‹å‡½æ•°ä¸ºAPIå±‚è°ƒç”¨ */
 
-/* ¶ÁÈ¡ÃüÁî½Ó¿Ú */
+/* è¯»å–å‘½ä»¤æ¥å£ */
 uint8_t SCA_Read(SCA_Handler_t *pSCA, uint8_t cmd);
 
-/* ÎåÀàĞ´ÈëÃüÁî */
+/* äº”ç±»å†™å…¥å‘½ä»¤ */
 uint8_t SCA_Write_1(SCA_Handler_t *pSCA, uint8_t cmd, uint8_t TxData);
 uint8_t SCA_Write_2(SCA_Handler_t *pSCA, uint8_t cmd, float TxData);
 uint8_t SCA_Write_3(SCA_Handler_t *pSCA, uint8_t cmd, float TxData);

@@ -1,10 +1,10 @@
-/**
+ï»¿/**
   ******************************************************************************
-  * @ÎÄ	¼ş £º SCA_API.h
-  * @×÷	Õß £º INNFOS Software Team
-  * @°æ	±¾ £º V1.5.3
-  * @ÈÕ	ÆÚ £º 2019.09.10
-  * @Õª	Òª £º SCA ¿ØÖÆ½Ó¿Ú²ã
+  * @æ–‡	ä»¶ ï¼š SCA_API.h
+  * @ä½œ	è€… ï¼š INNFOS Software Team
+  * @ç‰ˆ	æœ¬ ï¼š V1.5.3
+  * @æ—¥	æœŸ ï¼š 2019.09.10
+  * @æ‘˜	è¦ ï¼š SCA æ§åˆ¶æ¥å£å±‚
   ******************************************************************************/
 
 #ifndef __SCA_API_H
@@ -21,13 +21,13 @@ extern "C" {
 #include <malloc.h>
 #include "time_utils.h"
 
-/* ²ÎÊıÅäÖÃ */
-#define SCA_NUM_USE        2            //µ±Ç°Ê¹ÓÃSCAµÄÊıÁ¿,1-255
-#define SCA_DEBUGER        0            //Ê¹ÄÜµ÷ÊÔ½Ó¿Ú
-#define CanOvertime        0xFFFF        //Êı¾İ×èÈû³¬Ê±£¨180MHZ£©
-#define CanPowertime    0xFFFFFF    //¿ª¹Ø»ú×èÈû³¬Ê±£¨180MHZ£©
-#define SendInterval    200            //·Ç×èÈûÊ±µÄÖ¸Áî·¢ËÍ¼ä¸ô
-#define SCA_Delay(x)    delayMicroseconds(x)    //ÑÓÊ±½Ó¿Ú£¬·Ç×èÈûÊ±Á¬Ğø·¢ËÍĞèÑÓÊ±
+/* å‚æ•°é…ç½® */
+#define SCA_NUM_USE        2            //å½“å‰ä½¿ç”¨SCAçš„æ•°é‡,1-255
+#define SCA_DEBUGER        0            //ä½¿èƒ½è°ƒè¯•æ¥å£
+#define CanOvertime        0xFFFF        //æ•°æ®é˜»å¡è¶…æ—¶ï¼ˆ180MHZï¼‰
+#define CanPowertime    0xFFFFFF    //å¼€å…³æœºé˜»å¡è¶…æ—¶ï¼ˆ180MHZï¼‰
+#define SendInterval    200            //éé˜»å¡æ—¶çš„æŒ‡ä»¤å‘é€é—´éš”
+#define SCA_Delay(x)    delayMicroseconds(x)    //å»¶æ—¶æ¥å£ï¼Œéé˜»å¡æ—¶è¿ç»­å‘é€éœ€å»¶æ—¶
 
 
 #if SCA_DEBUGER
@@ -36,17 +36,17 @@ extern "C" {
 #define SCA_Debug(s,...)
 #endif
 
-/* £¡£¡£¡ÒÔÏÂºê¶¨ÒåĞÅÏ¢²ÎÊıÇëÎğĞŞ¸Ä£¡£¡£¡ */
+/* ï¼ï¼ï¼ä»¥ä¸‹å®å®šä¹‰ä¿¡æ¯å‚æ•°è¯·å‹¿ä¿®æ”¹ï¼ï¼ï¼ */
 
-//SCA×´Ì¬¶¨Òå
+//SCAçŠ¶æ€å®šä¹‰
 #define Actr_Enable        0x01
 #define Actr_Disable    0x00
 
-//Í¨ĞÅ·½Ê½¶¨Òå
+//é€šä¿¡æ–¹å¼å®šä¹‰
 #define Block            0x01
 #define Unblock            0x00
 
-//SCA²Ù×÷Ä£Ê½¶¨Òå
+//SCAæ“ä½œæ¨¡å¼å®šä¹‰
 #define SCA_Current_Mode            0x01
 #define SCA_Velocity_Mode            0x02
 #define SCA_Position_Mode            0x03
@@ -55,32 +55,32 @@ extern "C" {
 #define SCA_Homing_Mode                0X08
 
 /* 
-FASTÀàº¯ÊıÊ¹ÓÃËµÃ÷£º
-	ÒÔIDµ÷ÓÃAPIÊ±£¬»áÏÈÄÚ²¿²éÕÒID¶ÔÓ¦µÄĞÅÏ¢¾ä±ú£¬²Ù×÷Ö±¹Ûµ«µ±SCAµÄÊ¹ÓÃ
-	ÊıÁ¿½Ï¶àÊ±£¬º¯ÊıµÄÖ´ĞĞĞ§ÂÊµÍ¡£ÈôÖ±½Ó¶¨ÒåÖ¸ÕëÖ¸Ïò¶ÔÓ¦µÄ½á¹¹Ìå£¬»áÊ¡
-	È¥²éÕÒ¾ä±úµÄ¹ı³Ì£¬µ«Ğè·ÀÖ¹¸ÃÖ¸ÕëÔÚÊ¹ÓÃÊ±¶Ô¾ä±úÄÚ²¿Êı¾İµÄÒâÍâĞŞ¸Ä¡£
-	´ËÀàÖ¸ÕëÓÃÓÚ´øÓĞFastĞÍµÄAPI£¬µ±Ê¹ÓÃµÄSCAÊıÁ¿½Ï¶à»ò¸ßÆµ¶ÁĞ´Ê±£¬¿ÉÒÔ
-	Ìá¸ßº¯ÊıµÄÖ´ĞĞĞ§ÂÊ¡£ÆäËûÀàĞÍµÄº¯ÊıÈôÓĞĞèÇó£¬Ò²¿É°´ÕÕ´ËÖÖ·½Ê½½øĞĞĞŞ¸Ä¡£
+FASTç±»å‡½æ•°ä½¿ç”¨è¯´æ˜ï¼š
+	ä»¥IDè°ƒç”¨APIæ—¶ï¼Œä¼šå…ˆå†…éƒ¨æŸ¥æ‰¾IDå¯¹åº”çš„ä¿¡æ¯å¥æŸ„ï¼Œæ“ä½œç›´è§‚ä½†å½“SCAçš„ä½¿ç”¨
+	æ•°é‡è¾ƒå¤šæ—¶ï¼Œå‡½æ•°çš„æ‰§è¡Œæ•ˆç‡ä½ã€‚è‹¥ç›´æ¥å®šä¹‰æŒ‡é’ˆæŒ‡å‘å¯¹åº”çš„ç»“æ„ä½“ï¼Œä¼šçœ
+	å»æŸ¥æ‰¾å¥æŸ„çš„è¿‡ç¨‹ï¼Œä½†éœ€é˜²æ­¢è¯¥æŒ‡é’ˆåœ¨ä½¿ç”¨æ—¶å¯¹å¥æŸ„å†…éƒ¨æ•°æ®çš„æ„å¤–ä¿®æ”¹ã€‚
+	æ­¤ç±»æŒ‡é’ˆç”¨äºå¸¦æœ‰Fastå‹çš„APIï¼Œå½“ä½¿ç”¨çš„SCAæ•°é‡è¾ƒå¤šæˆ–é«˜é¢‘è¯»å†™æ—¶ï¼Œå¯ä»¥
+	æé«˜å‡½æ•°çš„æ‰§è¡Œæ•ˆç‡ã€‚å…¶ä»–ç±»å‹çš„å‡½æ•°è‹¥æœ‰éœ€æ±‚ï¼Œä¹Ÿå¯æŒ‰ç…§æ­¤ç§æ–¹å¼è¿›è¡Œä¿®æ”¹ã€‚
 	
 	Example:
 
-		//ÀıÈçÖ´ĞĞÆ÷IDÊÇ 0x03£¬¶Ô¸ÃID½øĞĞ¿ìËÙĞ´Î»ÖÃ
+		//ä¾‹å¦‚æ‰§è¡Œå™¨IDæ˜¯ 0x03ï¼Œå¯¹è¯¥IDè¿›è¡Œå¿«é€Ÿå†™ä½ç½®
 		SCA_Handler_t* pSCA_ID3 = NULL;
 		pSCA_ID3 = getInstance(0x03);
-		if(pSCA_ID3 == NULL)	return;//Î´ÕÒµ½¸ÃIDµÄĞÅÏ¢¾ä±ú
+		if(pSCA_ID3 == NULL)	return;//æœªæ‰¾åˆ°è¯¥IDçš„ä¿¡æ¯å¥æŸ„
 
-		//ÓÃ¶¨ÒåºÃµÄÖ¸ÕëÖ±½Ó´«ÈëFastĞÍĞ´Î»ÖÃº¯ÊıÖĞ
+		//ç”¨å®šä¹‰å¥½çš„æŒ‡é’ˆç›´æ¥ä¼ å…¥Fastå‹å†™ä½ç½®å‡½æ•°ä¸­
 		setPositionFast(pSCA_ID3,100);
 	
-º¯Êı×èÈû·½Ê½Ê¹ÓÃËµÃ÷£º
-	´øÓĞ²ÎÊıisBlockµÄº¯Êı£¬¿ÉÖ§³Ö×èÈû»ò·Ç×èÈûÊ½µÄÖ´ĞĞ·½Ê½£¬¿É¸ù¾İÊµ¼Ê
-	Ê¹ÓÃÇé¿ö½øĞĞÑ¡Ôñ¡£×èÈûµÈ´ıÊ±¼äÔÚ²ÎÊıÅäÖÃÖĞ¿É¸ù¾İCPUËÙÂÊ¸ü¸Ä¸º¡£ÆäÖĞÀà
-	ËÆ¿ª»úµÈº¯Êı±ØĞëÎª×èÈûÊ½Í¨ĞÅ£¨µÈ´ıÖ´ĞĞ½á¹û·µ»Ø£©£¬·ñÔğ»áÔì³ÉÊı¾İ´íÂÒ¡£
-	ÁíÍâ£¬·Ç×èÈûº¯ÊıµÄÁ¬ĞøÊ¹ÓÃÈİÒ×Ôì³É×ÜÏß¹ıÔØ£¬SCA»á³öÏÖÀ¶µÆÏÖÏó£¬ÔÚ·Ç×è
-	ÈûÖ´ĞĞÊ±º¯ÊıÄÚ²¿»áÓĞ±£»¤ÑÓÊ±£¬Í¨¹ı²ÎÊıÅäÖÃ¸ü¸ÄÑÓÊ±Ê±¼ä¡£
+å‡½æ•°é˜»å¡æ–¹å¼ä½¿ç”¨è¯´æ˜ï¼š
+	å¸¦æœ‰å‚æ•°isBlockçš„å‡½æ•°ï¼Œå¯æ”¯æŒé˜»å¡æˆ–éé˜»å¡å¼çš„æ‰§è¡Œæ–¹å¼ï¼Œå¯æ ¹æ®å®é™…
+	ä½¿ç”¨æƒ…å†µè¿›è¡Œé€‰æ‹©ã€‚é˜»å¡ç­‰å¾…æ—¶é—´åœ¨å‚æ•°é…ç½®ä¸­å¯æ ¹æ®CPUé€Ÿç‡æ›´æ”¹è´Ÿã€‚å…¶ä¸­ç±»
+	ä¼¼å¼€æœºç­‰å‡½æ•°å¿…é¡»ä¸ºé˜»å¡å¼é€šä¿¡ï¼ˆç­‰å¾…æ‰§è¡Œç»“æœè¿”å›ï¼‰ï¼Œå¦è´£ä¼šé€ æˆæ•°æ®é”™ä¹±ã€‚
+	å¦å¤–ï¼Œéé˜»å¡å‡½æ•°çš„è¿ç»­ä½¿ç”¨å®¹æ˜“é€ æˆæ€»çº¿è¿‡è½½ï¼ŒSCAä¼šå‡ºç°è“ç¯ç°è±¡ï¼Œåœ¨éé˜»
+	å¡æ‰§è¡Œæ—¶å‡½æ•°å†…éƒ¨ä¼šæœ‰ä¿æŠ¤å»¶æ—¶ï¼Œé€šè¿‡å‚æ•°é…ç½®æ›´æ”¹å»¶æ—¶æ—¶é—´ã€‚
 */
 
-/***************¿ØÖÆÏà¹Ø******************/
+/***************æ§åˆ¶ç›¸å…³******************/
 void lookupActuators(CAN_Handler_t *canPort);
 void setupActuators(uint8_t id, CAN_Handler_t *can);
 void resetController(uint8_t id);
@@ -99,7 +99,7 @@ uint8_t clearError(uint8_t id, uint8_t isBlock);
 uint8_t saveAllParams(uint8_t id, uint8_t isBlock);
 SCA_Handler_t *getInstance(uint8_t id);
 
-/***************Î»ÖÃÏà¹Ø******************/
+/***************ä½ç½®ç›¸å…³******************/
 uint8_t setPosition(uint8_t id, float pos);
 uint8_t setPositionFast(SCA_Handler_t *pSCA, float pos);
 uint8_t getPosition(uint8_t id, uint8_t isBlock);
@@ -133,7 +133,7 @@ uint8_t getProfilePositionDeceleration(uint8_t id, uint8_t isBlock);
 uint8_t setProfilePositionMaxVelocity(uint8_t id, float maxVelocity, uint8_t isBlock);
 uint8_t getProfilePositionMaxVelocity(uint8_t id, uint8_t isBlock);
 
-/***************ËÙ¶ÈÏà¹Ø******************/
+/***************é€Ÿåº¦ç›¸å…³******************/
 uint8_t setVelocity(uint8_t id, float vel);
 uint8_t setVelocityFast(SCA_Handler_t *pSCA, float vel);
 uint8_t getVelocity(uint8_t id, uint8_t isBlock);
@@ -160,7 +160,7 @@ uint8_t setProfileVelocityMaxVelocity(uint8_t id, float maxVelocity, uint8_t isB
 uint8_t getProfileVelocityMaxVelocity(uint8_t id, uint8_t isBlock);
 float getVelocityRange(uint8_t id);
 
-/***************µçÁ÷Ïà¹Ø******************/
+/***************ç”µæµç›¸å…³******************/
 uint8_t setCurrent(uint8_t id, float current);
 uint8_t setCurrentFast(SCA_Handler_t *pSCA, float current);
 uint8_t getCurrent(uint8_t id, uint8_t isBlock);
@@ -175,7 +175,7 @@ uint8_t setCurrentCutoffFrequency(uint8_t id, float frequency, uint8_t isBlock);
 uint8_t setCurrentLimit(uint8_t id, float limit, uint8_t isBlock);
 uint8_t getCurrentLimit(uint8_t id, uint8_t isBlock);
 
-/***************ÆäËû²ÎÊı******************/
+/***************å…¶ä»–å‚æ•°******************/
 uint8_t getVoltage(uint8_t id, uint8_t isBlock);
 uint8_t getLockEnergy(uint8_t id, uint8_t isBlock);
 uint8_t setLockEnergy(uint8_t id, float energy, uint8_t isBlock);
