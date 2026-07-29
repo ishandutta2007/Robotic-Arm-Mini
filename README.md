@@ -13,6 +13,7 @@
   <a href="https://github.com/ishandutta2007/Robotic-Arm-Mini/stargazers"><img src="https://img.shields.io/github/stars/ishandutta2007/Robotic-Arm-Mini?style=flat-square" alt="Stars"/></a>
   <a href="https://github.com/ishandutta2007/Robotic-Arm-Mini/network/members"><img src="https://img.shields.io/github/forks/ishandutta2007/Robotic-Arm-Mini?style=flat-square" alt="Forks"/></a>
   <a href="https://github.com/ishandutta2007/Robotic-Arm-Mini/blob/main/LICENSE"><img src="https://img.shields.io/github/license/ishandutta2007/Robotic-Arm-Mini?style=flat-square" alt="License"/></a>
+  <a href="https://github.com/ishandutta2007"><img alt="GitHub followers" src="https://img.shields.io/github/followers/ishandutta2007?label=Follow" /></a>
 </p>
 
 > **✨ My super compact smart robotic arm project.**
