@@ -1,0 +1,52 @@
+*			isBlock：Block for blocking, Unblock for non-blocking
+* @Param 	pSCA：target actuator handle address or pointer
+*			Kp：Target position loop Kp value, real value
+* @Brief 	Get Actuator position loop Kp value，update to handle
+*			Ki：Target position loop Ki value, real value
+* @Brief 	Get Actuator position loop Ki value，update to handle
+*			max：Target position loopoutput upper limit value，real value
+* @Brief 	Get Actuator position loopoutput upper limit value，update to handle
+*			min：Target position loopoutput lower limit value，real value
+* @Brief 	Get Actuator position loopoutput lower limit value，update to handle
+*			offset：target position offset value，real value
+* @Brief 	Get Actuator position offset value，update to handle
+*			maxPos：target position max value，real value
+* @Brief 	Get Actuator position max value，update to handle
+*			minPos：target position min value，real value
+* @Brief 	Get Actuator position min value，update to handle
+*			enable：enable status, Actr_Enable enable, Actr_Disable disable
+* @Brief 	Get Actuator position limitenablestatus，update to handle
+*			homingPos：zero position, real value, unit R
+*			frequency：filter bandwidth, real value, unit hz
+* @Param 	id：Actuator id
+*			acceleration：max acceleration, real value, unit RPM/S^2
+* @Brief 	Get Actuator profile position max acceleration，update to handle
+*			deceleration：max deceleration, real value, unit RPM/S^2
+* @Brief 	Get Actuator profile position max deceleration，update to handle
+*			maxVelocity：max velocity, real value, unit RPM
+* @Brief 	Get Actuator profile position max velocity，update to handle
+*			vel：target velocity, real value, unit RPM
+* @Brief 	Get Actuator current velocity, update to handle,快速
+*			Kp：velocity loop proportional，real value
+*			Ki：velocity loop integral，real value
+*			max：max output limit, real value
+*			min：min output limit, real value
+* @Return 	velocity loop velocity range，real value
+*			limit：input limit
+* @Brief 	Get Actuator velocity loop input limit，update to handle
+*			acceleration：acceleration, real value
+* @Brief 	Get Actuator profile velocity loop acceleration，update to handle
+*			deceleration：deceleration, real value
+* @Brief 	Get Actuator profile velocity loop deceleration，update to handle
+* @Brief 	Get Actuator profile velocity loop max velocity，update to handle
+*			current：current current value, real value, unit A
+* @Brief 	Get Actuator current current value, update to handle,快速
+*			frequency：target cutoff frequency, unit hz
+* @Brief 	Get Actuator current loopinput limit，update to handle
+*			energy：lock energy value，real value，单位 J
+*			temp：motor protection temperature value，real value，单位 摄氏度
+*			temp：motor recovery temperature value，real value，单位 摄氏度
+*			temp：inverter protection temperature value，real value，单位 摄氏度
+*			temp：inverter recovery temperature value，real value，单位 摄氏度
+* @Param 	newID：new id
+*			currentID：current id
