@@ -4,6 +4,17 @@
 
 # 🤖 Robotic-Arm-Mini: Super compact smart robotic-arm 🦾
 
+<meta name="description" content="Robotic-Arm-Mini: An open-source, super compact, smart 6-axis robotic arm with closed-loop stepper motor drivers, CAN bus communication, DH parameter kinematics calculations, and real-time interactive control. Built with dynamic simulation, FOC control, and trajectory planning." />
+<meta name="keywords" content="robotic arm, open source robot, 6-axis robotic arm, compact robotic arm, smart robotic arm, FOC stepper motor, closed-loop driver, CAN bus control, DH parameters, inverse kinematics, robot kinematics, RoboDK, FreeRTOS, STM32 robot" />
+
+<p align="center">
+  <a href="https://github.com/ishandutta2007/Awesome-Awesome-Awesome"><img src="https://img.shields.io/badge/Awesome-%E2%9C%94-blueviolet?style=flat-square&logo=github" alt="Awesome"/></a>
+  <a href="https://discord.gg/jc4xtF58Ve"><img src="https://img.shields.io/badge/Discord-5865F2?style=for-the-badge&logo=discord&logoColor=white" alt="Discord" /></a>
+  <a href="https://github.com/ishandutta2007/Robotic-Arm-Mini/stargazers"><img src="https://img.shields.io/github/stars/ishandutta2007/Robotic-Arm-Mini?style=flat-square" alt="Stars"/></a>
+  <a href="https://github.com/ishandutta2007/Robotic-Arm-Mini/network/members"><img src="https://img.shields.io/github/forks/ishandutta2007/Robotic-Arm-Mini?style=flat-square" alt="Forks"/></a>
+  <a href="https://github.com/ishandutta2007/Robotic-Arm-Mini/blob/main/LICENSE"><img src="https://img.shields.io/github/license/ishandutta2007/Robotic-Arm-Mini?style=flat-square" alt="License"/></a>
+</p>
+
 > **✨ My super compact smart robotic arm project.**
 >
 > 📺 Video Introduction: [[DIY] I Built an IRON MAN Robotic Arm! [Hardcore]](https://www.bilibili.com/video/BV12341117rG)
