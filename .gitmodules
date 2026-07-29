@@ -1,0 +1,3 @@
+[submodule "submodules/Peak"]
+	path = submodules/Peak
+	url = git@github.com:peng-zhihui/Peak.git
